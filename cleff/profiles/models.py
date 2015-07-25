@@ -70,3 +70,8 @@ class Genre(models.Model):
 class Video(models.Model):
     title = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
+    embedded_code = models.CharField(max_length=20, blank=True)
+
+
+
+
