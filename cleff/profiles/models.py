@@ -33,7 +33,6 @@ GENRES = (
     ('Vocal', 'Vocal'),
     ('World', 'World'),
     ('Metal', 'Metal'),
-
 )
 
 DAYS = (
@@ -44,7 +43,6 @@ DAYS = (
     ('Fri', 'Friday'),
     ('Sat', 'Saturday'),
     ('Sun', 'Sunday'),
-
 )
 
 TIMES = (
@@ -72,13 +70,15 @@ TIMES = (
     ('22:00', '10 pm (22:00)'), ('22:00', '10 pm (22:00)'),
     ('23:00', '11 pm (23:00)'), ('23:00', '11 pm (23:00)'),
     ('24:00', '12 am (24:00)'), ('24:00', '12 am (24:00)'),
-
 )
+
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     latitude = models.FloatField(blank=True)
     longitude = models.FloatField(blank=True)
+    first_name = models.CharField(max_length=15, blank=True)
+    last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d')
 
     class Meta:
