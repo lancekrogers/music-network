@@ -1,6 +1,6 @@
 from autoslug import AutoSlugField
 from django.db import models
-from cleff.profiles.models import Musician
+from cleff.profiles.models import Musician, NonMusician
 # Create your models here.
 
 
@@ -34,6 +34,58 @@ class MusicianPost(models.Model):
 class MusicianResponse(models.Model):
     user = models.ForeignKey(Musician)
     post = models.ForeignKey(MusicianPost)
+    text = models.TextField()
+    score = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    votes = models.ManyToManyField('Vote')
+
+    class Meta:
+        ordering = ['-score', 'timestamp']
+
+    def __str__(self):
+        return '{}'.format(self.post.title)
+
+    @property
+    def upvote_count(self):
+        upvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(upvote=True)
+        return upvotes.count()
+
+    @property
+    def downvote_count(self):
+        downvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(downvote=True)
+        return downvotes.count()
+
+
+class NonMusicianPost(models.Model):
+    user = models.ForeignKey(NonMusician)
+    title = models.CharField(max_length=140)
+    text = models.TextField()
+    slug = AutoSlugField(populate_from='title')
+    score = models.IntegerField(default=0)
+    tags = models.ManyToManyField('Tag')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    votes = models.ManyToManyField('Vote')
+
+    def __str__(self):
+        return "{}, user: {}".format(self.title, self.user.user.username)
+
+    @property
+    def upvote_count(self):
+        upvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_question=True).filter(upvote=True)
+        return upvotes.count()
+
+    @property
+    def downvote_count(self):
+        downvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_question=True).filter(downvote=True)
+        return downvotes.count()
+
+    class Meta:
+        ordering = ['-score', 'timestamp']
+
+
+class NonMusicianResponse(models.Model):
+    user = models.ForeignKey(NonMusician)
+    post = models.ForeignKey(NonMusicianPost)
     text = models.TextField()
     score = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
