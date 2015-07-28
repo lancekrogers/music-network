@@ -1,6 +1,7 @@
 from autoslug import AutoSlugField
 from django.db import models
-from cleff.profiles.models import Musician, NonMusician
+from profiles.models import Musician, NonMusician
+
 # Create your models here.
 
 
@@ -122,7 +123,7 @@ class Tag(models.Model):
 
 class Vote(models.Model):                               # I plan on handling this by making
     votee_pk = models.IntegerField(default=-1)          # a function in my views.py that
-    voter = models.ForeignKey('Musician', default=None)  # will take in **kwargs and will
+    voter = models.ForeignKey(Musician, default=None)  # will take in **kwargs and will
     upvote = models.BooleanField(default=False)                      # be able to put into context data
     downvote = models.BooleanField(default=False)               # when completed == True vote is active
     completed = models.BooleanField(default=False)  # that function can then be turned

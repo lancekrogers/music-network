@@ -7,8 +7,8 @@ from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     email = models.EmailField(blank=True)
-    latitude = models.DecimalField(blank=True, null=True)
-    longitude = models.DecimalField(blank=True, null=True)
+    latitude = models.DecimalField(blank=True, null=True, max_digits=200, decimal_places=10)
+    longitude = models.DecimalField(blank=True, null=True, max_digits=200, decimal_places=10)
     first_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
@@ -81,5 +81,5 @@ class Location(models.Model):
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=20, blank=True)
     description = models.CharField(max_length=20, blank=True)
-    latitude = models.DecimalField(blank=True)
-    longitude = models.DecimalField(blank=True)
+    latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
+    longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)

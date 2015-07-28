@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_PROFILE_MODULE = "profiles.Profile"
+AUTH_PROFILE_MODULE = "profiles.ProfileModel"
+
+
 
 # Application definition
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'Forum',
     'profiles',
+    'social.apps.django_app.default',
 
 )
 
@@ -69,6 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -109,3 +114,4 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
