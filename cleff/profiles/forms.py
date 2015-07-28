@@ -10,8 +10,22 @@ class MusicianForm(forms.ModelForm):
 
     class Meta:
         model = Musician
-        fields = ['email', 'first_name',
-                  'last_name', 'profile_image',
-                  'genres', 'summary',
-                  ''
+        fields = ['profile_image',
+                  'video',
+                  'locations', 'email',
+                  'genres', 'instrument_group',
+                  'availability',
+                  'first_name', 'last_name',
+                  'summary', 'company',
+                  ]
+
+
+class NonMusicianForm(forms.ModelForm):
+
+    class Meta:
+        model = NonMusician
+        fields = ['profile_image',
+                  'locations', 'email',
+                  'first_name', 'last_name',
+                  'summary', 'company',
                   ]
