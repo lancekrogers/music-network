@@ -69,11 +69,13 @@ TIMES = (
 INSTRUMENT_CLASSES = (
     ('Percussion', 'Percussion'),
     ('Strings', 'Strings'),
-    ('Woodwinds', 'Woodwinds'),
+    ('KPO', 'Keyboard, Piano, or Organ'),
+    ('Woodwind', 'Woodwind'),
     ('Brass', 'Brass'),
     ('Electronic', 'Electronic'),
     ('CG', 'Computer Generated'),
     ('Vocal', 'Vocal'),
     ('UCMI', 'Unconventional Musical Instrument'),
+    ('Other', 'Other'),
 
 )

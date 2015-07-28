@@ -6,8 +6,9 @@ from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES
 
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
+    email = models.EmailField(blank=True)
+    latitude = models.DecimalField(blank=True, null=True)
+    longitude = models.DecimalField(blank=True, null=True)
     first_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
@@ -22,7 +23,7 @@ class Musician(ProfileModel):
     company = models.CharField(max_length=60, blank=True)
     video = models.ManyToManyField('Video', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    instruments = models.ManyToManyField('Instrument')
+    instrument_group = models.ManyToManyField('InstrumentGroup')
     availability = models.ManyToManyField('TimeFrame', blank=True)
 
     def __str__(self):
@@ -55,10 +56,14 @@ class Video(models.Model):
     def __str__(self):
         return 'video title: {}'.format(self.title)
 
-class Instrument(models.Model):
-    type = models.CharField(choices=INSTRUMENT_CLASSES)
+
+class InstrumentGroup(models.Model):
+    family = models.CharField(choices=INSTRUMENT_CLASSES, max_length=60)
     description = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}'.format(self.family)
 
 
 class TimeFrame(models.Model):
