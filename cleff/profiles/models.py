@@ -1,76 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES
 
 # Create your models here.
-
-
-GENRES = (
-    ('Alternative', 'Alternative'),
-    ('Anime', 'Anime'),
-    ('Blues', 'Blues'),
-    ('Childrens Music', 'Childrens Music'),
-    ('Classical', 'Classical'),
-    ('Comedy', 'Comedy'),
-    ('Commercial', 'Commercial'),
-    ('Country', 'Country'),
-    ('Dance', 'Dance'),
-    ('Electronic', 'Electronic'),
-    ('Pop', 'Pop'),
-    ('Indie', 'Indie'),
-    ('Bluegrass', 'Bluegrass'),
-    ('Gospel', 'Gospel'),
-    ('Hip-Hop', 'Hip-Hop'),
-    ('Rap', 'Rap'),
-    ('Instrumental', 'Instrumental'),
-    ('Jazz', 'Jazz'),
-    ('Latin', 'Latin'),
-    ('New Age', 'New Age'),
-    ('R&B/Soul', 'R&B/Soul'),
-    ('Reggae', 'Reggae'),
-    ('Rock', 'Rock'),
-    ('Singer', 'Singer'),
-    ('Songwriter', 'Songwriter'),
-    ('Vocal', 'Vocal'),
-    ('World', 'World'),
-    ('Metal', 'Metal'),
-)
-
-DAYS = (
-    ('Mon', 'Monday'),
-    ('Tues', 'Tuesday'),
-    ('Wed', 'Wednesday'),
-    ('Thurs', 'Thursday'),
-    ('Fri', 'Friday'),
-    ('Sat', 'Saturday'),
-    ('Sun', 'Sunday'),
-)
-
-TIMES = (
-    ('01:00', '1 am'), ('01:30', '1:30 am'),
-    ('02:00', '2 am'), ('02:30', '2:30 am'),
-    ('03:00', '3 am'), ('03:30', '3:30 am'),
-    ('04:00', '4 am'), ('04:30', '4:30 am'),
-    ('05:00', '5 am'), ('05:30', '5:30 am'),
-    ('06:00', '6 am'), ('06:30', '6:30 am'),
-    ('07:00', '7 am'), ('07:30', '7:30 am'),
-    ('08:00', '8 am'), ('08:30', '8:30 am'),
-    ('09:00', '9 am'), ('09:30', '9:30 am'),
-    ('10:00', '10 am'), ('10:30', '10:30 am'),
-    ('11:00', '11 am'), ('11:30', '11:30 am'),
-    ('12:00', '12 pm'), ('12:30', '12:30 pm'),
-    ('13:00', '1 pm'), ('13:30', '1:30 pm'),
-    ('14:00', '2 pm'), ('14:30', '2:30 pm'),
-    ('15:00', '3 pm'), ('15:30', '3:30 pm'),
-    ('16:00', '4 pm'), ('16:30', '4:30 pm'),
-    ('17:00', '5 pm'), ('17:30', '5:30 pm'),
-    ('18:00', '6 pm'), ('18:30', '6:30 pm'),
-    ('19:00', '7 pm'), ('19:30', '7:30 pm'),
-    ('20:00', '8 pm'), ('20:30', '8:30 pm'),
-    ('21:00', '9 pm'), ('21:30', '9:30 pm'),
-    ('22:00', '10 pm'), ('22:30', '10:30 pm'),
-    ('23:00', '11 pm'), ('23:30', '11:30 pm'),
-    ('24:00', '12 am'), ('24:30', '12:30 am'),
-)
 
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
@@ -90,6 +22,7 @@ class Musician(ProfileModel):
     company = models.CharField(max_length=60, blank=True)
     video = models.ManyToManyField('Video', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    instruments = models.ManyToManyField('Instrument')
     availability = models.ManyToManyField('TimeFrame', blank=True)
 
     def __str__(self):
@@ -121,6 +54,11 @@ class Video(models.Model):
 
     def __str__(self):
         return 'video title: {}'.format(self.title)
+
+class Instrument(models.Model):
+    type = models.CharField(choices=INSTRUMENT_CLASSES)
+    description = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class TimeFrame(models.Model):
