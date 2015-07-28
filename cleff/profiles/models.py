@@ -49,7 +49,6 @@ class Genre(models.Model):
 
 
 class Video(models.Model):
-    uploader = models.ForeignKey(Musician, related_name='uploaded_videos')
     title = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
     embedded_code = models.CharField(max_length=20, blank=True)
@@ -60,7 +59,6 @@ class Video(models.Model):
 
 
 class InstrumentGroup(models.Model):
-    user = models.ForeignKey(Musician, related_name='instruments')
     family = models.CharField(choices=INSTRUMENT_CLASSES, max_length=60)
     description = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -70,7 +68,6 @@ class InstrumentGroup(models.Model):
 
 
 class TimeFrame(models.Model):
-    user = models.ForeignKey(Musician, related_name='users_availability')
     day = models.CharField(choices=DAYS, max_length=10)
     start = models.CharField(choices=TIMES, max_length=10)
     end = models.CharField(choices=TIMES, max_length=10)
@@ -81,7 +78,6 @@ class TimeFrame(models.Model):
 
 
 class Location(models.Model):
-    user = models.ForeignKey(User, related_name='user_location')
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=20, blank=True)
     description = models.CharField(max_length=20, blank=True)

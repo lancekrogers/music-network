@@ -1,7 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect
-from .forms import MusicianForm, NonMusicianForm
+from .forms import MusicianForm, NonMusicianForm, GenreForm, VideoForm, TimeFrameForm, \
+InstrumentGroupForm, LocationForm
 # Create your views here.
 from django.template import RequestContext
 
@@ -30,7 +31,22 @@ def musician_registration(request):
     if request.POST:
         ok = True
         profile_form = MusicianForm(request.POST)
+        video_form = VideoForm(request.POST)
+        genre_form = GenreForm(request.POST)
+        time_frame_form = TimeFrameForm(request.POST)
+        instrument_form = InstrumentGroupForm(request.POST)
+        location_form = LocationForm(request.POST)
         if not profile_form.is_valid():
+            ok = False
+        if not video_form.is_valid():
+            ok = False
+        if not genre_form.is_valid():
+            ok = False
+        if not time_frame_form.is_valid():
+            ok = False
+        if not instrument_form.is_valid():
+            ok = False
+        if not location_form.is_valid():
             ok = False
         if not request.user:
             ok = False
@@ -40,14 +56,31 @@ def musician_registration(request):
             try:
                 profile = profile_form.save(commit=False)
                 profile.user = user
+                profile.video = video_form.save()
+                profile.locations = genre_form.save()
+                profile.genres = time_frame_form.save()
+                profile.instrument_group = instrument_form.save()
+                profile.availability = location_form.save()
                 profile.save()
                 return redirect('profiles:home')  # add a homepage in forum app
             except:
                 return render_to_response('registration/register_musician.html',
-                                          {'musician_form': MusicianForm},
+                                          {'musician_form': MusicianForm,
+                                           'video_form': VideoForm,
+                                           'genre_form': GenreForm,
+                                           'time_frame_form': TimeFrameForm,
+                                           'instrument_form': InstrumentGroupForm,
+                                           'location_form': LocationForm,
+                                           },
                                           context_instance=RequestContext(request))
     return render_to_response('registration/register_musician.html',
-                              {'musician_form': MusicianForm},
+                              {'musician_form': MusicianForm,
+                               'video_form': VideoForm,
+                               'genre_form': GenreForm,
+                               'time_frame_form': TimeFrameForm,
+                               'instrument_form': InstrumentGroupForm,
+                               'location_form': LocationForm,
+                               },
                               context_instance=RequestContext(request))
 
 # add login required later
@@ -60,7 +93,7 @@ def non_musician_registration(request):
         if not request.user:
             ok = False
         if ok:
-            print('NonMuscian form should work')
+            print('NonMusician form should work')
             user = request.user
             try:
                 profile = profile_form.save(commit=False)

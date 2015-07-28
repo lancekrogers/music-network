@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ musician_form.as_p }}
+        {{ video_form.as_p }}
+        {{ genre_form.as_p }}
+        {{ time_frame_form.as_p }}
+        {{ instrument_form.as_p }}
+        {{ location_form.as_p }}
+        <button type="submit" name="register">Create</button>
+    </form>
+
+
+
+
+
+
+
+
+
+{% endblock %}
