@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Musician, NonMusician, Genre, TimeFrame, Video, ProfileModel
+from .models import Musician, NonMusician, Genre, TimeFrame, Video, ProfileModel, Location
 # Register your models here.
 admin.site.register(Genre)
 admin.site.register(TimeFrame)
 admin.site.register(Video)
+admin.site.register(Location)
+
 
 
 

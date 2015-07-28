@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_PROFILE_MODULE = "profiles.ProfileModel"
+AUTH_PROFILE_MODULE = "profiles.models.ProfileModel"
 
 
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'Forum',
     'profiles',
-    'social.apps.django_app.default',
+#    'social.apps.django_app.default',
 
 )
 
@@ -115,3 +115,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
+#AUTHENTICATION_BACKENDS = (
+#   'social.backends.facebook.FacebookOAuth2',
+ #  'social.backends.google.GoogleOAuth2',
+  # 'social.backends.twitter.TwitterOAuth',
+ #  'django.contrib.auth.backends.ModelBackend',
+#)
