@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianForm, NonMusicianForm
 # Create your views here.
@@ -40,7 +41,7 @@ def musician_registration(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user
                 profile.save()
-                return redirect('Forum:home')  # add a homepage in forum app
+                return redirect('profiles:home')  # add a homepage in forum app
             except:
                 return render_to_response('registration/register_musician.html',
                                           {'musician_form': MusicianForm},
@@ -65,7 +66,7 @@ def non_musician_registration(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user
                 profile.save()
-                return redirect('Forum:home')  # add a homepage in forum app
+                return redirect('profiles:home')  # add a homepage in forum app
             except:
                 return render_to_response('registration/register_non_musician.html',
                                           {'non_musician_form': NonMusicianForm},
@@ -73,3 +74,6 @@ def non_musician_registration(request):
     return render_to_response('registration/register_non_musician.html',
                               {'non_musician_form': NonMusicianForm},
                               context_instance=RequestContext(request))
+
+def home(request):
+    return HttpResponse('It worked')
