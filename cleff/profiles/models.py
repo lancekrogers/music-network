@@ -13,6 +13,7 @@ class ProfileModel(models.Model):
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
     locations = models.ManyToManyField('Location', blank=True)
+    is_musician = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -56,7 +57,7 @@ class Video(models.Model):
     embedded_code = models.CharField(max_length=20, blank=True,
                                      verbose_name='Paste Youtube video Url here\nor upload a video below')
     upload = models.FileField(upload_to='video/%Y/%m/%d/{}'.format('title'), blank=True, verbose_name='Upload Video')
-    genre = models.ManyToManyField('Genre')
+    genre = models.ManyToManyField('Genre', blank=True)
 
     def __str__(self):
         return 'video title: {}'.format(self.title)

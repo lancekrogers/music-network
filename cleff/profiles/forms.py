@@ -1,22 +1,33 @@
 from __future__ import unicode_literals
 from django import forms
 from .models import Musician, NonMusician, Video, Location, Genre, InstrumentGroup, TimeFrame
+from .choices_list import *
+
 
 class ProfileImageForm(forms.Form):
-    image = forms.FileField(label='Please upload a profile image')
+    image = forms.FileField(label='Please upload a profile image', required=False)
 
 
-class MusicianForm(forms.ModelForm):
+class MusicianUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Musician
-        fields = ['profile_image',
-                  'email',
-                  'first_name', 'last_name',
-                  'profile_image',
-                  'summary', 'company',
+        fields = [
+            'email',
+            'first_name',
+            'last_name',
+            'summary'
                   ]
+        required = False
 
+
+class MusicianCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Musician
+        fields = [
+            'email'
+        ]
 
 
 class VideoForm(forms.ModelForm):
@@ -71,12 +82,10 @@ class TimeFrameForm(forms.ModelForm):
         ]
 
 
-class NonMusicianForm(forms.ModelForm):
+class NonMusicianCreateForm(forms.ModelForm):
 
     class Meta:
         model = NonMusician
-        fields = ['profile_image',
-                  'email', 'first_name',
-                  'last_name', 'summary',
-                  'company',
+        fields = [
+                 'email'
                   ]
