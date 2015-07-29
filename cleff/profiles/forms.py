@@ -17,6 +17,8 @@ class MusicianForm(forms.ModelForm):
                   'summary', 'company',
                   ]
 
+
+
 class VideoForm(forms.ModelForm):
 
     class Meta:
@@ -35,7 +37,6 @@ class LocationForm(forms.ModelForm):
         fields = [
             'zipcode',
             'city',
-            'description',
         ]
 
 

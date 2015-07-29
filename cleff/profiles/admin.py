@@ -8,6 +8,8 @@ admin.site.register(TimeFrame)
 admin.site.register(Video)
 admin.site.register(Location)
 admin.site.register(InstrumentGroup)
+admin.site.register(Musician)
+admin.site.register(NonMusician)
 
 
 
