@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^profiles/', include('profiles.urls', namespace='profiles')),
     url(r'^forum/', include('Forum.urls', namespace='Forum')),
+    url(r'^', include('cleff_main.urls', namespace='main'))
 ]

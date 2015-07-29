@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<a href="{% url 'profiles:register_musician' %}" >Musicians Click Here</a><br></br>
+
+<a href="{% url 'profiles:register_non_musician' %}" >Non musicians click here</a>
+
+
+{% endblock %}

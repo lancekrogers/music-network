@@ -1,3 +1,4 @@
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect
@@ -30,7 +31,14 @@ def musician_registration(request):
                 profile.is_musician = True
                 profile.user = users
                 profile.save()
-                return redirect('profiles:Login')
+                try:
+                    username = request.POST['username']
+                    password = request.POST['password1']
+                    user = authenticate(username=username, password=password)
+                    login(request, user)
+                    return redirect('main:home')
+                except:
+                    return redirect('profiles:Login')
             except:
                 print('somethings wrong')
                 return render_to_response("registration/register_musician.html",
@@ -67,7 +75,14 @@ def non_musician_registration(request):
                 profile.is_musician = False
                 profile.user = users
                 profile.save()
-                return redirect('profiles:Login')
+                try:
+                    username = request.POST['username']
+                    password = request.POST['password1']
+                    user = authenticate(username=username, password=password)
+                    login(request, user)
+                    return redirect('main:home')
+                except:
+                    return redirect('profiles:Login')
             except:
                 print('somethings wrong non m')
                 return render_to_response("registration/register_non_musician.html",
@@ -79,5 +94,6 @@ def non_musician_registration(request):
                                    'non_m_form': NonMusicianCreateForm},
                                   context_instance=RequestContext(request))
 
-def home(request):
-    return HttpResponse('It worked')
+
+def choose(request):
+    return render(request, 'choose.html')

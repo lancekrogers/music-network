@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'Forum',
     'profiles',
+    'cleff_main',
 #    'social.apps.django_app.default',
 
 )
