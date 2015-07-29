@@ -3,7 +3,7 @@
 
 
 {% if user.username %}
-    <h3>Welcome {{ user.username }}</h3><br/>
+    <h3>Sup {{ user.username }}</h3><br/>
     <a href="{% url 'profiles:Logout' %}">Logout</a><br/>
     {% csrf_token %}
 {% else %}

@@ -1,9 +1,10 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm
+from .models import Musician, NonMusician, Video
 # Create your views here.
 from django.template import RequestContext
 
@@ -97,3 +98,27 @@ def non_musician_registration(request):
 
 def choose(request):
     return render(request, 'choose.html')
+
+
+def musician_profile(request, user_id):
+    try:
+        profile = Musician.objects.get(pk=user_id)
+    except Musician.DoesNotExist:
+        return HttpResponseNotFound('<h1>No Page Here</h1>')
+    if Video.objects.filter(user_pk=user_id):
+        videos = Video.objects.filter(user=user_id)
+        context = {"profile": profile, 'videos': videos}
+    else:
+        context = {"profile": profile}
+    context['videos'] = Video.objects.filter(user_pk=user_id)
+    return render_to_response("musician-profile.html",
+                              context, context_instance=RequestContext(request))
+
+
+def non_musician_profile(request, user_id):
+    try:
+        profile = NonMusician.objects.get(pk=user_id)
+    except NonMusician.DoesNotExist:
+        return HttpResponseNotFound('<h1>No Page Here</h1>')
+    return render_to_response("non-musician-profile.html", {'profile': profile},
+                              context_instance=RequestContext(request))

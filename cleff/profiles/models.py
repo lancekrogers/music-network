@@ -27,6 +27,7 @@ class Musician(ProfileModel):
     timestamp = models.DateTimeField(auto_now_add=True)
     instrument_group = models.ManyToManyField('InstrumentGroup')
     availability = models.ManyToManyField('TimeFrame', blank=True)
+    friends = models.ManyToManyField('SavedMusician')
 
     def __str__(self):
         return 'Username: {}'.format(self.user.username)
@@ -35,6 +36,7 @@ class NonMusician(ProfileModel):
     summary = models.TextField(blank=True, verbose_name='What brings you to this site?')
     company = models.CharField(max_length=60, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    musicians = models.ManyToManyField('SavedMusician')
 
     def __str__(self):
         return 'Username: {}'.format(self.user.username)
@@ -61,6 +63,9 @@ class Video(models.Model):
 
     def __str__(self):
         return 'video title: {}'.format(self.title)
+
+    class Meta:
+        ordering = ['-timestamp']
 
 
 class InstrumentGroup(models.Model):
@@ -93,3 +98,7 @@ class Location(models.Model):
                                    verbose_name="If you would like to describe your location do it here")
     latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
     longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
+
+
+class SavedMusician(models.Model):
+    musicain_pk = models.IntegerField()
