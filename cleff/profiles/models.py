@@ -32,7 +32,7 @@ class Musician(ProfileModel):
         return 'Username: {}'.format(self.user.username)
 
 class NonMusician(ProfileModel):
-    summary = models.TextField(blank=True)
+    summary = models.TextField(blank=True, verbose_name='What brings you to this site?')
     company = models.CharField(max_length=60, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

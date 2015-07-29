@@ -51,9 +51,9 @@ def non_musician_registration(request):
         ok = True
         m_form = NonMusicianCreateForm(request.POST)
         user_creation_form = UserCreationForm(request.POST)
-        print('third print')
+        print('non m third print')
         if not user_creation_form.is_valid():
-            print('4th print')
+            print('non m 4th print')
             ok = False
         if not m_form.is_valid():
             print('5th print')
@@ -61,7 +61,7 @@ def non_musician_registration(request):
         if ok:
             print('it should work')
             try:
-                print('I dont hate my life')
+                print('I dont hate my life non m')
                 users = user_creation_form.save()
                 profile = m_form.save(commit=False)
                 profile.is_musician = False
@@ -69,12 +69,12 @@ def non_musician_registration(request):
                 profile.save()
                 return redirect('profiles:Login')
             except:
-                print('somethings wrong')
-                return render_to_response("registration/register_musician.html",
+                print('somethings wrong non m')
+                return render_to_response("registration/register_non_musician.html",
                                       {'u_form': UserCreationForm,
                                        'non_m_form': NonMusicianCreateForm},
                                       context_instance=RequestContext(request))
-    return render_to_response("registration/register_musician.html",
+    return render_to_response("registration/register_non_musician.html",
                                   {'u_form': UserCreationForm,
                                    'non_m_form': NonMusicianCreateForm},
                                   context_instance=RequestContext(request))

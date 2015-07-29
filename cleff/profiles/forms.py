@@ -86,6 +86,15 @@ class NonMusicianCreateForm(forms.ModelForm):
 
     class Meta:
         model = NonMusician
+        fields = ['email']
+
+
+class NonMusicianUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = NonMusician
         fields = [
-                 'email'
-                  ]
+            'email',
+            'company',
+            'summary'
+        ]

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
-    <form method="post" enctype="multipart/form-data">
+
+    <h1>Musician Registration</h1>
+    <form method="post">
         {% csrf_token %}
          {{ u_form.as_p }}
         {{ m_form.as_p }}
