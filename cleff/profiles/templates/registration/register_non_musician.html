@@ -5,16 +5,9 @@
 <form method="post">
         {% csrf_token %}
         {{ non_musician_form.as_p }}
-
         {{ location_form.as_p }}
         <button type="submit" name="register">Create</button>
     </form>
-
-
-
-
-
-
 
 
 {% endblock %}
