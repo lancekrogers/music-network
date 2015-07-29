@@ -88,7 +88,10 @@ def non_musician_registration(request):
     if request.POST:
         ok = True
         profile_form = NonMusicianForm(request.POST)
+        location_form = LocationForm(request.POST)
         if not profile_form.is_valid():
+            ok = False
+        if not location_form.is_valid():
             ok = False
         if not request.user:
             ok = False

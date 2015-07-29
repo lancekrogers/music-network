@@ -75,7 +75,7 @@ class NonMusicianForm(forms.ModelForm):
     class Meta:
         model = NonMusician
         fields = ['profile_image',
-                  'locations', 'email',
-                  'first_name', 'last_name',
-                  'summary', 'company',
+                  'email', 'first_name',
+                  'last_name', 'summary',
+                  'company',
                   ]
