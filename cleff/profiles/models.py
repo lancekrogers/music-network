@@ -25,9 +25,9 @@ class Musician(ProfileModel):
     company = models.CharField(max_length=60, blank=True)
     video = models.ManyToManyField('Video', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    instrument_group = models.ManyToManyField('InstrumentGroup')
+    instrument_group = models.ManyToManyField('InstrumentGroup', blank=True)
     availability = models.ManyToManyField('TimeFrame', blank=True)
-    friends = models.ManyToManyField('SavedMusician')
+    friends = models.ManyToManyField('SavedMusician', blank=True)
 
     def __str__(self):
         return 'Username: {}'.format(self.user.username)
@@ -36,7 +36,7 @@ class NonMusician(ProfileModel):
     summary = models.TextField(blank=True)
     company = models.CharField(max_length=60, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    musicians = models.ManyToManyField('SavedMusician')
+    musicians = models.ManyToManyField('SavedMusician', blank=True)
 
     def __str__(self):
         return 'Username: {}'.format(self.user.username)
@@ -82,6 +82,7 @@ class TimeFrame(models.Model):
     day = models.CharField(choices=DAYS, max_length=10)
     start = models.CharField(choices=TIMES, max_length=10)
     end = models.CharField(choices=TIMES, max_length=10)
+    all_day = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

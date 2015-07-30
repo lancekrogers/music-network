@@ -76,9 +76,13 @@ class InstrumentGroupForm(forms.ModelForm):
 
 
 class TimeFrameForm(forms.Form):
+    # you need to figure out how to alter x after start_time or end_time are selected
+    # I was thinking pop anything out of x that is before start time, and if end_time is
+    # selected first pop anythin out of x that is after the selected end_time
+    x = TIMES
     day = forms.ChoiceField(choices=DAYS)
-    start_time = forms.ChoiceField(choices=TIMES)
-    end_time = forms.ChoiceField(choices=TIMES)
+    start_time = forms.ChoiceField(choices=x)
+    end_time = forms.ChoiceField(choices=x)
 
 
 class NonMusicianCreateForm(forms.ModelForm):

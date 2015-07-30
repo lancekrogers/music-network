@@ -9,6 +9,7 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from .models import Musician, NonMusician, Video, TimeFrame
 # Create your views here.
 from django.template import RequestContext
+from profiles.choices_list import TIMES, DAYS
 
 
 def musician_registration(request):
@@ -144,20 +145,19 @@ def musician_add_time_frame(request):
     time_frame_form = TimeFrameForm(request.POST)
     if request.method == 'POST':
         if time_frame_form.is_valid():
-            TimeFrame.objects.create(user_pk=request.user.pk,
+            obj = TimeFrame.objects.create(user_pk=request.user.pk,
                                            day=time_frame_form['day'].value(),
                                            start=time_frame_form['start_time'].value(),
                                            end=time_frame_form['end_time'].value(),)
-
-         #   print(time_frame_form.user_pk)
             print('time frame form saved')
-          #  if not Musician.objects.filter(availability=time_frame_form):
-           #     musician.availability.add(time_frame_form)
-            #    musician.save()
-             #   print('Time frame form should have been added to the musician')
+            if not Musician.objects.filter(availability=obj).filter(pk=request.user.pk):
+                musician.availability.add(obj)
+                musician.save()
+                print('Time frame form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'time_frame_form': time_frame_form}
     return render(request, 'updates/time-frame.html', context)
+
 
 
 

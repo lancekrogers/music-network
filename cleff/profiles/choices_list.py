@@ -1,4 +1,4 @@
-GENRES = (
+GENRES = [
     ('Alternative', 'Alternative'),
     ('Anime', 'Anime'),
     ('Blues', 'Blues'),
@@ -27,9 +27,9 @@ GENRES = (
     ('Vocal', 'Vocal'),
     ('World', 'World'),
     ('Metal', 'Metal'),
-)
+]
 
-DAYS = (
+DAYS = [
     ('Mon', 'Monday'),
     ('Tues', 'Tuesday'),
     ('Wed', 'Wednesday'),
@@ -37,9 +37,9 @@ DAYS = (
     ('Fri', 'Friday'),
     ('Sat', 'Saturday'),
     ('Sun', 'Sunday'),
-)
+]
 
-TIMES = (
+TIMES = [
     ('01:00', '1 am'), ('01:30', '1:30 am'),
     ('02:00', '2 am'), ('02:30', '2:30 am'),
     ('03:00', '3 am'), ('03:30', '3:30 am'),
@@ -64,9 +64,9 @@ TIMES = (
     ('22:00', '10 pm'), ('22:30', '10:30 pm'),
     ('23:00', '11 pm'), ('23:30', '11:30 pm'),
     ('24:00', '12 am'), ('24:30', '12:30 am'),
-)
+]
 
-INSTRUMENT_CLASSES = (
+INSTRUMENT_CLASSES = [
     ('Percussion', 'Percussion'),
     ('Strings', 'Strings'),
     ('KPO', 'Keyboard, Piano, or Organ'),
@@ -78,4 +78,4 @@ INSTRUMENT_CLASSES = (
     ('UCMI', 'Unconventional Musical Instrument'),
     ('Other', 'Other'),
 
-)
+]
