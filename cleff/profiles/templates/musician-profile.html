@@ -5,7 +5,8 @@
     {% if request.user.musician %}
         <h1>Play hard {{ user.username }}!</h1>
     <h2>it works</h2>
-    <a href="{% url 'profiles:musician_update' %}">Update Your Profile Here</a>
+    <a href="{% url 'profiles:musician_update' %}">Update Your Profile Here</a><br></br>
+    <a href="{% url 'profiles:add_availability' %}">Add Availability</a><br></br>
     {% endif %}
 
 {% endblock %}

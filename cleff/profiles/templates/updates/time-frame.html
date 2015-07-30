@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if request.user.musician %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ time_frame_form.as_p }}
+    <button type="submit">Add</button>
+    </form>
+
+
+{% endif %}
+
+
+
+{% endblock %}

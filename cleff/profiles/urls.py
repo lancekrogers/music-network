@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib.auth.views import login, logout
 from .views import musician_registration, non_musician_registration, choose, musician_profile, \
-    non_musician_profile, update_musician_profile
+    non_musician_profile, update_musician_profile, musician_add_time_frame
 
 urlpatterns = [
     url(r'^register-musician/$', musician_registration, name='register_musician'),
@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^musician/(?P<user_id>\d+)/$', musician_profile, name='musician_profile'),
     url(r'^non-musician/(?P<user_id>\d+)/$', non_musician_profile, name='non_musicain_profile'),
     url(r'^musician/update/$', update_musician_profile, name='musician_update'),
+    url(r'^add-availability/', musician_add_time_frame, name='add_availability'),
 
 
 ]

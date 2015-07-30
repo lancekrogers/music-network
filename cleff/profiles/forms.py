@@ -3,7 +3,6 @@ from django import forms
 from .models import Musician, NonMusician, Video, Location, Genre, InstrumentGroup, TimeFrame
 from .choices_list import *
 
-
 class ProfileImageForm(forms.Form):
     image = forms.FileField(label='Please upload a profile image', required=False)
 
@@ -76,15 +75,10 @@ class InstrumentGroupForm(forms.ModelForm):
         ]
 
 
-class TimeFrameForm(forms.ModelForm):
-
-    class Meta:
-        model = TimeFrame
-        fields = [
-            'day',
-            'start',
-            'end',
-        ]
+class TimeFrameForm(forms.Form):
+    day = forms.ChoiceField(choices=DAYS)
+    start_time = forms.ChoiceField(choices=TIMES)
+    end_time = forms.ChoiceField(choices=TIMES)
 
 
 class NonMusicianCreateForm(forms.ModelForm):
