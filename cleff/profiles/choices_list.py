@@ -27,6 +27,7 @@ GENRES = [
     ('Vocal', 'Vocal'),
     ('World', 'World'),
     ('Metal', 'Metal'),
+    ('Other', 'Other')
 ]
 
 DAYS = [

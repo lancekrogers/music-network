@@ -60,17 +60,18 @@ class GenreForm(forms.Form):
     genre = forms.ChoiceField(choices=choice_list)
     description = forms.CharField(max_length=140, required=False, widget=forms.Textarea)
 
-
-
-
-class InstrumentGroupForm(forms.ModelForm):
+class UpdateGenresForm(forms.ModelForm):
 
     class Meta:
-        model = InstrumentGroup
-        fields = [
-            'family',
-            'description'
-        ]
+        model = Musician
+        widgets = {'genres': forms.CheckboxSelectMultiple}
+        fields = ['genres']
+
+
+class InstrumentGroupForm(forms.Form):
+    choice_list = INSTRUMENT_CLASSES
+    family = forms.ChoiceField(choices=choice_list)
+    description = forms.CharField(max_length=50, required=False, widget=forms.Textarea)
 
 
 class TimeFrameForm(forms.Form):
@@ -86,7 +87,6 @@ class MusicianUpdateAvailabilityForm(forms.ModelForm):
 
     class Meta:
         model = Musician
-      #  queryset = Musician.objects.filter(pk=isinstance)
         widgets = {'availability': forms.CheckboxSelectMultiple}
         fields = ['availability']
 

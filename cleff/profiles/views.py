@@ -4,9 +4,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
-InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm
+InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
+    UpdateGenresForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Musician, NonMusician, Video, TimeFrame, Genre
+from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
@@ -180,9 +181,9 @@ def add_genre(request):
     if request.method == 'POST':
         if genre_form.is_valid():
             obj = Genre.objects.create(user_pk=request.user.pk,
-                                       genre=genre_form['genre'].value(),
-                                       description=genre_form['description'].value()
-                                      )
+                genre=genre_form['genre'].value(),
+                description=genre_form['description'].value()
+            )
             print('genre form saved')
             if not Musician.objects.filter(genres=obj).filter(pk=request.user.pk):
                 musician.genres.add(obj)
@@ -195,19 +196,36 @@ def add_genre(request):
 
 def update_genres(request):
     musician = Musician.objects.get(user=request.user)
-    update_musician_form = MusicianUpdateAvailabilityForm(
+    update_genres_form = UpdateGenresForm(
         request.POST or None,
         instance=musician
     )
-    update_musician_form.fields["availability"].queryset = musician.availability.all()
+    update_genres_form.fields["genres"].queryset = musician.genres.all()
     if request.method == 'POST':
-        if update_musician_form.is_valid():
-            update_musician_form.save()
+        if update_genres_form.is_valid():
+            update_genres_form.save()
             print('I am here')
             return redirect('profiles:musician_profile', request.user.pk)
-    context = {'update_availability': update_musician_form}
-    return render(request, 'updates/music-update-availability.html', context)
+    context = {'update_genres_form': update_genres_form}
+    return render(request, 'updates/update-genres.html', context)
 
 
+def add_instrument(request):
+    musician = Musician.objects.get(user=request.user)
+    instrument_form = InstrumentGroupForm(request.POST)
+    if request.method == 'POST':
+        if instrument_form.is_valid():
+            obj = InstrumentGroup.objects.create(user_pk=request.user.pk,
+                family=instrument_form['family'].value(),
+                description=instrument_form['description'].value()
+            )
+            print('genre form saved')
+            if not Musician.objects.filter(instrument_group=obj).filter(pk=request.user.pk):
+                musician.instrument_group.add(obj)
+                musician.save()
+                print('Genre form should have been added to the musician')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'add_instrument_form': instrument_form}
+    return render(request, 'updates/add-instrument.html', context)
 
 

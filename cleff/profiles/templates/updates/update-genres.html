@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+
+{% if request.user.musician %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ update_genres_form.as_p }}
+    <button type="submit">Delete the Deselected Genres</button>
+    </form>
+
+
+{% endif %}
+
+
+{% endblock %}
