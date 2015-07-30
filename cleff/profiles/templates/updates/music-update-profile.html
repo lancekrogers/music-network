@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+
 
 <form method="POST">
 {% csrf_token %}

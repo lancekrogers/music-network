@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block body %}
- Musician Profile
+    <a href="{% url 'main:home' %}">Home</a><br></br>
     {% if request.user.musician %}
+        Musician Profile
         <h1>Play hard {{ user.username }}!</h1>
     <h2>it works</h2>
     <a href="{% url 'profiles:musician_update' %}">Update Your Profile Here</a><br></br>
-    <a href="{% url 'profiles:add_availability' %}">Add Availability</a><br></br>
+    <a href="{% url 'profiles:add_availability' %}">Add Availability</a>
+    <a href="{% url 'profiles:update_availability' %}">Remove Availability</a><br></br>
+    <a href="{% url 'profiles:add_genre' %}">Add Genre</a>
+
     {% endif %}
 
 {% endblock %}

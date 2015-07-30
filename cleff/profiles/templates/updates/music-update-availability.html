@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+{% if request.user.musician %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ update_availability }}
+    <button type="submit">Remove Unselected Times From Your Availability</button>
+    </form>
+
+
+{% endif %}
+
+
+
+{% endblock %}

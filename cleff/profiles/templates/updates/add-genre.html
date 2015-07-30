@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
-
-    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+<a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
 
 {% if request.user.musician %}
     <form method="POST">
-    {% csrf_token %}
-    {{ time_frame_form.as_p }}
+    {{ add_genre_form }}
     <button type="submit">Add</button>
     </form>
 
