@@ -21,7 +21,7 @@ class ProfileModel(models.Model):
 
 class Musician(ProfileModel):
     genres = models.ManyToManyField('Genre', blank=True)
-    summary = models.TextField(blank=True, verbose_name='Your Bio Goes Here')
+    summary = models.TextField(blank=True)
     company = models.CharField(max_length=60, blank=True)
     video = models.ManyToManyField('Video', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -33,7 +33,7 @@ class Musician(ProfileModel):
         return 'Username: {}'.format(self.user.username)
 
 class NonMusician(ProfileModel):
-    summary = models.TextField(blank=True, verbose_name='What brings you to this site?')
+    summary = models.TextField(blank=True)
     company = models.CharField(max_length=60, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     musicians = models.ManyToManyField('SavedMusician')
@@ -45,7 +45,7 @@ class NonMusician(ProfileModel):
 class Genre(models.Model):
     user_pk = models.IntegerField(default=-1)
     genre = models.CharField(choices=GENRES, max_length=20)
-    description = models.CharField(max_length=140, blank=True, verbose_name='Genre Description')
+    description = models.CharField(max_length=140, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -54,11 +54,10 @@ class Genre(models.Model):
 
 class Video(models.Model):
     user_pk = models.IntegerField(default=-1)
-    title = models.CharField(max_length=20, verbose_name='Video Title')
+    title = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
-    embedded_code = models.CharField(max_length=20, blank=True,
-                                     verbose_name='Paste Youtube video Url here\nor upload a video below')
-    upload = models.FileField(upload_to='video/%Y/%m/%d/{}'.format('title'), blank=True, verbose_name='Upload Video')
+    embedded_code = models.CharField(max_length=20, blank=True)
+    upload = models.FileField(upload_to='video/%Y/%m/%d/{}'.format('title'), blank=True)
     genre = models.ManyToManyField('Genre', blank=True)
 
     def __str__(self):
@@ -70,9 +69,8 @@ class Video(models.Model):
 
 class InstrumentGroup(models.Model):
     user_pk = models.IntegerField(default=-1)
-    family = models.CharField(choices=INSTRUMENT_CLASSES, max_length=60,
-                              verbose_name='Select The Instrument Family that best fits you')
-    description = models.CharField(max_length=50, verbose_name='Briefly describe your instrument')
+    family = models.CharField(choices=INSTRUMENT_CLASSES, max_length=60)
+    description = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -94,8 +92,7 @@ class Location(models.Model):
     user_pk = models.IntegerField(default=-1)
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=20, blank=True)
-    description = models.TextField(max_length=20, blank=True,
-                                   verbose_name="If you would like to describe your location do it here")
+    description = models.TextField(max_length=20, blank=True)
     latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
     longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
 

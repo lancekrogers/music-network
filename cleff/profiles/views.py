@@ -1,9 +1,11 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse, HttpResponseNotFound
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
-InstrumentGroupForm, LocationForm, ProfileImageForm
+InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video
 # Create your views here.
 from django.template import RequestContext
@@ -122,3 +124,19 @@ def non_musician_profile(request, user_id):
         return HttpResponseNotFound('<h1>No Page Here</h1>')
     return render_to_response("non-musician-profile.html", {'profile': profile},
                               context_instance=RequestContext(request))
+
+
+def update_musician_profile(request):
+    musician = Musician.objects.get(user=request.user)
+    profile = musician
+    update_musician_form = MusicianUpdateForm(request.POST or None, instance=profile)
+    update_musician_form.email = request.user.musician.email
+
+    if request.method == 'POST':
+        if update_musician_form.is_valid():
+            update_musician_form.save()
+            print('I am here')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_musician': update_musician_form}
+    return render(request, 'registration/music-update-profile.html', context)
+

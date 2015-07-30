@@ -7,6 +7,10 @@ from .choices_list import *
 class ProfileImageForm(forms.Form):
     image = forms.FileField(label='Please upload a profile image', required=False)
 
+class YoutubeUrlForm(forms.Form):
+    youtube = forms.CharField(max_length=43)
+                              #verbose_name="To post a video: 1. Upload a video on youtube.\n2. Copy video url from your\
+                              # browser\n3. Paste your videos url here\n4. Hit 'Post Video'")
 
 class MusicianUpdateForm(forms.ModelForm):
 
@@ -16,7 +20,8 @@ class MusicianUpdateForm(forms.ModelForm):
             'email',
             'first_name',
             'last_name',
-            'summary'
+            'summary',
+            'company',
                   ]
         required = False
 

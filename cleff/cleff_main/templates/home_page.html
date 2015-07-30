@@ -4,6 +4,10 @@
 
 {% if user.username %}
     <h3>Sup {{ user.username }}</h3><br/>
+
+    {% if request.user.musician %}
+        <a href="{% url 'profiles:musician_profile' user.pk %}">Profile</a><br></br>
+    {% endif %}
     <a href="{% url 'profiles:Logout' %}">Logout</a><br/>
     {% csrf_token %}
 {% else %}
