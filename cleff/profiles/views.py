@@ -181,11 +181,11 @@ def add_genre(request):
         if genre_form.is_valid():
             obj = Genre.objects.create(user_pk=request.user.pk,
                                        genre=genre_form['genre'].value(),
-                                       desription=genre_form['description'].value()
+                                       description=genre_form['description'].value()
                                       )
             print('genre form saved')
-            if not Musician.objects.filter(genre=obj).filter(pk=request.user.pk):
-                musician.genre.add(obj)
+            if not Musician.objects.filter(genres=obj).filter(pk=request.user.pk):
+                musician.genres.add(obj)
                 musician.save()
                 print('Genre form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)

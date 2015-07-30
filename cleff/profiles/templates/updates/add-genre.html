@@ -4,6 +4,7 @@
 
 {% if request.user.musician %}
     <form method="POST">
+    {% csrf_token %}
     {{ add_genre_form }}
     <button type="submit">Add</button>
     </form>
