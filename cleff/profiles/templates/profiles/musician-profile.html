@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'profiles/base.html' %}
 
 {% block body %}
     <a href="{% url 'main:home' %}">Home</a><br></br>
@@ -10,8 +10,9 @@
     <a href="{% url 'profiles:add_genre' %}">Add Genre</a>
     <a href="{% url 'profiles:update_genres' %}">Delete Genres</a><br></br>
     <a href="{% url 'profiles:add_instrument' %}">Add Instrument Family</a>
-    <a href="{% url 'profiles:update_instruments' %}">Delete Unselected Families</a><br></br>
-
+    <a href="{% url 'profiles:update_instruments' %}">Remove Instrument Groups</a><br></br>
+    <a href="{% url 'profiles:add_musician_location' %}">Add Location</a>
+    <a href="{% url 'profiles:update_musician_location' %}">Remove Locations</a><br></br>
 
     <a href="{% url 'profiles:musician_update' %}">Update Your Profile Here</a><br></br>
 

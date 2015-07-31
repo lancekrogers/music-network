@@ -1,0 +1,14 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+
+    {% if request.user.musician %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ musician_location_form.as_p }}
+    <button type="submit">Add</button>
+    </form>
+
+    {% endif %}
+
+{% endblock %}

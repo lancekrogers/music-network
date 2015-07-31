@@ -5,9 +5,9 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
-    UpdateGenresForm
+    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup
+from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
@@ -101,7 +101,7 @@ def non_musician_registration(request):
 
 
 def choose(request):
-    return render(request, 'choose.html')
+    return render(request, 'profiles/choose.html')
 
 
 def musician_profile(request, user_id):
@@ -115,7 +115,7 @@ def musician_profile(request, user_id):
     else:
         context = {"profile": profile}
     context['videos'] = Video.objects.filter(user_pk=user_id)
-    return render_to_response("musician-profile.html",
+    return render_to_response("profiles/musician-profile.html",
                               context, context_instance=RequestContext(request))
 
 
@@ -124,7 +124,7 @@ def non_musician_profile(request, user_id):
         profile = NonMusician.objects.get(pk=user_id)
     except NonMusician.DoesNotExist:
         return HttpResponseNotFound('<h1>No Page Here</h1>')
-    return render_to_response("non-musician-profile.html", {'profile': profile},
+    return render_to_response("profiles/non-musician-profile.html", {'profile': profile},
                               context_instance=RequestContext(request))
 
 
@@ -219,13 +219,62 @@ def add_instrument(request):
                 family=instrument_form['family'].value(),
                 description=instrument_form['description'].value()
             )
-            print('genre form saved')
+            print('instrument form saved')
             if not Musician.objects.filter(instrument_group=obj).filter(pk=request.user.pk):
                 musician.instrument_group.add(obj)
                 musician.save()
-                print('Genre form should have been added to the musician')
+                print('Instrument form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'add_instrument_form': instrument_form}
     return render(request, 'updates/add-instrument.html', context)
 
 
+def update_instruments(request):
+    musician = Musician.objects.get(user=request.user)
+    update_instruments_form = UpdateInstrumentsForm(
+        request.POST or None,
+        instance=musician
+    )
+    update_instruments_form.fields["instrument_group"].queryset = musician.instrument_group.all()
+    if request.method == 'POST':
+        if update_instruments_form.is_valid():
+            update_instruments_form.save()
+            print('I am here')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_instruments_form': update_instruments_form}
+    return render(request, 'updates/update-instruments.html', context)
+
+
+def musician_add_location(request):
+    musician = Musician.objects.get(user=request.user)
+    location_form = LocationForm(request.POST)
+    if request.method == 'POST':
+        if location_form.is_valid():
+            obj = Location.objects.create(user_pk=request.user.pk,
+                state=location_form['state'].value(),
+                city=location_form['city'].value()
+            )
+            print('location form saved')
+            if not Musician.objects.filter(locations=obj).filter(pk=request.user.pk):
+                musician.locations.add(obj)
+                musician.save()
+                print('Location form should have been added to the musician')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'musician_location_form': location_form}
+    return render(request, 'updates/add-musician-location.html', context)
+
+
+def update_musician_location(request):
+    musician = Musician.objects.get(user=request.user)
+    update_location_form = UpdateLocationsForm(
+        request.POST or None,
+        instance=musician
+    )
+    update_location_form.fields["locations"].queryset = musician.locations.all()
+    if request.method == 'POST':
+        if update_location_form.is_valid():
+            update_location_form.save()
+            print('I am after the second if in update musician location')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_location_form': update_location_form}
+    return render(request, 'updates/update-musician-location.html', context)

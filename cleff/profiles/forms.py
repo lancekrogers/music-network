@@ -45,14 +45,18 @@ class VideoForm(forms.ModelForm):
         ]
 
 
-class LocationForm(forms.ModelForm):
+class LocationForm(forms.Form):
+    state_list = STATES
+    city = forms.CharField(max_length=30)
+    state = forms.ChoiceField(choices=state_list)
+
+
+class UpdateLocationsForm(forms.ModelForm):
 
     class Meta:
-        model = Location
-        fields = [
-            'zipcode',
-            'city',
-        ]
+        model = Musician
+        fields = ['locations']
+        widgets = {'locations': forms.CheckboxSelectMultiple}
 
 
 class GenreForm(forms.Form):
@@ -72,6 +76,15 @@ class InstrumentGroupForm(forms.Form):
     choice_list = INSTRUMENT_CLASSES
     family = forms.ChoiceField(choices=choice_list)
     description = forms.CharField(max_length=50, required=False, widget=forms.Textarea)
+
+
+class UpdateInstrumentsForm(forms.ModelForm):
+
+    class Meta:
+        model = Musician
+        fields = ['instrument_group']
+        widgets = {'instrument_group': forms.CheckboxSelectMultiple}
+        labels = {'instrument_group': 'instrument family'}
 
 
 class TimeFrameForm(forms.Form):

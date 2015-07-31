@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES
+from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
 
 # Create your models here.
 
@@ -49,7 +49,7 @@ class Genre(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}'.format(self.genre)
+        return '{} {}'.format(self.genre, self.description)
 
 
 class Video(models.Model):
@@ -74,7 +74,7 @@ class InstrumentGroup(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}'.format(self.family)
+        return '{} {}'.format(self.family, self.description)
 
 
 class TimeFrame(models.Model):
@@ -92,11 +92,14 @@ class TimeFrame(models.Model):
 class Location(models.Model):
     user_pk = models.IntegerField(default=-1)
     zipcode = models.CharField(max_length=12, blank=True)
-    city = models.CharField(max_length=20, blank=True)
-    description = models.TextField(max_length=20, blank=True)
-    latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
-    longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10)
+    city = models.CharField(max_length=30, blank=True)
+    state = models.CharField(choices=STATES, blank=True, max_length=2)
+    latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10, null=True)
+    longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10, null=True)
+
+    def __str__(self):
+        return '{} {}'.format(self.city, self.state)
 
 
 class SavedMusician(models.Model):
-    musicain_pk = models.IntegerField()
+    musician_pk = models.IntegerField()

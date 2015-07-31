@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'profiles/base.html' %}
 {% block body %}
 <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
 
 {% if request.user.musician %}
     <form method="POST">
     {% csrf_token %}
-    {{ add_genre_form }}
+    {{ add_genre_form.as_p }}
     <button type="submit">Add</button>
     </form>
 
