@@ -368,6 +368,3 @@ def add_profile_image(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/add-profile-photo.html', context)
-
-
-
