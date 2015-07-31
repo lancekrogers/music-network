@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
-    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm
+    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
@@ -316,15 +316,15 @@ def youtube_url_decoder_view(request):
 
 def update_video(request):
     musician = Musician.objects.get(user=request.user)
-    update_location_form = UpdateVideoForm(
+    update_video_form = UpdateVideoForm(
         request.POST or None,
         instance=musician
     )
-    update_location_form.fields["locations"].queryset = musician.locations.all()
+    update_video_form.fields["video"].queryset = musician.video.all()
     if request.method == 'POST':
-        if update_location_form.is_valid():
-            update_location_form.save()
+        if update_video_form.is_valid():
+            update_video_form.save()
             print('I am after the second if in update musician location')
             return redirect('profiles:musician_profile', request.user.pk)
-    context = {'update_location_form': update_location_form}
-    return render(request, 'updates/update-musician-location.html', context)
+    context = {'update_video_form': update_video_form}
+    return render(request, 'updates/update-video.html', context)

@@ -61,7 +61,7 @@ class Video(models.Model):
     genre = models.ManyToManyField('Genre', blank=True)
 
     def __str__(self):
-        return 'video title: {}'.format(self.title)
+        return '{} {}'.format(self.title, self.timestamp)
 
     class Meta:
         ordering = ['-timestamp']

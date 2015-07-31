@@ -11,6 +11,13 @@ class YoutubeUrlForm(forms.Form):
     youtube_url = forms.URLField(max_length=43, error_messages={'not_url': "Not a valid youtube url"})
     genre = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=GENRES)
 
+class UpdateVideoForm(forms.ModelForm):
+
+    class Meta:
+        model = Musician
+        fields = ['video']
+        widgets = {'video': forms.CheckboxSelectMultiple}
+
 
 class MusicianUpdateForm(forms.ModelForm):
 
