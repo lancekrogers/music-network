@@ -1,0 +1,22 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+
+    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a><br></br>
+{% if request.user.musician %}
+      {% if messages %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          {% endif %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ youtube_url_form.as_p }}
+    <button type="submit">Add</button>
+    </form>
+
+
+{% endif %}
+
+
+
+{% endblock %}

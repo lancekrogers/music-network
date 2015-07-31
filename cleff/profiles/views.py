@@ -1,17 +1,19 @@
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.messages import INFO
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
-    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm
+    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
-
+from random_functions import youtube_code_getter
 
 def musician_registration(request):
     print('first print')
@@ -110,7 +112,7 @@ def musician_profile(request, user_id):
     except Musician.DoesNotExist:
         return HttpResponseNotFound('<h1>No Page Here</h1>')
     if Video.objects.filter(user_pk=user_id):
-        videos = Video.objects.filter(user=user_id)
+        videos = Video.objects.filter(user_pk=user_id)
         context = {"profile": profile, 'videos': videos}
     else:
         context = {"profile": profile}
@@ -267,6 +269,54 @@ def musician_add_location(request):
 def update_musician_location(request):
     musician = Musician.objects.get(user=request.user)
     update_location_form = UpdateLocationsForm(
+        request.POST or None,
+        instance=musician
+    )
+    update_location_form.fields["locations"].queryset = musician.locations.all()
+    if request.method == 'POST':
+        if update_location_form.is_valid():
+            update_location_form.save()
+            print('I am after the second if in update musician location')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_location_form': update_location_form}
+    return render(request, 'updates/update-musician-location.html', context)
+
+
+def youtube_url_decoder_view(request):
+    musician = Musician.objects.get(user=request.user)
+    youtube_url_form = YoutubeUrlForm(request.POST)
+    data = youtube_url_form['youtube_url'].value()
+    if request.method == 'POST':
+        if "www.youtube.com/watch?v=" in data:
+            if youtube_url_form.is_valid():
+                title = youtube_url_form['title'].value()
+                genres = youtube_url_form['genre'].value()
+                tube_url = youtube_url_form['youtube_url'].value()
+                youtube_code = youtube_code_getter(tube_url)
+                print(genres)
+                obj = Video.objects.create(
+                    user_pk=request.user.pk,
+                    title=title,
+                    embedded_code=youtube_code
+                )
+                for gen in genres:
+                    obj_g = Genre.objects.create(user_pk=request.user.pk,
+                                                 genre=gen)
+                    obj.genre.add(obj_g)
+                obj.save()
+                musician.video.add(obj)
+                musician.save()
+                return redirect('profiles:musician_profile', request.user.pk)
+            # figure out how to raise error message here
+        else:
+            messages.add_message(request, INFO, 'Please enter a Youtube video url!')
+    context = {'youtube_url_form': youtube_url_form}
+    return render(request, 'updates/add-video.html', context)
+
+
+def update_video(request):
+    musician = Musician.objects.get(user=request.user)
+    update_location_form = UpdateVideoForm(
         request.POST or None,
         instance=musician
     )

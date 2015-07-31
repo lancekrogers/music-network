@@ -7,9 +7,10 @@ class ProfileImageForm(forms.Form):
     image = forms.FileField(label='Please upload a profile image', required=False)
 
 class YoutubeUrlForm(forms.Form):
-    youtube = forms.CharField(max_length=43)
-                              #verbose_name="To post a video: 1. Upload a video on youtube.\n2. Copy video url from your\
-                              # browser\n3. Paste your videos url here\n4. Hit 'Post Video'")
+    title = forms.CharField(max_length=20)
+    youtube_url = forms.URLField(max_length=43, error_messages={'not_url': "Not a valid youtube url"})
+    genre = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=GENRES)
+
 
 class MusicianUpdateForm(forms.ModelForm):
 
