@@ -13,6 +13,9 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from django.conf import settings
+
+from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.contrib import admin
 
@@ -23,4 +26,6 @@ urlpatterns = [
     url(r'^profiles/', include('profiles.urls', namespace='profiles')),
     url(r'^forum/', include('Forum.urls', namespace='Forum')),
     url(r'^', include('cleff_main.urls', namespace='main')),
-]
+    url(r'^uploads/', include('stickyuploads.urls')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

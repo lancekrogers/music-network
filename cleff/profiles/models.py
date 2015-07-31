@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
-
+from PIL import Image
 # Create your models here.
 
 class ProfileModel(models.Model):
@@ -30,7 +30,7 @@ class Musician(ProfileModel):
     friends = models.ManyToManyField('SavedMusician', blank=True)
 
     def __str__(self):
-        return 'Username: {}'.format(self.user.username)
+        return '{}'.format(self.user.username)
 
 class NonMusician(ProfileModel):
     summary = models.TextField(blank=True)
@@ -103,3 +103,6 @@ class Location(models.Model):
 
 class SavedMusician(models.Model):
     musician_pk = models.IntegerField()
+
+    def __str__(self):
+        return "{}".format(Musician.objects.get(pk=self.musician_pk))

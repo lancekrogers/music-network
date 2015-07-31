@@ -2,9 +2,17 @@ from __future__ import unicode_literals
 from django import forms
 from .models import Musician, NonMusician, Video, Location, Genre, InstrumentGroup, TimeFrame
 from .choices_list import *
+from stickyuploads.widgets import StickyUploadWidget
+from PIL import Image
+
+
 
 class ProfileImageForm(forms.Form):
-    image = forms.FileField(label='Please upload a profile image', required=False)
+    image = forms.ImageField(label='Please upload a profile image',
+                            required=False, help_text='max. 50 megabytes',
+                            widget=StickyUploadWidget,
+                            error_messages={'invalid_file': 'Please upload an image'}
+                            )
 
 class YoutubeUrlForm(forms.Form):
     title = forms.CharField(max_length=20)
@@ -110,6 +118,15 @@ class MusicianUpdateAvailabilityForm(forms.ModelForm):
         model = Musician
         widgets = {'availability': forms.CheckboxSelectMultiple}
         fields = ['availability']
+
+
+class UpdateFriendsForm(forms.ModelForm):
+
+    class Meta:
+        model = Musician
+        fields = ['friends']
+        widgets = {'friends': forms.CheckboxSelectMultiple}
+
 
 class NonMusicianCreateForm(forms.ModelForm):
 

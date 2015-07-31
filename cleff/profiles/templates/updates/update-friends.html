@@ -1,0 +1,14 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+{% if request.user.musician %}
+    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+<form method="POST">
+{% csrf_token %}
+{{ update_friends_form.as_p }}
+<button type="submit">Remove Friends</button>
+</form>
+
+{% endif %}
+
+
+{% endblock %}

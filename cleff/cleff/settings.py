@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'Forum',
     'profiles',
     'cleff_main',
+    'stickyuploads',
 #    'social.apps.django_app.default',
 
 )
@@ -111,9 +112,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
 
 
@@ -123,5 +125,10 @@ MEDIA_URL = '/media/'
   # 'social.backends.twitter.TwitterOAuth',
  #  'django.contrib.auth.backends.ModelBackend',
 #)
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.media',
+)
 
 

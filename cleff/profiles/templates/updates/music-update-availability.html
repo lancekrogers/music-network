@@ -4,7 +4,7 @@
 {% if request.user.musician %}
     <form method="POST">
     {% csrf_token %}
-    {{ update_availability .as_p}}
+    {{ update_availability.as_p}}
     <button type="submit">Remove Unselected Times From Your Availability</button>
     </form>
 

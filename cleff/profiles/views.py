@@ -5,15 +5,19 @@ from django.contrib.messages import INFO
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
+from django.utils.datastructures import MultiValueDictKeyError
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
-    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm
+    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
+
+
+
 
 def musician_registration(request):
     print('first print')
@@ -328,3 +332,38 @@ def update_video(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_video_form': update_video_form}
     return render(request, 'updates/update-video.html', context)
+
+
+def update_friends(request):
+    musician = Musician.objects.get(user=request.user)
+    update_friends_form = UpdateFriendsForm(
+        request.POST or None,
+        instance=musician
+    )
+    update_friends_form.fields["friends"].queryset = musician.friends.all()
+    if request.method == 'POST':
+        if update_friends_form.is_valid():
+            update_friends_form.save()
+            print('I am after the second if in update musician friends')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_friends_form': update_friends_form}
+    return render(request, 'updates/update-friends.html', context)
+
+
+def add_profile_image(request):
+    musician = Musician.objects.get(user=request.user)
+    profile_image_form = ProfileImageForm(request.POST, request.FILES)
+    print('.......image....user..{}....'.format(request.user.username))
+    if request.method == 'POST':
+        if profile_image_form.is_valid():
+            try:
+                musician.profile_image = request.FILES['image']
+                musician.save()
+                messages.add_message(request, INFO, 'Profile Photo Is Uploading')
+            except MultiValueDictKeyError:
+                print('MultiValueDictKeyError in add_profile_image')
+                messages.add_message(request, INFO, 'Profile Photo Not Updated')
+            print(request.user.musician.profile_image.url)
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'profile_image_form': profile_image_form}
+    return render(request, 'updates/add-profile-photo.html', context)

@@ -1,0 +1,18 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+
+{% if request.user.musician %}
+    {% load static from staticfiles %}
+<script type="text/javascript" src="{% static 'stickyuploads/js/django-uploader.min.js' %}"></script>
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+{{ profile_image_form.as_p }}
+<button type="submit">Set Profile Photo</button>
+</form>
+
+{% endif %}
+
+
+{% endblock %}
