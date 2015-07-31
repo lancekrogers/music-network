@@ -360,6 +360,7 @@ def add_profile_image(request):
                 musician.profile_image = request.FILES['image']
                 musician.save()
                 messages.add_message(request, INFO, 'Profile Photo Is Uploading')
+                print(request.user.musician.profile_image.url)
             except MultiValueDictKeyError:
                 print('MultiValueDictKeyError in add_profile_image')
                 messages.add_message(request, INFO, 'Profile Photo Not Updated')
@@ -367,3 +368,6 @@ def add_profile_image(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/add-profile-photo.html', context)
+
+
+

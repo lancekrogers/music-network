@@ -9,7 +9,7 @@ from PIL import Image
 
 class ProfileImageForm(forms.Form):
     image = forms.ImageField(label='Please upload a profile image',
-                            required=False, help_text='max. 50 megabytes',
+                            required=False,
                             widget=StickyUploadWidget,
                             error_messages={'invalid_file': 'Please upload an image'}
                             )
