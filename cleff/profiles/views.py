@@ -9,7 +9,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
     UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
-    NonMusicianUpdateForm
+    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
@@ -143,6 +143,7 @@ def update_musician_profile(request):
         if update_musician_form.is_valid():
             update_musician_form.save()
             print('I am here')
+            messages.add_message(request, INFO, 'Profile updated!')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_musician': update_musician_form}
     return render(request, 'updates/music-update-profile.html', context)
@@ -156,6 +157,7 @@ def update_non_musician_profile(request):
         if update_nonmusician_form.is_valid():
             update_nonmusician_form.save()
             print('I am here')
+            messages.add_message(request, INFO, 'Profile updated!')
             return redirect('profiles:non_musician_profile', request.user.pk)
     context = {'update_non_musician': update_nonmusician_form}
     return render(request, 'updates/nonmusic-update-profile.html', context)
@@ -174,6 +176,7 @@ def musician_add_time_frame(request):
             if not Musician.objects.filter(availability=obj).filter(pk=request.user.pk):
                 musician.availability.add(obj)
                 musician.save()
+                messages.add_message(request, INFO, 'Availability added!')
                 print('Time frame form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'time_frame_form': time_frame_form}
@@ -190,6 +193,7 @@ def musician_update_time_frame(request):
         if update_musician_form.is_valid():
             update_musician_form.save()
             print('I am here')
+            messages.add_message(request, INFO, 'Availability updated!')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_availability': update_musician_form}
     return render(request, 'updates/music-update-availability.html', context)
@@ -208,6 +212,7 @@ def add_genre(request):
             if not Musician.objects.filter(genres=obj).filter(pk=request.user.pk):
                 musician.genres.add(obj)
                 musician.save()
+                messages.add_message(request, INFO, 'Genre added!')
                 print('Genre form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'add_genre_form': genre_form}
@@ -224,6 +229,7 @@ def update_genres(request):
     if request.method == 'POST':
         if update_genres_form.is_valid():
             update_genres_form.save()
+            messages.add_message(request, INFO, 'Genre updated!')
             print('I am here')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_genres_form': update_genres_form}
@@ -243,6 +249,7 @@ def add_instrument(request):
             if not Musician.objects.filter(instrument_group=obj).filter(pk=request.user.pk):
                 musician.instrument_group.add(obj)
                 musician.save()
+                messages.add_message(request, INFO, 'Instrument Family Added!')
                 print('Instrument form should have been added to the musician')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'add_instrument_form': instrument_form}
@@ -259,6 +266,7 @@ def update_instruments(request):
     if request.method == 'POST':
         if update_instruments_form.is_valid():
             update_instruments_form.save()
+            messages.add_message(request, INFO, 'Instruments updated!')
             print('I am here')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_instruments_form': update_instruments_form}
@@ -402,3 +410,19 @@ def add_profile_image_non_musician(request):
             return redirect('profiles:non_musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/non-musician-p-image.html', context)
+
+
+def update_watched_musicians(request):
+    non_musician = NonMusician.objects.get(user=request.user)
+    update_watched_form = NonMusicianUpdateWatchedMusicians(
+        request.POST or None,
+        instance=non_musician
+    )
+    update_watched_form.fields["musicians"].queryset = non_musician.musicians.all()
+    if request.method == 'POST':
+        if update_watched_form.is_valid():
+            update_watched_form.save()
+            print('I am after the second if in update musician friends')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_watched_form': update_watched_form}
+    return render(request, 'updates/update-watched-musicians.html', context)

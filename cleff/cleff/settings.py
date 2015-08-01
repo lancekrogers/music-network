@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'profiles',
     'cleff_main',
     'stickyuploads',
+    'messaging',
 #    'social.apps.django_app.default',
 
 )

@@ -2,10 +2,10 @@
 {% block body %}
 <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
 {% if request.user.musician %}
-    <form method="POST">
+    <form method="POST" checked=False>
     {% csrf_token %}
     {{ update_availability.as_p}}
-    <button type="submit">Remove Unselected Times From Your Availability</button>
+    <button type="submit">Update</button>
     </form>
 
 

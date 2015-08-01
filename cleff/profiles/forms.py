@@ -145,3 +145,11 @@ class NonMusicianUpdateForm(forms.ModelForm):
             'summary'
         ]
         required = False
+
+
+class NonMusicianUpdateWatchedMusicians(forms.ModelForm):
+
+    class Meta:
+        model = NonMusician
+        fields = ['musicians']
+        widgets = {'musicians': forms.CheckboxSelectMultiple}

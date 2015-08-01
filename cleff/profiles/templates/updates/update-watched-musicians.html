@@ -1,0 +1,10 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+{% if request.user.nonmusician %}
+<a href="{% url 'profiles:non_musician_profile' request.user.pk %}">Back</a>
+<form method="POST">
+{{ update_watched_form.as_p }}
+<button type="submit">Update</button>
+</form>
+{% endif %}
+{% endblock %}
