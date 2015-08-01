@@ -1,0 +1,15 @@
+{% extends 'messaging/base.html' %}
+{% block body %}
+<h2>Musician to Musician Inbox</h2>
+{% for conversation in object_list %}
+    {% if conversation in view.owner_is_musician_one %}
+        {{ conversation.musician_two }}<br></br>
+    {% elif conversation in view.owner_is_musician_two %}
+        {{ conversation.musician_one }}<br></br>
+    {% endif %}
+
+{% endfor %}
+
+
+
+{% endblock %}
