@@ -15,6 +15,12 @@ class ProfileModel(models.Model):
     locations = models.ManyToManyField('Location', blank=True)
     is_musician = models.BooleanField(default=False)
 
+    def profile_image_func(self):
+        if self.profile_image.url:
+            return self.profile_image.url
+        else:
+            pass
+
     class Meta:
         abstract = True
 

@@ -144,3 +144,4 @@ class NonMusicianUpdateForm(forms.ModelForm):
             'company',
             'summary'
         ]
+        required = False

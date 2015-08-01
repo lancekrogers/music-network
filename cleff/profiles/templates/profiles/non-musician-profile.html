@@ -1,13 +1,23 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
-<h2>Play on {{ user.username }}!</h2>
+<h2>Hows it going {{ user.username }}?</h2><br></br>
 
-Non Musician Profile
+{% if request.user.nonmusician %}
+    {% if messages %}
+        {% for message in messages %}
+              {{ message }}
+        {% endfor %}
+    {% endif %}<br></br>
+    {% if request.user.nonmusician.profile_image %}
+        <img src="/static{{ request.user.nonmusician.profile_image.url }}" width="200" />
+    {% endif %}<br></br>
 
-    {% if request.user.nonmusician %}
-        <h1>it works</h1>
 
-    {% endif %}
+<a href="{% url 'profiles:non_musician_profile_image' %}">Update Profile Image</a><br></br>
+<a href="{% url 'profiles:non_musician_update' %}">Update Your Information Here</a><br></br>
+
+
+{% endif %}
 
 
 

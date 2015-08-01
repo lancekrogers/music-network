@@ -7,8 +7,8 @@
 
     {% if request.user.musician %}
         <a href="{% url 'profiles:musician_profile' user.pk %}">Profile</a><br></br>
-    {% elif request.user.non_musician %}
-        <a href"{% url 'profiles:non_musician_profile' %}
+    {% else %}
+        <a href="{% url 'profiles:non_musician_profile' user.pk %}">Profile</a><br></br>
     {% endif %}
     <a href="{% url 'profiles:Logout' %}">Logout</a><br/>
     {% csrf_token %}

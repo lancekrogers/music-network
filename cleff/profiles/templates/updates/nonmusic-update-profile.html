@@ -1,12 +1,12 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
-{% if request.user.musician %}
-<a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a>
+{% if request.user.nonmusician %}
+<a href="{% url 'profiles:non_musician_profile' request.user.pk %}">Back</a>
 
 
 <form method="POST">
 {% csrf_token %}
-{{ update_musician.as_p }}
+{{ update_non_musician.as_p }}
 <button type="submit">Update</button>
 </form>
 

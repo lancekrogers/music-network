@@ -3,7 +3,8 @@ from django.contrib.auth.views import login, logout
 from .views import musician_registration, non_musician_registration, choose, musician_profile, \
     non_musician_profile, update_musician_profile, musician_add_time_frame, musician_update_time_frame, add_genre,\
     update_genres, add_instrument, update_instruments, musician_add_location, update_musician_location, \
-    youtube_url_decoder_view, update_video, update_friends, add_profile_image
+    youtube_url_decoder_view, update_video, update_friends, add_profile_image, add_profile_image_non_musician, \
+    update_non_musician_profile
 
 urlpatterns = [
     url(r'^register-musician/$', musician_registration, name='register_musician'),
@@ -26,6 +27,8 @@ urlpatterns = [
     url(r'^update-video/', update_video, name='update_video'),
     url(r'^update-friends/', update_friends, name='update_friends'),
     url(r'^musician-profile-image/', add_profile_image, name='musician_profile_image'),
+    url(r'^non-musician-profile-image/', add_profile_image_non_musician, name='non_musician_profile_image'),
+    url(r'^non-musician/update/$', update_non_musician_profile, name='non_musician_update'),
 
 
 

@@ -10,7 +10,7 @@
             {% endfor %}
           {% endif %}<br></br>
         {% if request.user.musician.profile_image %}
-        <img src="/static{{ request.user.musician.profile_image.url}}" width="200" />
+        <img src="/static{{ request.user.musician.profile_image.url }}" width="200" />
         {% endif %}
         <h1>Play on {{ user.username }}!</h1>
     <a href="{% url 'profiles:add_availability' %}">Add Availability</a>

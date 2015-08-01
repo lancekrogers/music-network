@@ -8,7 +8,8 @@ from django.shortcuts import render, render_to_response, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
-    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm
+    UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
+    NonMusicianUpdateForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
@@ -145,6 +146,19 @@ def update_musician_profile(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_musician': update_musician_form}
     return render(request, 'updates/music-update-profile.html', context)
+
+
+def update_non_musician_profile(request):
+    nonmusician = NonMusician.objects.get(user=request.user)
+    profile = nonmusician
+    update_nonmusician_form = NonMusicianUpdateForm(request.POST or None, instance=profile)
+    if request.method == 'POST':
+        if update_nonmusician_form.is_valid():
+            update_nonmusician_form.save()
+            print('I am here')
+            return redirect('profiles:non_musician_profile', request.user.pk)
+    context = {'update_non_musician': update_nonmusician_form}
+    return render(request, 'updates/nonmusic-update-profile.html', context)
 
 
 def musician_add_time_frame(request):
@@ -368,3 +382,23 @@ def add_profile_image(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/add-profile-photo.html', context)
+
+
+def add_profile_image_non_musician(request):
+    nonmusician = NonMusician.objects.get(user=request.user)
+    profile_image_form = ProfileImageForm(request.POST, request.FILES)
+    print('.......image....user..{}....'.format(request.user.username))
+    if request.method == 'POST':
+        if profile_image_form.is_valid():
+            try:
+                nonmusician.profile_image = request.FILES['image']
+                nonmusician.save()
+                messages.add_message(request, INFO, 'Profile Photo Is Uploading')
+                print(request.user.nonmusician.profile_image.url)
+            except MultiValueDictKeyError:
+                print('MultiValueDictKeyError in add_profile_image')
+                messages.add_message(request, INFO, 'Profile Photo Not Updated')
+            print(request.user.nonmusician.profile_image.url)
+            return redirect('profiles:non_musician_profile', request.user.pk)
+    context = {'profile_image_form': profile_image_form}
+    return render(request, 'updates/non-musician-p-image.html', context)
