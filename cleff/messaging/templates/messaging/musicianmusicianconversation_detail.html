@@ -1,6 +1,5 @@
 {% extends 'messaging/base.html' %}
 {% block body %}
-<a href="{% url 'message:musician_conversations'  %}">Back</a><br><br/>
     {% if request.user.musician %}
     <form action="{% url 'message:mm_send_message' object.pk 1  %}" method="POST"  >
     {% csrf_token %}
