@@ -1,7 +1,6 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 {% if request.user.nonmusician %}
-    <a href="{% url 'profiles:non_musician_profile' request.user.pk %}">Back</a>
 
     {% load static from staticfiles %}
 <script type="text/javascript" src="{% static 'stickyuploads/js/django-uploader.min.js' %}"></script>

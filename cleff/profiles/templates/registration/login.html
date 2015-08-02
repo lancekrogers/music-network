@@ -1,5 +1,7 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
+<a href="{% url 'main:home' %}">Home</a><br></br>
+
     <form method="Post">
           {% csrf_token %}
           {{ form.as_table }}

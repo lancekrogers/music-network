@@ -1,7 +1,6 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 
-    <a href="{% url 'profiles:musician_profile' request.user.pk %}">Back</a><br></br>
 {% if request.user.musician %}
       {% if messages %}
             {% for message in messages %}
