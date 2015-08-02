@@ -1,8 +1,10 @@
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
+from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView
+from messaging.forms import MusicianMessageForm
 from profiles.models import Musician
 from .models import MusicianMusicianConversation, MusMusMessage
 # Create your views here.
@@ -31,9 +33,9 @@ class MusicianMusicianConversationDetailView(DetailView):
     def list_of_messages(self):
         return MusicianMusicianConversation.messages
 
-def mm_start_conv(request, reciever_pk):
+def mm_start_conv(request, receiver_pk):
     me = Musician.objects.get(pk=request.user.pk)
-    other = Musician.objects.get(pk=reciever_pk)
+    other = Musician.objects.get(pk=receiver_pk)
     redirection = request.META.get('HTTP_REFERER')
     if request.method == 'POST':
         print('post mm_start_conv')
@@ -53,3 +55,34 @@ def mm_start_conv(request, reciever_pk):
     else:
         print('doesnt work')
         return HttpResponseRedirect(redirection)
+
+
+def mm_message_create_view(request, conversation_pk, receiver_pk):
+    message_t = request.POST['memo']
+    conv = MusicianMusicianConversation.objects.get(pk=conversation_pk)
+    receiver = Musician.objects.get(pk=receiver_pk)
+    me = request.user.musician
+    if request.method == 'POST':
+        print('mm_message_create POST')
+        mm_message = MusMusMessage.objects.create(
+            sender=me,
+            receiver=receiver,
+            message=message_t
+        )
+        mm_message.save()
+        print('mm_message saved')
+        conv.messages.add(mm_message)
+        conv.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return render(request, 'messaging/musicianmusicianconversation_detail.html',
+                  {'message_form': message_t})
+
+
+
+
+
+
+
+
+
+

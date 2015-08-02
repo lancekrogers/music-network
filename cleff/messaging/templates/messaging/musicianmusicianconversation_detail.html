@@ -1,6 +1,12 @@
 {% extends 'messaging/base.html' %}
 {% block body %}
-        <a href="{% url 'message:musician_conversations'  %}">Back</a><br><br/>
+<a href="{% url 'message:musician_conversations'  %}">Back</a><br><br/>
+    {% if request.user.musician %}
+    <form action="{% url 'message:mm_send_message' object.pk 1  %}" method="POST"  >
+    {% csrf_token %}
+    <input type="text" name="memo" size="200" height="100"  >
+    <input type="submit" value="send" size="100" height="50" >
+    </form>
 {% if object.messages.all %}
 {% for m in object.messages.all %}
 
@@ -10,4 +16,6 @@
 {% else %}
     <h2>No messages yet</h2>
 {% endif %}
+{% endif %}
+
 {% endblock %}
