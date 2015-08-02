@@ -1,7 +1,8 @@
 from autoslug import AutoSlugField
 from django.db import models
 from profiles.models import Musician, NonMusician
-
+from profiles.choices_list import STATES
+from profiles.models import Location
 # Create your models here.
 
 
@@ -14,6 +15,7 @@ class MusicianPost(models.Model):
     tags = models.ManyToManyField('Tag')
     timestamp = models.DateTimeField(auto_now_add=True)
     votes = models.ManyToManyField('Vote')
+    location = models.ForeignKey(Location, blank=True)
 
     def __str__(self):
         return "{}, user: {}".format(self.title, self.user.user.username)
@@ -29,7 +31,7 @@ class MusicianPost(models.Model):
         return downvotes.count()
 
     class Meta:
-        ordering = ['-score', 'timestamp']
+        ordering = ['-score', '-timestamp']
 
 
 class MusicianResponse(models.Model):
@@ -41,7 +43,7 @@ class MusicianResponse(models.Model):
     votes = models.ManyToManyField('Vote')
 
     class Meta:
-        ordering = ['-score', 'timestamp']
+        ordering = ['-score', '-timestamp']
 
     def __str__(self):
         return '{}'.format(self.post.title)
@@ -66,6 +68,7 @@ class NonMusicianPost(models.Model):
     tags = models.ManyToManyField('Tag')
     timestamp = models.DateTimeField(auto_now_add=True)
     votes = models.ManyToManyField('Vote')
+    location = models.ForeignKey(Location, blank=True)
 
     def __str__(self):
         return "{}, user: {}".format(self.title, self.user.user.username)
@@ -81,7 +84,7 @@ class NonMusicianPost(models.Model):
         return downvotes.count()
 
     class Meta:
-        ordering = ['-score', 'timestamp']
+        ordering = ['-score', '-timestamp']
 
 
 class NonMusicianResponse(models.Model):
@@ -93,7 +96,7 @@ class NonMusicianResponse(models.Model):
     votes = models.ManyToManyField('Vote')
 
     class Meta:
-        ordering = ['-score', 'timestamp']
+        ordering = ['-score', '-timestamp']
 
     def __str__(self):
         return '{}'.format(self.post.title)

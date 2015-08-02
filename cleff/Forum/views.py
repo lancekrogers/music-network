@@ -1,12 +1,13 @@
 import random
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, CreateView
 from profiles.models import Musician, NonMusician
-from .models import Vote, MusicianPost, MusicianResponse
+from .models import Vote, MusicianPost, MusicianResponse, NonMusicianPost, NonMusicianResponse
 # Create your views here.
 
 def vote_create(request, votee_pk, model_type, vote_type='upvote'):
-    print('here') # separate this out into more than one function so that
-    x_var = votee_pk    # people can only vote on one question at a time
+    print('here')  # separate this out into more than one function so that
+    x_var = votee_pk  # people can only vote on one question at a time
     if request.POST:
         print('sent post')
         user_pk = request.user.pk
@@ -45,4 +46,31 @@ def vote_create(request, votee_pk, model_type, vote_type='upvote'):
             pass
         return redirect('Forum:musician_post_page', musician_post_id=x_var)
     else:
-       return redirect('Forum:musician_post_page', musician_post_id=x_var)
+        return redirect('Forum:musician_post_page', musician_post_id=x_var)
+
+
+class MusicianPostListView(ListView):
+    model = MusicianPost
+
+
+
+class NonMusicianPostListView(ListView):
+    model = NonMusicianPost
+
+
+class MusicianCreatePost(CreateView):
+    model = MusicianPost
+    fields = ['title', 'text', 'location']
+
+
+class NonMusicianCreatePost(CreateView):
+    model = NonMusicianPost
+    fields = ['title', 'text']
+
+
+
+
+
+
+
+
