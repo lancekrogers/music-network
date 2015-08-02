@@ -1,0 +1,13 @@
+{% extends 'messaging/base.html' %}
+{% block body %}
+        <a href="{% url 'message:musician_conversations'  %}">Back</a><br><br/>
+{% if object.messages.all %}
+{% for m in object.messages.all %}
+
+    {{ m.message }}<br></br>
+
+{% endfor %}
+{% else %}
+    <h2>No messages yet</h2>
+{% endif %}
+{% endblock %}

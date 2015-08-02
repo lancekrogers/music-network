@@ -17,13 +17,22 @@ class MusicianMusicianConversation(models.Model):
     class Meta:
         ordering = ['-timestamp']
 
+    def __str__(self):
+        return '{} conversation, started by {}'.format(self.pk, self.initializer)
+
 
 class MusMusMessage(models.Model):
     message = models.TextField()
-    conversation = models.OneToOneField(MusicianMusicianConversation)
+    conversation = models.ManyToManyField(MusicianMusicianConversation)
     sender = models.ForeignKey(Musician, related_name='sender')
     receiver = models.ForeignKey(Musician, related_name='receiver')
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{} {}'.format(self.conversation, self.timestamp)
+
+    class Meta:
+        ordering = ['-timestamp']
 
 
 

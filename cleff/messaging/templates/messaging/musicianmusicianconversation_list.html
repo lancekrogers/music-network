@@ -3,13 +3,12 @@
 <h2>Musician to Musician Inbox</h2>
 {% for conversation in object_list %}
     {% if conversation in view.owner_is_musician_one %}
-        {{ conversation.musician_two }}<br></br>
+       <a href="{% url 'message:musician_conv_detail_view' conversation.pk %}">{{ conversation.musician_two }}</a><br></br>
     {% elif conversation in view.owner_is_musician_two %}
-        {{ conversation.musician_one }}<br></br>
+        <a href="{% url 'message:musician_conv_detail_view' conversation.pk %}">{{ conversation.musician_one }}</a><br></br>
     {% endif %}
 
 {% endfor %}
-
 
 
 {% endblock %}

@@ -8,9 +8,15 @@ def youtube_code_getter(youtube_vide_url):
     x = str(youtube_vide_url).rsplit(sep='?v=')
     return x[1]
 
-
-
 '''
+
+djinja form to put on public profiles and videos
+
+<form action="{% url 'message:start_music_talk' request.user.musician.pk %}" method="POST">
+{% csrf_token %}
+<input type="submit" value="Start conversation" >
+</form>
+
 
 geolocation javascript
 

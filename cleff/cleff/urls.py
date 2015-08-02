@@ -27,6 +27,6 @@ urlpatterns = [
     url(r'^forum/', include('Forum.urls', namespace='Forum')),
     url(r'^', include('cleff_main.urls', namespace='main')),
     url(r'^uploads/', include('stickyuploads.urls')),
-    url(r'^messaging/', include('messaging.urls')),
+    url(r'^message/', include('messaging.urls', namespace='message')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
