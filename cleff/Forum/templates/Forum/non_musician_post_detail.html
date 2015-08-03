@@ -1,14 +1,9 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-<div><a href="{% url 'Forum:musician_post_list' %}"><button>Back</button></a></div>
 <h2>{{ post.title }}</h2>
     <h6>Score: {{post.score}}</h6>
-    <p>{{post.text}}</p> <p>Post by {{ post.user.user.username }}</p><br></br>
-
-
-
-
-{% if request.user.musician %}
+    <p>{{post.text}}</p> <p>Post by {{ post.user.user.username }}</p>
+{% if request.user %}
 <form action="{% url 'Forum:vote_create' post.pk 'post' 'upvote' %}" method="POST">
                     {% csrf_token %}
                     <input id="submit" type="submit" value="upvote" />
@@ -17,23 +12,15 @@
                 {% csrf_token %}
                 <input id="submit" type="submit" value="downvote">
 </form>
-<br></br>
-<form action="{% url 'Forum:m_response_create' post.pk %}" method="POST">
-{% csrf_token %}
-<input name="this" type="text" >
-
-<input type="submit" value="Comment" >
-
-</form><br></br>
 {% endif %}
 <h2>Comments are below</h2>
 {% for obj in response %}
     <div>Score: {{obj.score}} <br>Timestamp: {{obj.timestamp}} <br></br>User:
-        {% if obj.user %}
-           <a href="{% url 'profiles:public_profile' obj.user.user.pk %}">
+        {% if obj.user.nonmusician.pk %}
+             <a href="{% url 'profiles:public_profile' obj.user.user.pk %}">
    {{obj.user.user.username}}</a>
         {% endif %}
-   {% if request.user.musician %}
+   {% if request.user %}
     <form action="{% url 'Forum:vote_create' obj.pk 'response' 'upvote' %}" method="POST">
         {% csrf_token %}
         <input id="submit" type="submit" value="upvote"/>
@@ -43,7 +30,7 @@
         <input id="submit" type="submit" value="downvote"/>
     </form>
     {% endif %}
-     <br> </br> {{obj.text}}</div><br></br>
+     <br></br> {{obj.text}}</div><br></br>
 {% endfor %}
 
 
@@ -52,11 +39,12 @@
     </div>
 
 
+{% if response.pk %}
 
 
 
 
-
+{% endif %}
 
 
 

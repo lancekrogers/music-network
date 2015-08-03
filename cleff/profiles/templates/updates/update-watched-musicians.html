@@ -2,6 +2,7 @@
 {% block body %}
 {% if request.user.nonmusician %}
 <form method="POST">
+{% csrf_token %}
 {{ update_watched_form.as_p }}
 <button type="submit">Update</button>
 </form>

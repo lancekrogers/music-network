@@ -422,7 +422,8 @@ def update_watched_musicians(request):
     if request.method == 'POST':
         if update_watched_form.is_valid():
             update_watched_form.save()
+            messages.add_message(request, INFO, 'Watched Musicians Updated')
             print('I am after the second if in update musician friends')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:non_musician_profile', request.user.pk)
     context = {'update_watched_form': update_watched_form}
     return render(request, 'updates/update-watched-musicians.html', context)

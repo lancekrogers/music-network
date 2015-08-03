@@ -1,11 +1,14 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
+<div><a href="{% url 'main:home' %}"><button>Back</button></a></div><br></br>
 
 {% if object_list %}
 {% for obj in object_list %}
-    {{ obj.title }}
+    <div>{{ obj.title }} <a href="{% url 'Forum:musician_post_detail' obj.pk %}"><button>Go To Post</button></a></div>
 {% endfor %}
-
+{% else %}
+    <h2>No Post Yet</h2>
 {% endif %}
+
 
 {% endblock %}

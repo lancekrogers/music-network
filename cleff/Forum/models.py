@@ -44,7 +44,32 @@ class MusicianResponse(models.Model):
     votes = models.ManyToManyField('Vote', blank=True)
 
     class Meta:
-        ordering = ['-score', '-timestamp']
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return '{}'.format(self.post.title)
+
+    @property
+    def upvote_count(self):
+        upvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(upvote=True)
+        return upvotes.count()
+
+    @property
+    def downvote_count(self):
+        downvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(downvote=True)
+        return downvotes.count()
+
+
+class MusicianResponseNonMusicianPost(models.Model):
+    user = models.ForeignKey(Musician)
+    post = models.ForeignKey('NonMusicianPost')
+    text = models.TextField()
+    score = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    votes = models.ManyToManyField('Vote', blank=True)
+
+    class Meta:
+        ordering = ['-timestamp']
 
     def __str__(self):
         return '{}'.format(self.post.title)

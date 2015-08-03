@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib.auth.views import login, logout
+from django.http import Http404
 from .views import musician_registration, non_musician_registration, choose, musician_profile, \
     non_musician_profile, update_musician_profile, musician_add_time_frame, musician_update_time_frame, add_genre,\
     update_genres, add_instrument, update_instruments, musician_add_location, update_musician_location, \
@@ -29,7 +30,8 @@ urlpatterns = [
     url(r'^musician-profile-image/', add_profile_image, name='musician_profile_image'),
     url(r'^non-musician-profile-image/', add_profile_image_non_musician, name='non_musician_profile_image'),
     url(r'^non-musician/update/$', update_non_musician_profile, name='non_musician_update'),
-    url(r'^update-watched-musicians/', update_watched_musicians, name='update_watched_musicians')
+    url(r'^update-watched-musicians/', update_watched_musicians, name='update_watched_musicians'),
+    url(r'^musician-public-profile/(?P<pk>\d+)/', Http404, name='public_profile'),
 
 
 
