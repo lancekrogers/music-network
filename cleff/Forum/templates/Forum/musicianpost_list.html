@@ -1,0 +1,11 @@
+{% extends 'Forum/base.html' %}
+{% block body %}
+
+{% if object_list %}
+{% for obj in object_list %}
+    {{ obj.title }}
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

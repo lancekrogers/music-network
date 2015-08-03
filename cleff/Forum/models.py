@@ -14,11 +14,12 @@ class MusicianPost(models.Model):
     score = models.IntegerField(default=0)
     tags = models.ManyToManyField('Tag')
     timestamp = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField('Vote')
-    location = models.ForeignKey(Location, blank=True)
+    votes = models.ManyToManyField('Vote', blank=True)
+    city = models.CharField(max_length=30)
+    states = models.CharField(choices=STATES, max_length=15)
 
     def __str__(self):
-        return "{}, user: {}".format(self.title, self.user.user.username)
+        return "{}".format(self.title)
 
     @property
     def upvote_count(self):
@@ -40,7 +41,7 @@ class MusicianResponse(models.Model):
     text = models.TextField()
     score = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField('Vote')
+    votes = models.ManyToManyField('Vote', blank=True)
 
     class Meta:
         ordering = ['-score', '-timestamp']
@@ -67,8 +68,9 @@ class NonMusicianPost(models.Model):
     score = models.IntegerField(default=0)
     tags = models.ManyToManyField('Tag')
     timestamp = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField('Vote')
-    location = models.ForeignKey(Location, blank=True)
+    votes = models.ManyToManyField('Vote', blank=True)
+    city = models.CharField(max_length=30)
+    states = models.CharField(choices=STATES, max_length=15)
 
     def __str__(self):
         return "{}, user: {}".format(self.title, self.user.user.username)
@@ -93,7 +95,7 @@ class NonMusicianResponse(models.Model):
     text = models.TextField()
     score = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField('Vote')
+    votes = models.ManyToManyField('Vote', blank=True)
 
     class Meta:
         ordering = ['-score', '-timestamp']
