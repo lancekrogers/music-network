@@ -32,7 +32,7 @@ class MusicianPost(models.Model):
         return downvotes.count()
 
     class Meta:
-        ordering = ['-score', '-timestamp']
+        ordering = ['-timestamp']
 
 
 class MusicianResponse(models.Model):
@@ -111,7 +111,7 @@ class NonMusicianPost(models.Model):
         return downvotes.count()
 
     class Meta:
-        ordering = ['-score', '-timestamp']
+        ordering = ['-timestamp']
 
 
 class NonMusicianResponse(models.Model):
@@ -123,7 +123,7 @@ class NonMusicianResponse(models.Model):
     votes = models.ManyToManyField('Vote', blank=True)
 
     class Meta:
-        ordering = ['-score', '-timestamp']
+        ordering = ['-timestamp']
 
     def __str__(self):
         return '{}'.format(self.post.title)

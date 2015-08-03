@@ -107,16 +107,6 @@ def non_musician_post_page(request, post_id):
                               context_instance=RequestContext(request))
 
 
-class MusicianCreatePost(CreateView):
-    model = MusicianPost
-    fields = ['title', 'text', 'location']
-
-
-class NonMusicianCreatePost(CreateView):
-    model = NonMusicianPost
-    fields = ['title', 'text']
-
-
 def musician_response_create(request, post_id):
     print('here')  # separate this out into more than one function so that
     x_var = post_id
@@ -138,6 +128,15 @@ def musician_response_create(request, post_id):
     return redirect('Forum:musician_post_detail', post_id=x_var)
 
 
+class MusicianPostCreateView(CreateView):
+    model = MusicianPost
+    fields = ['title', 'states', 'city', 'text']
+    success_url = 'Forum/musician_post_list'
+
+    def form_valid(self, form):
+        user = self.request.user.musician
+        form.instance.user = user
+        return super(MusicianPostCreateView, self).form_valid(form)
 
 
 
