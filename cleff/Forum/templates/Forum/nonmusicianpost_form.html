@@ -1,6 +1,6 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-<div><a href="{% url 'Forum:musician_post_list' %}"><button>Back</button></a></div><br><br><br>
+<div><a href="{% url 'Forum:non_musician_post_list' %}"><button>Back</button></a></div><br><br><br>
 
 <form method="POST">
 {% csrf_token %}

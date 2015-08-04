@@ -1,6 +1,11 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-<div><a href="{% url 'main:home' %}"><button>Back</button></a></div><br><br>
+
+{% if request.user.nonmusician %}
+
+<div align="right" ><a href="{% url 'Forum:create_non_musician_post' %}"><button>Create a Post</button></a></div>
+
+{% endif %}
 
 {% if object_list %}
 {% for obj in object_list %}

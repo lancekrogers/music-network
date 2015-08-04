@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView
 from profiles.models import Musician, NonMusician
 from .models import Vote, MusicianPost, MusicianResponse, NonMusicianPost, NonMusicianResponse
-from .forms import MusicianResponseForm, MusicianPostForm
+from .forms import MusicianResponseForm, MusicianPostForm, NonMusicianPostForm
 # Create your views here.
 
 def vote_create(request, votee_pk, model_type, vote_type='upvote'):
@@ -176,3 +176,25 @@ def non_musician_post_response_create(request, post_id):
     else:
         pass
     return redirect('Forum:non_musician_post_detail', post_id=x_var)
+
+
+def non_musician_post_create_view(request):
+    musician = NonMusician.objects.get(user=request.user)
+    create_post_form = NonMusicianPostForm(
+        request.POST or None,
+    )
+    if request.POST:
+        if create_post_form.is_valid():
+            title = create_post_form['title'].value()
+            text = create_post_form['text'].value()
+            obj = NonMusicianPost.objects.create(
+                user=musician,
+                title=title,
+                text=text,
+            )
+            print(obj.pk)
+            obj.save()
+            print('create_non_m_post_form obj saved ' + str(obj.pk))
+            return redirect('Forum:non_musician_post_detail', obj.pk)
+    context = {'create_post_form': create_post_form}
+    return render(request, 'Forum/nonmusicianpost_form.html', context)

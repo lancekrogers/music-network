@@ -7,9 +7,9 @@
 <div align="Left"></div><a href="{% url 'Forum:musician_post_list' %}"><button>Musician Forum</button></a></div>
 <div align="Right"><a href="{% url 'Forum:non_musician_post_list' %}"><button>NonMusician Forum</button></a></div>
 <div align="Center">    {% if request.user.musician %}
-        <a href="{% url 'profiles:musician_profile' user.pk %}"><button>Profile</button></a><br></br>
+        <a href="{% url 'profiles:musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
     {% else %}
-        <a href="{% url 'profiles:non_musician_profile' user.pk %}"><button>Profile</button></a><br></br>
+        <a href="{% url 'profiles:non_musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
     {% endif %}
     <a href="{% url 'profiles:Logout' %}"><button>Logout</button></a><br/>
     {% csrf_token %}
