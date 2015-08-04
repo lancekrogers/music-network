@@ -3,6 +3,7 @@ from django import forms
 from .models import Musician, NonMusician, Video, Location, Genre, InstrumentGroup, TimeFrame
 from .choices_list import *
 from stickyuploads.widgets import StickyUploadWidget
+from geoposition.fields import GeopositionField
 from PIL import Image
 
 
@@ -65,6 +66,8 @@ class LocationForm(forms.Form):
     state_list = STATES
     city = forms.CharField(max_length=30)
     state = forms.ChoiceField(choices=state_list)
+    location = GeopositionField(blank=True)
+
 
 
 class UpdateLocationsForm(forms.ModelForm):

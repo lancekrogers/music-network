@@ -280,7 +280,7 @@ def musician_add_location(request):
         if location_form.is_valid():
             obj = Location.objects.create(user_pk=request.user.pk,
                 state=location_form['state'].value(),
-                city=location_form['city'].value()
+                city=location_form['city'].value(),
             )
             print('location form saved')
             if not Musician.objects.filter(locations=obj).filter(pk=request.user.pk):
@@ -290,6 +290,7 @@ def musician_add_location(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'musician_location_form': location_form}
     return render(request, 'updates/add-musician-location.html', context)
+
 
 
 def update_musician_location(request):
@@ -303,6 +304,7 @@ def update_musician_location(request):
         if update_location_form.is_valid():
             update_location_form.save()
             print('I am after the second if in update musician location')
+            messages.add_message(request, INFO, 'Locations Updated')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_location_form': update_location_form}
     return render(request, 'updates/update-musician-location.html', context)

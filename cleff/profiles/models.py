@@ -2,17 +2,17 @@ from django.contrib.auth.models import User
 from django.db import models
 from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
 from PIL import Image
+from geoposition.fields import GeopositionField
 # Create your models here.
 
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     email = models.EmailField(blank=True)
-    latitude = models.DecimalField(blank=True, null=True, max_digits=200, decimal_places=10)
-    longitude = models.DecimalField(blank=True, null=True, max_digits=200, decimal_places=10)
     first_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
     locations = models.ManyToManyField('Location', blank=True)
+    location = GeopositionField(blank=True)
     is_musician = models.BooleanField(default=False)
 
     def profile_image_func(self):
@@ -97,11 +97,11 @@ class TimeFrame(models.Model):
 
 class Location(models.Model):
     user_pk = models.IntegerField(default=-1)
+    description = models.CharField(max_length=30, blank=True)
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(choices=STATES, blank=True, max_length=2)
-    latitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10, null=True)
-    longitude = models.DecimalField(blank=True, max_digits=200, decimal_places=10, null=True)
+    location = GeopositionField(blank=True)
 
     def __str__(self):
         return '{} {}'.format(self.city, self.state)
