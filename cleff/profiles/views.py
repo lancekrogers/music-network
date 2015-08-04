@@ -416,7 +416,7 @@ def update_watched_musicians(request):
     non_musician = NonMusician.objects.get(user=request.user)
     update_watched_form = NonMusicianUpdateWatchedMusicians(
         request.POST or None,
-        instance=non_musician
+        instance=non_musician,
     )
     update_watched_form.fields["musicians"].queryset = non_musician.musicians.all()
     if request.method == 'POST':

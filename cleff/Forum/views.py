@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView
 from profiles.models import Musician, NonMusician
 from .models import Vote, MusicianPost, MusicianResponse, NonMusicianPost, NonMusicianResponse
-from .forms import MusicianResponseForm
+from .forms import MusicianResponseForm, MusicianPostForm
 # Create your views here.
 
 def vote_create(request, votee_pk, model_type, vote_type='upvote'):
@@ -128,16 +128,29 @@ def musician_response_create(request, post_id):
     return redirect('Forum:musician_post_detail', post_id=x_var)
 
 
-class MusicianPostCreateView(CreateView):
-    model = MusicianPost
-    fields = ['title', 'states', 'city', 'text']
-    success_url = 'Forum/musician_post_list'
-
-    def form_valid(self, form):
-        user = self.request.user.musician
-        form.instance.user = user
-        return super(MusicianPostCreateView, self).form_valid(form)
-
-
+def musician_post_create_view(request):
+    musician = Musician.objects.get(user=request.user)
+    create_post_form = MusicianPostForm(
+        request.POST or None,
+    )
+    if request.POST:
+        if create_post_form.is_valid():
+            state = create_post_form['states'].value()
+            city = create_post_form['city'].value()
+            title = create_post_form['title'].value()
+            text = create_post_form['text'].value()
+            obj = MusicianPost.objects.create(
+                user=musician,
+                title=title,
+                city=city,
+                states=state,
+                text=text,
+            )
+            print(obj.pk)
+            obj.save()
+            print('create_post_form obj saved ' + str(obj.pk))
+            return redirect('Forum:musician_post_detail', obj.pk)
+    context = {'create_post_form': create_post_form}
+    return render(request, 'Forum/musicianpost_form.html', context)
 
 

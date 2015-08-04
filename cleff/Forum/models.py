@@ -12,14 +12,14 @@ class MusicianPost(models.Model):
     text = models.TextField()
     slug = AutoSlugField(populate_from='title')
     score = models.IntegerField(default=0)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     votes = models.ManyToManyField('Vote', blank=True)
     city = models.CharField(max_length=30)
     states = models.CharField(choices=STATES, max_length=15)
 
     def __str__(self):
-        return "{}".format(self.title)
+        return "{} {}".format(self.title, self.pk)
 
     @property
     def upvote_count(self):
@@ -33,6 +33,7 @@ class MusicianPost(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
 
 
 class MusicianResponse(models.Model):
