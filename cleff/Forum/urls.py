@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from .views import MusicianPostListView, musician_post_page, vote_create, non_musician_post_page, \
-    NonMusicianPostListView, musician_response_create, musician_post_create_view
+    NonMusicianPostListView, musician_response_create, musician_post_create_view, \
+    non_musician_post_response_create
+
 
 urlpatterns = [
     url(r'^$',
@@ -20,5 +22,10 @@ urlpatterns = [
     url(r'^response-create/(?P<post_id>\d+)/',
         musician_response_create,
         name='m_response_create'),
-    url(r'^create-musician-post/', musician_post_create_view, name='create_musician_post'),
+    url(r'^create-musician-post/',
+        musician_post_create_view,
+        name='create_musician_post'),
+    url(r'^non-musician-response-create/(?P<post_id>\d+)/$',
+        non_musician_post_response_create,
+        name='non_m_response_create')
 ]

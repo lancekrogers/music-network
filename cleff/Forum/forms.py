@@ -13,5 +13,4 @@ class MusicianPostForm(forms.ModelForm):
 
     class Meta:
         model = MusicianPost
-        fields = ['title', 'text', 'states', 'city']
-        labels = {'states': 'State'}
+        fields = ['title', 'text']

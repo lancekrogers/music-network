@@ -3,6 +3,7 @@ from django.db import models
 from profiles.models import Musician, NonMusician
 from profiles.choices_list import STATES
 from profiles.models import Location
+from geoposition.fields import GeopositionField
 # Create your models here.
 
 
@@ -15,11 +16,10 @@ class MusicianPost(models.Model):
     tags = models.ManyToManyField('Tag', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     votes = models.ManyToManyField('Vote', blank=True)
-    city = models.CharField(max_length=30)
-    states = models.CharField(choices=STATES, max_length=15)
+    location = GeopositionField(blank=True)
 
     def __str__(self):
-        return "{} {}".format(self.title, self.pk)
+        return "{}".format(self.title)
 
     @property
     def upvote_count(self):
@@ -61,42 +61,16 @@ class MusicianResponse(models.Model):
         return downvotes.count()
 
 
-class MusicianResponseNonMusicianPost(models.Model):
-    user = models.ForeignKey(Musician)
-    post = models.ForeignKey('NonMusicianPost')
-    text = models.TextField()
-    score = models.IntegerField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    votes = models.ManyToManyField('Vote', blank=True)
-
-    class Meta:
-        ordering = ['-timestamp']
-
-    def __str__(self):
-        return '{}'.format(self.post.title)
-
-    @property
-    def upvote_count(self):
-        upvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(upvote=True)
-        return upvotes.count()
-
-    @property
-    def downvote_count(self):
-        downvotes = Vote.objects.filter(voter_pk=self.pk).filter(is_answer=True).filter(downvote=True)
-        return downvotes.count()
-
-
 class NonMusicianPost(models.Model):
     user = models.ForeignKey(NonMusician)
     title = models.CharField(max_length=140)
     text = models.TextField()
     slug = AutoSlugField(populate_from='title')
     score = models.IntegerField(default=0)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     votes = models.ManyToManyField('Vote', blank=True)
-    city = models.CharField(max_length=30)
-    states = models.CharField(choices=STATES, max_length=15)
+    location = GeopositionField(blank=True)
 
     def __str__(self):
         return "{}, user: {}".format(self.title, self.user.user.username)
@@ -116,7 +90,8 @@ class NonMusicianPost(models.Model):
 
 
 class NonMusicianResponse(models.Model):
-    user = models.ForeignKey(NonMusician)
+    musician = models.ForeignKey(Musician, blank=True, null=True)
+    nonmusician = models.ForeignKey(NonMusician, blank=True, null=True)
     post = models.ForeignKey(NonMusicianPost)
     text = models.TextField()
     score = models.IntegerField(default=0)

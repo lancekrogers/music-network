@@ -47,9 +47,7 @@ def vote_create(request, votee_pk, model_type, vote_type='upvote'):
                                        is_post=musician_post,
                                        is_response=answer)
                 vote.save()
-
             else:
-                obj = MusicianResponse.objects.get(pk=votee_pk)
                 obj.score += 10
                 obj.save()
                 vote = Vote.objects.create(votee_pk=votee_pk,
@@ -135,15 +133,11 @@ def musician_post_create_view(request):
     )
     if request.POST:
         if create_post_form.is_valid():
-            state = create_post_form['states'].value()
-            city = create_post_form['city'].value()
             title = create_post_form['title'].value()
             text = create_post_form['text'].value()
             obj = MusicianPost.objects.create(
                 user=musician,
                 title=title,
-                city=city,
-                states=state,
                 text=text,
             )
             print(obj.pk)
@@ -154,3 +148,31 @@ def musician_post_create_view(request):
     return render(request, 'Forum/musicianpost_form.html', context)
 
 
+def non_musician_post_response_create(request, post_id):
+    print('here')  # separate this out into more than one function so that
+    x_var = post_id
+    the_post = NonMusicianPost.objects.get(pk=post_id)
+    if request.POST:
+        print('sent post m response create')
+        user_pk = request.user.pk
+        if request.user.musician:
+            profile = Musician.objects.get(pk=user_pk)
+            m = NonMusicianResponse.objects.create(
+                musician=profile,
+                post=the_post,
+                text=request.POST['this'],
+            )
+            m.save()
+        else:
+            profile = NonMusician.objects.get(pk=user_pk)
+            m = NonMusicianResponse.objects.create(
+                nonmusician=profile,
+                post=the_post,
+                text=request.POST['this'],
+            )
+            m.save()
+        print('mtheory')
+        return redirect('Forum:non_musician_post_detail', post_id=x_var)
+    else:
+        pass
+    return redirect('Forum:non_musician_post_detail', post_id=x_var)

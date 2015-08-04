@@ -17,7 +17,7 @@
                 {% csrf_token %}
                 <input id="submit" type="submit" value="downvote">
 </form>
-<br></br>
+<br><br>
 <form action="{% url 'Forum:m_response_create' post.pk %}" method="POST">
 {% csrf_token %}
 <input name="this" type="text" >

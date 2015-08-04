@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'cleff_main',
     'stickyuploads',
     'messaging',
+    'geoposition',
 #    'social.apps.django_app.default',
 
 )
