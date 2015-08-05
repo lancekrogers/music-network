@@ -135,6 +135,16 @@ MEDIA_URL = '/media/'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
+
 )
 
+'''
+GEOPOSITION_MAP_OPTIONS = {
+    'minZoom': 3,
+    'maxZoom': 15,
+}
 
+GEOPOSITION_MARKER_OPTIONS = {
+    'cursor': 'move'
+}
+'''

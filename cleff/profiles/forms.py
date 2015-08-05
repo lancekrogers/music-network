@@ -4,7 +4,7 @@ from .models import Musician, NonMusician, Video, Location, Genre, InstrumentGro
 from .choices_list import *
 from stickyuploads.widgets import StickyUploadWidget
 from geoposition.fields import GeopositionField
-from geoposition.widgets import GeopositionMapOnlyWidget
+from geoposition.widgets import MapOnlyWidget, AdjustableMapOnlyWidget
 from PIL import Image
 
 
@@ -166,4 +166,16 @@ class LocationTwoForm(forms.ModelForm):
         fields = ['description', 'location']
         required = False
         labels = {'location': ''}
-        widgets = {'location': GeopositionMapOnlyWidget}
+        widgets = {'location': MapOnlyWidget,
+                   'description': forms.Textarea}
+
+
+class LocationThreeForm(forms.ModelForm):
+
+    class Meta:
+        model = Location
+        fields = ['description', 'location']
+        required = False
+        labels = {'location': ''}
+        widgets = {'location': AdjustableMapOnlyWidget,
+                   'description': forms.Textarea}

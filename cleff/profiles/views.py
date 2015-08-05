@@ -6,16 +6,18 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.utils.datastructures import MultiValueDictKeyError
+from cleff import settings
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
     UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
-    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm
+    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm, LocationThreeForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
+from geoposition.custom_map import Options
 
 
 
@@ -449,3 +451,12 @@ class LocationCreateView(CreateView):
             form.add_error('common_error', 'An Error has occurred')
             pass
 
+
+class LocationCreateViewTwo(CreateView):
+    template_name = 'maps/maps_two.html'
+    model = Location
+    form_class = LocationThreeForm
+    success_url = '/'
+
+    def height(self):
+        return Options.height

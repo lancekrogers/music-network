@@ -1,13 +1,18 @@
 {% extends 'profiles/base.html' %}
+{% block head %}
+    {{ view.map_center }}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript"></script>
+{% endblock %}
 {% block body %}
 
 
     {% if request.user.musician %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
     <form method="POST" action="">
     {% csrf_token %}
+    {{ musician_location_form.media }}
     {{ musician_location_form.as_p }}
     <button type="submit">Add</button>
     </form>
