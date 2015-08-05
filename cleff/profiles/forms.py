@@ -164,3 +164,5 @@ class LocationTwoForm(forms.ModelForm):
         model = Location
         fields = ['description', 'location']
         required = False
+        labels = {'location': ''}
+
