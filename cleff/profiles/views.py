@@ -436,3 +436,16 @@ class LocationCreateView(CreateView):
     model = Location
     form_class = LocationTwoForm
     success_url = '/'
+
+    def form_valid(self, form):
+        if self.request.user.musician:
+            music = self.request.user.musician
+            m = Musician.objects.get(pk=music.pk)
+            obj = form.save()
+            m.locations.add(obj)
+            messages.add_message(self.request, INFO, 'Location Added')
+            return redirect('profiles:musician_profile', self.request.user.pk)
+        else:
+            form.add_error('common_error', 'An Error has occurred')
+            pass
+

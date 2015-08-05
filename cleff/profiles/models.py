@@ -104,7 +104,7 @@ class Location(models.Model):
     location = GeopositionField(blank=True)
 
     def __str__(self):
-        return '{} {}'.format(self.city, self.state)
+        return 'Location {}'.format(self.description)
 
 
 class SavedMusician(models.Model):
