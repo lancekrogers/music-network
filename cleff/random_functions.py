@@ -42,3 +42,50 @@ geolocation javascript
 
 
     '''
+
+
+'''
+
+JQUERY Examples
+
+$(document).ready(function() {
+   $('div').mouseenter(function() {
+       $(this).animate({
+           height: '+=10px'
+       });
+   });
+   $('div').mouseleave(function() {
+       $(this).animate({
+           height: '-=10px'
+       });
+   });
+   $('div').click(function() {
+       $(this).toggle(1000);
+   });
+});
+
+
+def inflation(x,y):
+    i = x
+    for a in range(y):
+        b = i * .025
+        i = i + b
+    return i
+
+
+
+{% extends 'profiles/base.html' %}
+{% block body %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+    <input type="submit" value="Add Location">
+    </form>
+
+
+{% endblock %}
+
+'''

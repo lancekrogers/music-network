@@ -9,13 +9,14 @@ from django.utils.datastructures import MultiValueDictKeyError
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
     UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
-    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians
+    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
+
 
 
 
@@ -429,3 +430,9 @@ def update_watched_musicians(request):
             return redirect('profiles:non_musician_profile', request.user.pk)
     context = {'update_watched_form': update_watched_form}
     return render(request, 'updates/update-watched-musicians.html', context)
+
+class LocationCreateView(CreateView):
+    template_name = 'maps/maps_two.html'
+    model = Location
+    form_class = LocationTwoForm
+    success_url = '/'

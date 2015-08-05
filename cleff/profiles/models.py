@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
-from PIL import Image
+from PIL import Image  # this is needed for the models.ImageField to work
 from geoposition.fields import GeopositionField
 # Create your models here.
 
@@ -12,7 +12,7 @@ class ProfileModel(models.Model):
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
     locations = models.ManyToManyField('Location', blank=True)
-    location = GeopositionField(blank=True)
+    current_location = GeopositionField(blank=True)
     is_musician = models.BooleanField(default=False)
 
     def profile_image_func(self):
