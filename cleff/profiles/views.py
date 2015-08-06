@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.messages import INFO
+import json
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
@@ -10,14 +11,13 @@ from cleff import settings
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
     UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
-    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm, LocationThreeForm
+    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
-from geoposition.custom_map import Options
 
 
 
@@ -455,8 +455,12 @@ class LocationCreateView(CreateView):
 class LocationCreateViewTwo(CreateView):
     template_name = 'maps/maps_two.html'
     model = Location
-    form_class = LocationThreeForm
+    form_class = LocationTwoForm
     success_url = '/'
 
-    def height(self):
-        return Options.height
+
+
+
+
+
+

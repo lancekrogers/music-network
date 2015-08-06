@@ -1,5 +1,26 @@
 {% extends 'profiles/base.html' %}
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="application/javascript">
+$(document).ready(function() {
+    var height=300;
+    var map_options = {'minZoom': 3, 'maxZoom': 15};
+    var marker_options = {};
+    $.ajax({
+        url: "{% url 'profiles:sending_loc' %}",
+        type: 'POST',
+        data: {'height': height, 'map_options': map_options, 'marker_options': marker_options},
+
+    });
+    return false;
+});
+
+</script>
+
+
+{% endblock %}
 {% block body %}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <form method="POST" action="">

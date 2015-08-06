@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -8,4 +8,9 @@ def home(request):
 
 
 def feed(request):
-    pass
+    return render(request, 'main/feed.html')
+
+def something(request):
+    if request.POST:
+        print(request.POST)
+        return redirect('main:feed')
