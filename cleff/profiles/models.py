@@ -105,6 +105,7 @@ class Location(models.Model):
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(choices=STATES, blank=True, max_length=2)
     location = GeopositionField(blank=True)
+    date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return '{}'.format(self.description)
@@ -113,15 +114,34 @@ class Location(models.Model):
 @receiver(post_save, sender=Location)
 def set_description(sender, instance, created=False, **kwargs):
     if created:
-        geolocator = Nominatim()
-        lat = instance.location.latitude
-        lon = instance.location.longitude
-        print('{}, {}'.format(lat, lon))
-        loc = geolocator.reverse([lat, lon])
-        address = loc.address
-        print(address)
-        instance.description = address
-        instance.save()
+        try:
+            geolocator = Nominatim()
+            lat = instance.location.latitude
+            lon = instance.location.longitude
+            print('{}, {}'.format(lat, lon))
+            loc = geolocator.reverse([lat, lon])
+            address = loc.address
+            print(address)
+            instance.description = address
+            instance.save()
+        except:
+            try:
+                geolocator = Nominatim()
+                lat = instance.location.latitude
+                lon = instance.location.longitude
+                print('{}, {}'.format(lat, lon))
+                loc = geolocator.reverse([lat, lon])
+                address = loc.address
+                print(address)
+                instance.description = address
+                instance.save()
+
+            except:
+                print('didnt work')
+                instance.description = 'Location created on {}'.format(instance.date_added)
+                raise Exception
+
+
 
 
 
