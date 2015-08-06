@@ -1,12 +1,28 @@
-{% extends 'profiles/base.html' %}
-{% block body %}
-<a href="{% url 'main:home' %}">Home</a><br></br>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-    <form method="Post">
+    <meta charset="UTF-8">
+    <title>Cleff LOGIN</title>
+
+</head>
+<body>
+<div align="Center" ><h1>CLEFF LOGIN</h1></div>
+
+<div align="Center"><a href="{% url 'main:home' %}"><button>Home</button></a><br><br></div>
+
+
+  <div align="Center"><form method="Post">
           {% csrf_token %}
-          {{ form.as_table }}
+          {{ form.as_p }}
         <button type="submit">Login</button>
         <input type="hidden" name="next" value='{% url "main:home"  %}' />
-    </form>
+    </form></div>
 
-{% endblock %}
+
+
+
+</body>
+</html>
+

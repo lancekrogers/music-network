@@ -1,32 +1,23 @@
-{% extends 'profiles/base.html' %}
-{% block head %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="application/javascript">
-$(document).ready(function() {
-    var height=300;
-    var map_options = {'minZoom': 3, 'maxZoom': 15};
-    var marker_options = {};
-    $.ajax({
-        url: "{% url 'profiles:sending_loc' %}",
-        type: 'POST',
-        data: {'height': height, 'map_options': map_options, 'marker_options': marker_options},
-
-    });
-    return false;
-});
-
-</script>
-
-
-{% endblock %}
-{% block body %}
-
-
+<!DOCTYPE html>
+<html>
+<head lang="en">
+{% load static %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Base Profiles</title>
+</head>
+<body>
+<div><a href="{% url 'profiles:musician_profile' request.user.pk %}"><button>Back</button></a></div>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
     <input type="submit" value="Add Location">
     </form>
-{% endblock %}
+
+
+</body>
+</html>
+
+

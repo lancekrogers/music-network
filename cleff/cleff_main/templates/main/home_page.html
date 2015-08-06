@@ -2,20 +2,39 @@
 {% block body %}
 
 
-<div align="Center">{% if user.username %}
+<div align="Center">
+
+{% if user.username %}
+
     <h3>Sup {{ user.username }}</h3><br/></div>
-<div align="Left"></div><a href="{% url 'Forum:musician_post_list' %}"><button>Musician Forum</button></a></div>
-<div align="Right"><a href="{% url 'Forum:non_musician_post_list' %}"><button>NonMusician Forum</button></a></div>
-<div align="Center">    {% if request.user.musician %}
+
+    <div align="Left"></div><a href="{% url 'Forum:musician_post_list' %}"><button>Musician Forum</button></a></div>
+
+    <div align="Right"><a href="{% url 'Forum:non_musician_post_list' %}"><button>NonMusician Forum</button></a></div>
+
+    <div align="Center">
+        <a href="{% url 'main:feed' %}"><button>Main Feed</button></a><br><br>
+
+    {% if request.user.musician %}
+
         <a href="{% url 'profiles:musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
+
     {% else %}
+
         <a href="{% url 'profiles:non_musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
-    {% endif %}
+
+{% endif %}
+
     <a href="{% url 'profiles:Logout' %}"><button>Logout</button></a><br/>
+
     {% csrf_token %}
+
 {% else %}
+
     <a href="{% url 'profiles:Login' %}"><button>Login</button></a><br/>
+
     <a href="{% url 'profiles:choose' %}"><button>Sign up</button></a><br/><br/>
+
 {% endif %}<br/>
 </div>
 

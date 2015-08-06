@@ -163,10 +163,9 @@ class LocationTwoForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields = ['description', 'location']
+        fields = ['location']
         required = False
         labels = {'location': ''}
-        widgets = {'location': MapOnlyWidget,
-                   'description': forms.Textarea}
+        widgets = {'location': MapOnlyWidget}
 
 

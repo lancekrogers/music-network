@@ -1,8 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
 from PIL import Image  # this is needed for the models.ImageField to work
 from geoposition.fields import GeopositionField
+from geopy.geocoders import Nominatim
 # Create your models here.
 
 class ProfileModel(models.Model):
@@ -97,14 +100,29 @@ class TimeFrame(models.Model):
 
 class Location(models.Model):
     user_pk = models.IntegerField(default=-1)
-    description = models.CharField(max_length=30, blank=True)
+    description = models.CharField(max_length=100, blank=True)
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(choices=STATES, blank=True, max_length=2)
     location = GeopositionField(blank=True)
 
     def __str__(self):
-        return 'Location {}'.format(self.description)
+        return '{}'.format(self.description)
+
+
+@receiver(post_save, sender=Location)
+def create_replystamp(sender, instance, created=False, **kwargs):
+    if created:
+        geolocator = Nominatim()
+        lat = instance.location.latitude
+        lon = instance.location.longitude
+        print('{}, {}'.format(lat, lon))
+        loc = geolocator.reverse([lat, lon])
+        address = loc.address
+        print(address)
+        instance.description = address
+        instance.save()
+
 
 
 class SavedMusician(models.Model):

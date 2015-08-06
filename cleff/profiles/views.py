@@ -452,11 +452,6 @@ class LocationCreateView(CreateView):
             pass
 
 
-class LocationCreateViewTwo(CreateView):
-    template_name = 'maps/maps_two.html'
-    model = Location
-    form_class = LocationTwoForm
-    success_url = '/'
 
 
 

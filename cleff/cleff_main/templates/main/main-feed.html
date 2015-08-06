@@ -1,8 +1,7 @@
-{% extends 'main/base.html' %}
-{% block body %}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
 window.onload = function() {
     if(!window.location.hash) {
@@ -27,20 +26,40 @@ function successCallback(position) {
     var coords = document.getElementById('coordinates');
     coords.value = coordinates;
     $.ajax({
-        url: "{% url 'main:something' %}",
+        url: "{% url 'main:current' %}",
         type: 'POST',
         data: {
             coordinates: coordinates,
             csrfmiddlewaretoken: '{{ csrf_token }}'
-
-        },
+        }
     });
 }
 
 </script>
+
+
+
+    <meta charset="UTF-8">
+    <title>Main-Feed</title>
+
+
+
+
+
+</head>
+
 <body onload="javascript:initGeolocation()">
 
-<form action="{% url 'main:something' %}" method="POST" id="position_form" >
+
+<div align="Center"><h1>CLEFF FEED</h1>
+
+
+{% if request.user %}
+    <h3>Whats going on {{ request.user.username }}?</h3>
+{% endif %}
+<div><a href="{% url 'main:home' %}"><button>Home</button></a></div>
+</div>
+<form action="{% url 'main:current' %}" method="POST" id="position_form" >
        {% csrf_token %}
         <label>
             <input name="position" type="hidden" id="coordinates">
@@ -52,10 +71,5 @@ function successCallback(position) {
 
 
 
-
-
-
-
 </body>
-
-{% endblock %}
+</html>
