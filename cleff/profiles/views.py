@@ -443,14 +443,15 @@ class LocationCreateView(CreateView):
         if self.request.user.musician:
             music = self.request.user.musician
             m = Musician.objects.get(pk=music.pk)
-            for v in range(2):
+            for v in range(10):
                 try:
                     obj = form.save()
                     m.locations.add(obj)
                     messages.add_message(self.request, INFO, 'Location Added')
-                    break
+                    return redirect('profiles:musician_profile', self.request.user.pk)
                 except:
                     if v < 1:
+                        v -= 1
                         continue
                     else:
                         messages.add_message(self.request, INFO, 'An Error Occured')

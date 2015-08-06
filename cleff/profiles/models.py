@@ -100,7 +100,7 @@ class TimeFrame(models.Model):
 
 class Location(models.Model):
     user_pk = models.IntegerField(default=-1)
-    description = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     zipcode = models.CharField(max_length=12, blank=True)
     city = models.CharField(max_length=30, blank=True)
     state = models.CharField(choices=STATES, blank=True, max_length=2)
@@ -135,7 +135,6 @@ def set_description(sender, instance, created=False, **kwargs):
                 print(address)
                 instance.description = address
                 instance.save()
-
             except:
                 print('didnt work')
                 instance.description = 'Location created on {}'.format(instance.date_added)
