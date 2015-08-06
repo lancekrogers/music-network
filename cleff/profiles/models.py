@@ -111,7 +111,7 @@ class Location(models.Model):
 
 
 @receiver(post_save, sender=Location)
-def create_replystamp(sender, instance, created=False, **kwargs):
+def set_description(sender, instance, created=False, **kwargs):
     if created:
         geolocator = Nominatim()
         lat = instance.location.latitude
