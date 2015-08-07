@@ -143,11 +143,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        #     'URL': 'http://127.0.0.1:9200/',
-        'URL': 'http://192.168.1.82:9200/',
+        'URL': 'http://127.0.0.1:9200/',
+     #   'URL': 'http://192.168.1.82:9200/',
         'INDEX_NAME': 'haystack',
+        'INCLUDE_SPELLING': 'False',
     },
 }
+
+
 
 '''
 GEOPOSITION_MAP_OPTIONS = {

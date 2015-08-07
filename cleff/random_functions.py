@@ -85,8 +85,22 @@ def inflation(x,y):
     <input type="submit" value="Add Location">
     </form>
 
-elasticsearch -d -Des.config=/Users/lancerogers/Library/ElasticSearch/elasticsearch.yml
 
 {% endblock %}
+
+
+elasticsearch -d -Des.config=/Users/lancerogers/Library/ElasticSearch/elasticsearch.yml
+
+
+
+
+<style>
+    body {
+     width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-image: url("/static/illistratorImages/background-main-feed-cleff.svg");
+}
+</style>
 
 '''

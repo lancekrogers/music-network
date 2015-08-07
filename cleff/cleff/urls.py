@@ -20,13 +20,24 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-  #  url('', include('social.apps.django_app.urls', namespace='social')),
-  #  url('', include('django.contrib.auth.urls', namespace='auth')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^profiles/', include('profiles.urls', namespace='profiles')),
-    url(r'^forum/', include('Forum.urls', namespace='Forum')),
-    url(r'^', include('cleff_main.urls', namespace='main')),
-    url(r'^uploads/', include('stickyuploads.urls')),
-    url(r'^message/', include('messaging.urls', namespace='message')),
+                  #  url('', include('social.apps.django_app.urls', namespace='social')),
+                  #  url('', include('django.contrib.auth.urls', namespace='auth')),
+                  url(r'^admin/',
+                      include(admin.site.urls)),
+                  url(r'^profiles/',
+                      include('profiles.urls',
+                              namespace='profiles')),
+                  url(r'^forum/',
+                      include('Forum.urls',
+                              namespace='Forum')),
+                  url(r'^',
+                      include('cleff_main.urls', namespace='main')),
+                  url(r'^uploads/',
+                      include('stickyuploads.urls')),
+                  url(r'^message/',
+                      include('messaging.urls',
+                              namespace='message')),
+                  url(r'^search/',
+                      include('haystack.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

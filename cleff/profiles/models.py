@@ -6,6 +6,8 @@ from .choices_list import GENRES, DAYS, TIMES, INSTRUMENT_CLASSES, STATES
 from PIL import Image  # this is needed for the models.ImageField to work
 from geoposition.fields import GeopositionField
 from geopy.geocoders import Nominatim
+from django.contrib.gis.geos import Point
+
 # Create your models here.
 
 class ProfileModel(models.Model):
@@ -109,6 +111,12 @@ class Location(models.Model):
 
     def __str__(self):
         return '{}'.format(self.description)
+
+    def get_location(self):
+        # Remember, longitude FIRST!
+        lat = float(self.location.latitude)
+        lon = float(self.location.longitude)
+        return Point(lon, lat)
 
 
 @receiver(post_save, sender=Location)
