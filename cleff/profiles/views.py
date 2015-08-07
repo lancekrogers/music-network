@@ -196,7 +196,9 @@ def musician_update_time_frame(request):
         if update_musician_form.is_valid():
             update_musician_form.save()
             print('I am here')
-            messages.add_message(request, INFO, 'Availability updated!')
+            messages.add_message(request,
+                                 INFO,
+                                 'Availability updated!')
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_availability': update_musician_form}
     return render(request, 'updates/music-update-availability.html', context)
@@ -384,14 +386,16 @@ def add_profile_image(request):
     if request.method == 'POST':
         if profile_image_form.is_valid():
             try:
-                musician.profile_image = request.FILES['image']
-                musician.save()
-                messages.add_message(request, INFO, 'Profile Photo Is Uploading')
-                print(request.user.musician.profile_image.url)
+                try:
+                    musician.profile_image = request.FILES['image']
+                    musician.save()
+                    messages.add_message(request, INFO, 'Profile Photo Is Uploading')
+                    print(request.user.musician.profile_image.url)
+                except ValueError:
+                    messages.add_message(request, INFO, 'No File Was Chosen')
             except MultiValueDictKeyError:
                 print('MultiValueDictKeyError in add_profile_image')
                 messages.add_message(request, INFO, 'Profile Photo Not Updated')
-            print(request.user.musician.profile_image.url)
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/add-profile-photo.html', context)
@@ -411,7 +415,6 @@ def add_profile_image_non_musician(request):
             except MultiValueDictKeyError:
                 print('MultiValueDictKeyError in add_profile_image')
                 messages.add_message(request, INFO, 'Profile Photo Not Updated')
-            print(request.user.nonmusician.profile_image.url)
             return redirect('profiles:non_musician_profile', request.user.pk)
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/non-musician-p-image.html', context)
