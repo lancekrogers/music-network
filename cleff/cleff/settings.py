@@ -48,7 +48,8 @@ INSTALLED_APPS = (
     'stickyuploads',
     'messaging',
     'geoposition',
-#    'social.apps.django_app.default',
+    'haystack',
+    #    'social.apps.django_app.default',
 
 )
 
@@ -76,8 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-               # 'social.apps.django_app.context_processors.backends',
-               # 'social.apps.django_app.context_processors.login_redirect',
+                # 'social.apps.django_app.context_processors.backends',
+                # 'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -92,8 +93,8 @@ WSGI_APPLICATION = 'cleff.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cleff',    #'db_name',
-        'USER': 'cleff',   #'db_user',
+        'NAME': 'cleff',  # 'db_name',
+        'USER': 'cleff',  # 'db_user',
     }
 }
 
@@ -115,28 +116,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATICFILES_DIRS = (
-os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
 )
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")  #/Users/lancerogers/Developer/music-network/music-network/cleff/static/media"
+MEDIA_ROOT = os.path.join(BASE_DIR,
+                          "static/media")  # /Users/lancerogers/Developer/music-network/music-network/cleff/static/media"
 MEDIA_URL = '/media/'
 
 
-#AUTHENTICATION_BACKENDS = (
+# AUTHENTICATION_BACKENDS = (
 #   'social.backends.facebook.FacebookOAuth2',
- #  'social.backends.google.GoogleOAuth2',
-  # 'social.backends.twitter.TwitterOAuth',
- #  'django.contrib.auth.backends.ModelBackend',
-#)
+#  'social.backends.google.GoogleOAuth2',
+# 'social.backends.twitter.TwitterOAuth',
+#  'django.contrib.auth.backends.ModelBackend',
+# )
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
 
 )
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        #     'URL': 'http://127.0.0.1:9200/',
+        'URL': 'http://192.168.1.82:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 
 '''
 GEOPOSITION_MAP_OPTIONS = {

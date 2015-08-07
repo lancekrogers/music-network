@@ -85,6 +85,7 @@ def inflation(x,y):
     <input type="submit" value="Add Location">
     </form>
 
+elasticsearch -d -Des.config=/Users/lancerogers/Library/ElasticSearch/elasticsearch.yml
 
 {% endblock %}
 
