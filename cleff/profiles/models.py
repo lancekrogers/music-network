@@ -141,9 +141,6 @@ def set_description(sender, instance, created=False, **kwargs):
                 raise Exception
 
 
-
-
-
 class SavedMusician(models.Model):
     musician_pk = models.IntegerField()
 

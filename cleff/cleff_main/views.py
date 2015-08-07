@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from profiles.models import Musician, Location
+from profiles.models import Musician, Location, TimeFrame, Video
 # Create your views here.
 
 def home(request):
@@ -40,3 +40,5 @@ def current_location_view(request):
             }
 
         return redirect('main:feed')
+
+
