@@ -11,14 +11,13 @@ from cleff import settings
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
     UpdateGenresForm, UpdateInstrumentsForm, UpdateLocationsForm, YoutubeUrlForm, UpdateVideoForm, UpdateFriendsForm, \
-    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm
+    NonMusicianUpdateForm, NonMusicianUpdateWatchedMusicians, LocationTwoForm, AdjustMusicianSearchAreaForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
 # Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
-
 
 
 
@@ -464,6 +463,21 @@ class LocationCreateView(CreateView):
             pass
 
 
+def change_search_area_range(request):
+    musician = Musician.objects.get(user=request.user)
+    update_area_form = AdjustMusicianSearchAreaForm(
+        request.POST or None,
+        instance=musician,
+        initial={'search_range': 50}
+    )
+    if request.method == 'POST':
+        if update_area_form.is_valid():
+            update_area_form.save()
+            print('I am after the second if in update musician area ramge')
+            messages.add_message(request, 20, 'Search Area Updated')
+            return redirect('profiles:musician_profile', request.user.pk)
+    context = {'update_area_form': update_area_form}
+    return render(request, 'updates/update-area-musician.html', context)
 
 
 

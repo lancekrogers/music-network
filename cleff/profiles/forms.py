@@ -169,3 +169,11 @@ class LocationTwoForm(forms.ModelForm):
         widgets = {'location': MapOnlyWidget}
 
 
+class AdjustMusicianSearchAreaForm(forms.ModelForm):
+
+    class Meta:
+        model = Musician
+        fields = ['search_range']
+        labels = {'search_range': 'Search Area In Miles'}
+
+

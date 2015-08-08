@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from profiles.models import Musician, Location, TimeFrame, Video
+from haystack.utils.geo import Distance
 # Create your views here.
 
 def home(request):
@@ -41,4 +43,12 @@ def current_location_view(request):
 
         return redirect('main:feed')
 
+
+def distance_bar(request):
+    if request.user.musician:
+        current_location = request.user.musician.current_location
+    elif request.user.nonmusician:
+        current_location = request.user.current_location
+    else:
+        messages.add_message(request, 20, 'Please Login')
 

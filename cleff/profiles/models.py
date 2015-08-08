@@ -19,6 +19,7 @@ class ProfileModel(models.Model):
     locations = models.ManyToManyField('Location', blank=True)
     current_location = GeopositionField(blank=True)
     is_musician = models.BooleanField(default=False)
+    search_range = models.IntegerField(default=50)
 
     def profile_image_func(self):
         if self.profile_image.url:
