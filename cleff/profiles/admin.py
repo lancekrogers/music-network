@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from .models import Musician, NonMusician, Genre, TimeFrame, Video, ProfileModel, Location, InstrumentGroup, \
-    SavedMusician
+    SavedMusician, Comrade
 # Register your models here.
 admin.site.register(Genre)
 admin.site.register(TimeFrame)
@@ -12,6 +12,7 @@ admin.site.register(InstrumentGroup)
 admin.site.register(Musician)
 admin.site.register(NonMusician)
 admin.site.register(SavedMusician)
+admin.site.register(Comrade)
 
 
 

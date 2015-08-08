@@ -7,7 +7,6 @@ from PIL import Image  # this is needed for the models.ImageField to work
 from geoposition.fields import GeopositionField
 from geopy.geocoders import Nominatim
 from django.contrib.gis.geos import Point
-
 # Create your models here.
 
 class ProfileModel(models.Model):
@@ -20,6 +19,7 @@ class ProfileModel(models.Model):
     current_location = GeopositionField(blank=True)
     is_musician = models.BooleanField(default=False)
     search_range = models.IntegerField(default=50)
+    comrades = models.ManyToManyField('Comrade', blank=True)
 
     def profile_image_func(self):
         if self.profile_image.url:
@@ -155,3 +155,10 @@ class SavedMusician(models.Model):
 
     def __str__(self):
         return "{}".format(Musician.objects.get(pk=self.musician_pk))
+
+
+class Comrade(models.Model):
+    musicians = models.ForeignKey(SavedMusician, blank=True)
+
+    def __str__(self):
+        return 'Comrade: {}'.format(Musician.objects.get(pk=self.musicians.pk))

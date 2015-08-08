@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from profiles.models import Musician, Location, TimeFrame, Video, NonMusician
+from profiles.models import Musician, Location, TimeFrame, Video, NonMusician, \
+    SavedMusician, Comrade
 from django.contrib.gis.geos import Point
 from haystack.query import SearchQuerySet
 from haystack.utils.geo import Distance
@@ -26,6 +27,38 @@ def current_location_view(request):
             user.current_location = cor_data
             user.save()
             print('Working Music Loc is {}'.format(user.current_location))
+            loca = Location.objects.create(
+                user_pk=user.pk,
+                location=cor_data,
+            )
+            loca.save()
+            coor = user.current_location
+            lat = float(coor.latitude)
+            lon = float(coor.longitude)
+            current_location = Point(lon, lat)
+            radius = request.user.musician.search_range
+            max_dist = Distance(mi=radius)
+            loc_match = SearchQuerySet().dwithin('location', current_location, max_dist)
+            print(loc_match)
+            if len(loc_match) > 0:
+                for obj in loc_match:
+                    print(obj)
+                    print(obj.pk)
+                    try:
+                        loc_o = Location.objects.get(pk=obj.pk)
+                        print('made it to loc_o {}'.format(loc_o))
+                        loc_o_user = Musician.objects.get(pk=loc_o.user_pk)
+                        print(loc_o_user)
+                        print('right here baby')
+                        sav = SavedMusician.objects.create(musician_pk=int(loc_o_user.pk))
+                        print('decent')
+                        com = Comrade.objects.create(musicians=sav)
+                        print('com {}'.format(com))
+                        user.comrades.add(com)
+                        user.save()
+
+                    except:
+                        print('shit')
             return redirect('main:feed')
 
 
