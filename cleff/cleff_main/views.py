@@ -38,27 +38,42 @@ def current_location_view(request):
             current_location = Point(lon, lat)
             radius = request.user.musician.search_range
             max_dist = Distance(mi=radius)
-            loc_match = SearchQuerySet().dwithin('location', current_location, max_dist)
-            print(loc_match)
+            loc_match = SearchQuerySet().dwithin(
+                'location',
+                current_location,
+                max_dist)
             if len(loc_match) > 0:
                 for obj in loc_match:
-                    print(obj)
-                    print(obj.pk)
                     try:
                         loc_o = Location.objects.get(pk=obj.pk)
-                        print('made it to loc_o {}'.format(loc_o))
                         loc_o_user = Musician.objects.get(pk=loc_o.user_pk)
-                        print(loc_o_user)
-                        print('right here baby')
-                        sav = SavedMusician.objects.create(musician_pk=int(loc_o_user.pk))
-                        print('decent')
-                        com = Comrade.objects.create(musicians=sav)
-                        print('com {}'.format(com))
-                        user.comrades.add(com)
-                        user.save()
-
+                        if loc_o_user != user:
+                            if not loc_o_user in SavedMusician.objects.all():
+                                sav = SavedMusician.objects.create(musician_pk=int(loc_o_user.pk))
+                                sav.save()
+                                com = Comrade.objects.create(musicians=sav)
+                                print('Sav...{}....and....Com...{}...Created in if not.....'.format(
+                                    sav,
+                                    com))
+                                com.save()
+                                print('........{}....SavedMusician...... '.format(loc_o_user))
+                            else:
+                                sav = SavedMusician.objects.get(musician_pk=int(loc_o_user.pk))
+                                com = Comrade.objects.get(musicians=sav)
+                                print('Sav...{}....and....Com...{}...Created in if not.....'.format(
+                                    sav,
+                                    com))
+                            if not com in user.comrades.all():
+                                user.comrades.add(com)
+                                user.save()
+                                print('....{}...added..to....{}'.format(
+                                    com,
+                                    user.username))
+                            else:
+                                print('I hate everyone man')
                     except:
-                        print('shit')
+                        print('......hit.....except...in....current_location_view...')
+                        pass
             return redirect('main:feed')
 
 

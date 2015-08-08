@@ -127,7 +127,7 @@ def set_description(sender, instance, created=False, **kwargs):
             geolocator = Nominatim()
             lat = instance.location.latitude
             lon = instance.location.longitude
-            print('{}, {}'.format(lat, lon))
+            print('.....{}, {}........'.format(lat, lon))
             loc = geolocator.reverse([lat, lon])
             address = loc.address
             print(address)
@@ -138,17 +138,17 @@ def set_description(sender, instance, created=False, **kwargs):
                 geolocator = Nominatim()
                 lat = instance.location.latitude
                 lon = instance.location.longitude
-                print('{}, {}'.format(lat, lon))
+                print('..........{}, {}........'.format(lat, lon))
                 loc = geolocator.reverse([lat, lon])
                 address = loc.address
                 print(address)
                 instance.description = address
                 instance.save()
             except:
-                print('didnt work')
+                print('......didnt work.......')
                 instance.description = 'Location created on {}'.format(instance.date_added)
-                raise Exception
-
+                instance.save()
+                pass
 
 class SavedMusician(models.Model):
     musician_pk = models.IntegerField()
@@ -158,7 +158,7 @@ class SavedMusician(models.Model):
 
 
 class Comrade(models.Model):
-    musicians = models.ForeignKey(SavedMusician, blank=True)
+    musicians = models.OneToOneField(SavedMusician, blank=True, primary_key=True)
 
     def __str__(self):
-        return 'Comrade: {}'.format(Musician.objects.get(pk=self.musicians.pk))
+        return 'Com {}'.format(Musician.objects.get(pk=self.musicians.musician_pk))

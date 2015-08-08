@@ -478,10 +478,3 @@ def change_search_area_range(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_area_form': update_area_form}
     return render(request, 'updates/update-area-musician.html', context)
-
-
-
-
-
-
-

@@ -10,7 +10,7 @@ window.onload = function() {
         window.location = window.location + '#loaded';
         window.location.reload();
     }
-}
+};
 
 function initGeolocation() {
     if (navigator && navigator.geolocation) {
@@ -39,6 +39,7 @@ function successCallback(position) {
 }
 
 </script>
+
 {% elif request.user.nonmusician %}
 
 <script>
@@ -47,7 +48,7 @@ window.onload = function() {
         window.location = window.location + '#loaded';
         window.location.reload();
     }
-}
+};
 
 function initGeolocation() {
     if (navigator && navigator.geolocation) {
