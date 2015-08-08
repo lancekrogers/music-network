@@ -15,6 +15,7 @@ def home(request):
 def feed(request):
     return render(request, 'main/main-feed.html')
 
+
 def current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
@@ -64,13 +65,14 @@ def current_location_view(request):
                                     sav,
                                     com))
                             if not com in user.comrades.all():
+
                                 user.comrades.add(com)
                                 user.save()
                                 print('....{}...added..to....{}'.format(
                                     com,
                                     user.username))
                             else:
-                                print('I hate everyone man')
+                                print()
                     except:
                         print('......hit.....except...in....current_location_view...')
                         pass
@@ -112,6 +114,3 @@ def distance_search(request):
         else:
             messages.add_message(request, 20, 'Please Login')
             return redirect('main:feed')
-
-
-

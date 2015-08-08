@@ -9,6 +9,7 @@ from geopy.geocoders import Nominatim
 from django.contrib.gis.geos import Point
 # Create your models here.
 
+
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     email = models.EmailField(blank=True)
@@ -149,6 +150,7 @@ def set_description(sender, instance, created=False, **kwargs):
                 instance.description = 'Location created on {}'.format(instance.date_added)
                 instance.save()
                 pass
+
 
 class SavedMusician(models.Model):
     musician_pk = models.IntegerField()
