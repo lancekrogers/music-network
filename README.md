@@ -18,3 +18,7 @@ on the other.  I might try to figure out how to do a slide in button menu contai
 my site.
 
 
+I edited django-geoposition.  My project requires a pip install from my github page.  My version of 
+django-geoposition can be installed using pip.
+
+##Pip install git+https://github.com/lancekrogers/django-geoposition

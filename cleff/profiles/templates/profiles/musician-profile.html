@@ -2,6 +2,7 @@
 
 {% block body %}
 {% load staticfiles %}
+    <div align="Center">
     <a href="{% url 'main:home' %}"><button>Home</button></a><br><br>
     {% if request.user.musician %}
         {% if messages %}
@@ -30,5 +31,5 @@
     <a href="{% url 'profiles:musician_update' %}"><button>Update Your Information Here</button></a><br><br>
 
     {% endif %}
-
+</div>
 {% endblock %}

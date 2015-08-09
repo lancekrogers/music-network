@@ -163,4 +163,4 @@ class Comrade(models.Model):
     numbre = models.OneToOneField(SavedMusician, blank=True, primary_key=True)
 
     def __str__(self):
-        return 'Com {}'.format(Musician.objects.get(pk=self.numbre.numbre))
+        return 'Comrade {}'.format(Musician.objects.get(pk=self.numbre.numbre))
