@@ -177,3 +177,11 @@ class AdjustMusicianSearchAreaForm(forms.ModelForm):
         labels = {'search_range': 'Search Area In Miles'}
 
 
+class AdjustNonMusicianSearchAreaForm(forms.ModelForm):
+
+    class Meta:
+        model = NonMusician
+        fields = ['search_range']
+        labels = {'search_range': 'Search Area In Miles'}
+
+

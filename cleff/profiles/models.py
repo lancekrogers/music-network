@@ -17,10 +17,10 @@ class ProfileModel(models.Model):
     last_name = models.CharField(max_length=15, blank=True)
     profile_image = models.ImageField(upload_to='profile_image/%Y/%m/%d', blank=True)
     locations = models.ManyToManyField('Location', blank=True)
-    current_location = GeopositionField(blank=True)
-    is_musician = models.BooleanField(default=False)
-    search_range = models.IntegerField(default=50)
-    comrades = models.ManyToManyField('Comrade', blank=True)
+    current_location = GeopositionField(blank=True)  # comrades are the matched users
+    is_musician = models.BooleanField(default=False)  # the more times a comrade with the same user_pk
+    search_range = models.IntegerField(default=50)  #
+    comrades = models.ManyToManyField('Comrade', blank=True)  #
 
     def profile_image_func(self):
         if self.profile_image.url:
@@ -153,14 +153,14 @@ def set_description(sender, instance, created=False, **kwargs):
 
 
 class SavedMusician(models.Model):
-    musician_pk = models.IntegerField()
+    numbre = models.IntegerField()
 
     def __str__(self):
-        return "{}".format(Musician.objects.get(pk=self.musician_pk))
+        return "{}".format(Musician.objects.get(pk=self.numbre))
 
 
 class Comrade(models.Model):
-    musicians = models.OneToOneField(SavedMusician, blank=True, primary_key=True)
+    numbre = models.OneToOneField(SavedMusician, blank=True, primary_key=True)
 
     def __str__(self):
-        return 'Com {}'.format(Musician.objects.get(pk=self.musicians.musician_pk))
+        return 'Com {}'.format(Musician.objects.get(pk=self.numbre.numbre))

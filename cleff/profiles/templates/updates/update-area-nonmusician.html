@@ -1,0 +1,18 @@
+{% extends 'profiles/base.html' %}
+{% block body %}
+
+{% if request.user.nonmusician %}
+
+    <div align="Center">
+    <form method="POST">
+        {% csrf_token %}
+        {{ update_area_form }}
+        <input type="submit" value="Change">
+    </form>
+    </div>
+
+{% endif %}
+
+
+
+{% endblock %}

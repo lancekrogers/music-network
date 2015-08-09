@@ -5,7 +5,8 @@ from .views import musician_registration, non_musician_registration, choose, mus
     non_musician_profile, update_musician_profile, musician_add_time_frame, musician_update_time_frame, add_genre,\
     update_genres, add_instrument, update_instruments, musician_add_location, update_musician_location, \
     youtube_url_decoder_view, update_video, update_friends, add_profile_image, add_profile_image_non_musician, \
-    update_non_musician_profile, update_watched_musicians, LocationCreateView, change_search_area_range
+    update_non_musician_profile, update_watched_musicians, LocationCreateView, change_search_area_range, \
+    non_musician_change_search_area_range
 
 urlpatterns = [
     url(r'^register-musician/$',
@@ -82,6 +83,9 @@ urlpatterns = [
     url(r'^update-range-musician/',
         change_search_area_range,
         name='update_area_range'),
+    url(r'update-range-nonmusician/',
+        non_musician_change_search_area_range,
+        name='update_non_area_range'),
 
 
 

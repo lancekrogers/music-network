@@ -16,7 +16,7 @@ def feed(request):
     return render(request, 'main/main-feed.html')
 
 
-def current_location_view(request):
+def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
         print(cor_data)
@@ -37,7 +37,7 @@ def current_location_view(request):
             lat = float(coor.latitude)
             lon = float(coor.longitude)
             current_location = Point(lon, lat)
-            radius = request.user.musician.search_range
+            radius = user.search_range
             max_dist = Distance(mi=radius)
             loc_match = SearchQuerySet().dwithin(
                 'location',
@@ -49,37 +49,49 @@ def current_location_view(request):
                         loc_o = Location.objects.get(pk=obj.pk)
                         loc_o_user = Musician.objects.get(pk=loc_o.user_pk)
                         if loc_o_user != user:
-                            if not loc_o_user in SavedMusician.objects.all():
-                                sav = SavedMusician.objects.create(musician_pk=int(loc_o_user.pk))
+                            print('loc_o != user')
+                            print(loc_o_user.pk)
+                            try:
+                                print('trying....and...crying')
+                                sav = SavedMusician.objects.filter(numbre=loc_o_user.pk)[0]
+                                print('im here')
+                                try:
+                                    print('not....crying..as..bad')
+                                    com = Comrade.objects.filter(numbre=sav)[0]
+                                    print('Yay you know it worked!')
+                                except:
+                                    com = Comrade.objects.create(numbre=sav)
+                                print('Sav...{}....and....Com...{}...Created in try.....'.format(
+                                    sav,
+                                    com))
+                            except:
+                                sav = SavedMusician.objects.create(numbre=loc_o_user.pk)
                                 sav.save()
-                                com = Comrade.objects.create(musicians=sav)
-                                print('Sav...{}....and....Com...{}...Created in if not.....'.format(
+                                com = Comrade.objects.create(numbre=sav)
+                                print('Sav...{}....and....Com...{}...Created in except.....'.format(
                                     sav,
                                     com))
                                 com.save()
-                                print('........{}....SavedMusician...... '.format(loc_o_user))
+                                print('........{}....SavedMusician....Has Been Saved....You are welcome.... '.format(
+                                    loc_o_user))
+                            if com in user.comrades.all():
+                                print('Com {} already in {}s comrade list'.format(
+                                    com,
+                                    user))
+                                pass
                             else:
-                                sav = SavedMusician.objects.get(musician_pk=int(loc_o_user.pk))
-                                com = Comrade.objects.get(musicians=sav)
-                                print('Sav...{}....and....Com...{}...Created in if not.....'.format(
-                                    sav,
-                                    com))
-                            if not com in user.comrades.all():
-
                                 user.comrades.add(com)
                                 user.save()
                                 print('....{}...added..to....{}'.format(
                                     com,
-                                    user.username))
-                            else:
-                                print()
+                                    user))
                     except:
                         print('......hit.....except...in....current_location_view...')
                         pass
             return redirect('main:feed')
 
 
-def non_current_location_view(request):
+def nonmusician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
         if request.user.nonmusician:
@@ -87,30 +99,4 @@ def non_current_location_view(request):
             user = request.user.nonmusician
             user.current_location = cor_data
             user.save()
-            print('working nonmusician c_loc {}'.format(cor_data))
-            return redirect('main:feed')
-
-
-def distance_search(request):
-    if request.POST:
-        if request.user.musician:
-            coor = request.user.musician.current_location
-            lat = float(coor.latitude)
-            lon = float(coor.longitude)
-            current_location = Point(lon, lat)
-            radius = request.user.musician.search_range
-            max_dist = Distance(mi=radius)
-            loc_match = SearchQuerySet().dwithin('location', current_location, max_dist)
-            print(loc_match)
-        elif request.user.nonmusician:
-            coor = request.user.current_location
-            lat = float(coor.latitude)
-            lon = float(coor.longitude)
-            current_location = Point(lon, lat)
-            radius = request.user.nonmusician.search_range
-            max_dist = Distance(mi=radius)
-            loc_match = SearchQuerySet().dwithin('location', current_location, max_dist)
-            print(loc_match)
-        else:
-            messages.add_message(request, 20, 'Please Login')
             return redirect('main:feed')
