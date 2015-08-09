@@ -13,7 +13,8 @@ def home(request):
 
 
 def feed(request):
-    return render(request, 'main/main-feed.html')
+    context = render_comrades(request)
+    return render(request, 'main/main-feed.html', context)
 
 
 def denied(request):
@@ -160,5 +161,35 @@ def nonmusician_current_location_view(request):
                         print('......hit.....except...in....current_location_view...')
                         pass
             return redirect('main:feed')
+
+
+def render_comrades(request):
+    print('hhewhlghasd;lgh;dasjgopdskpkjrpughfjkd')
+    context = {}
+    try:
+        print('.......render_comrades ...is..musician....')
+        visitor = request.user.musician
+        comrades = visitor.comrades.all()
+        musician_list = []
+        try:
+            for com in comrades:
+                muc = Musician.objects.get(pk=com.numbre.numbre)
+                musician_list.append(muc)
+        except:
+            messages.add_message(request, 20, 'No Musician Matches')
+        context['comrades'] = musician_list
+    except:
+        print('......non..musician.....render.....comrades...')
+        visitor = request.user.nonmusician
+        comrades = visitor.comrades.all()
+        musician_list = []
+        try:
+            for com in comrades:
+                muc = Musician.objects.get(pk=com.numbre.numbre)
+                musician_list.append(muc)
+        except:
+            messages.add_message(request, 20, 'No Musician Matches')
+        context['comrades'] = musician_list
+    return context
 
 

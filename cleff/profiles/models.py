@@ -46,6 +46,10 @@ class Musician(ProfileModel):
     def __str__(self):
         return '{}'.format(self.user.username)
 
+    def latest_video(self):
+        if Video.objects.filter(user_pk=self.pk):
+            return Video.objects.filter(user_pk=self.pk)[0]
+
 class NonMusician(ProfileModel):
     summary = models.TextField(blank=True)
     company = models.CharField(max_length=60, blank=True)

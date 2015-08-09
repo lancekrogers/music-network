@@ -512,7 +512,8 @@ class MusicianPublicProfile(DetailView):
         if self.object.first_name:
             dn = self.object.first_name
         else:
-            dn = self.object.username
+            dn = self.object.user.username
+
         return dn.title()
 
 
