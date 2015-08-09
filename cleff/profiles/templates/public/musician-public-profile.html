@@ -1,12 +1,41 @@
 {% extends 'public/base.html' %}
 {% block  body %}
+<h1>Checkout {{ view.display_name}}</h1>
+
+{% if object.profile_image %}<img src="/static{{ object.profile_image.url }}" width="20%" />{% endif %}
+
+{% if object.summary %}<h2>{{ view.display_name }}'s Summary</h2> <p>{{ object.summary }}</p>{% endif %}
+
+{% if object.company %}<p><b>Company:</b> {{ object.company }}</p>{% endif %}
+
+{% if object.availability.all %}
+<h3>Availability:</h3>
+    <ul>
+    {% for x in object.availability.all %}
+        <li>{{ x }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if object.instrument_group %}
+    <h3>Instrument Families</h3>
+    <ul>
+    {% for x in object.instrument_group.all %}
+        <li>{{ x.family }}{% if x.description %}: {{ x.description }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if object.genres %}
+    <h3>Genres</h3>
+    <ul>
+    {% for x in object.genres.all %}
+        <li>{{ x.genre }}{% if x.description %}: {{ x.description }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 
- {% for vid in object.video.all %}
-     <div class="videoWrapper">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ vid.embedded_code }}" frameborder="0" ></iframe><br>
-     </div>
-{% endfor %}
-
+ <div class="videoWrapper"><iframe  src="https://www.youtube.com/embed/{{ view.latest_video.embedded_code }}" frameborder="0" ></iframe></div>
 
 {% endblock %}

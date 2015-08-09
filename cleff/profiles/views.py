@@ -501,3 +501,14 @@ class MusicianPublicProfile(DetailView):
     model = Musician
     template_name= 'public/musician-public-profile.html'
 
+    def latest_video(self):
+        return Video.objects.filter(user_pk=self.object.pk)[0]
+
+    def display_name(self):
+        if self.object.first_name:
+            dn = self.object.first_name
+        else:
+            dn = self.object.username
+        return dn.title()
+
+

@@ -162,8 +162,4 @@ GEOPOSITION_MAP_OPTIONS = {
 GEOPOSITION_MARKER_OPTIONS = {
     'cursor': 'move'
 }
-
-GEOPOSITION_MAP_WIDGET_HEIGHT = {
-    'height': 800,
-}
 '''

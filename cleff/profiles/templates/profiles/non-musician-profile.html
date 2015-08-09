@@ -4,14 +4,14 @@
 <h2>Hows it going {{ user.username }}?</h2><br><br>
     <a href="{% url 'main:home' %}"><button>Home</button></a><br><br>
 
-{% if request.user.nonmusician %}
+{% if request.user.nonmusician == profile %}
     {% if messages %}
         {% for message in messages %}
               {{ message }}
         {% endfor %}
     {% endif %}<br><br>
-    {% if request.user.nonmusician.profile_image %}
-        <img src="/static{{ request.user.nonmusician.profile_image.url }}" width="200" />
+    {% if profile.profile_image %}
+        <img src="/static{{ profile.profile_image.url }}" width="20%" />
     {% endif %}<br><br>
 
 <a href="{% url 'profiles:update_watched_musicians' %}"><button>Update Watched Musicians</button></a><br><br>
