@@ -1,0 +1,12 @@
+{% extends 'public/base.html' %}
+{% block  body %}
+
+
+ {% for vid in object.video.all %}
+     <div class="videoWrapper">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ vid.embedded_code }}" frameborder="0" ></iframe><br>
+     </div>
+{% endfor %}
+
+
+{% endblock %}

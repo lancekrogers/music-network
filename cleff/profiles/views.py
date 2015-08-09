@@ -496,3 +496,8 @@ def non_musician_change_search_area_range(request):
             return redirect('profiles:musician_profile', request.user.pk)
     context = {'update_area_form': update_area_form}
     return render(request, 'updates/update-area-nonmusician.html', context)
+
+class MusicianPublicProfile(DetailView):
+    model = Musician
+    template_name= 'public/musician-public-profile.html'
+

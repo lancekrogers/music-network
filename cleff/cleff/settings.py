@@ -156,10 +156,14 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 '''
 GEOPOSITION_MAP_OPTIONS = {
     'minZoom': 3,
-    'maxZoom': 15,
+    'maxZoom': 8,
 }
 
 GEOPOSITION_MARKER_OPTIONS = {
     'cursor': 'move'
+}
+
+GEOPOSITION_MAP_WIDGET_HEIGHT = {
+    'height': 800,
 }
 '''
