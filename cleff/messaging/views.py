@@ -1,16 +1,17 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
-from django.views.generic import ListView, DetailView, CreateView
-from messaging.forms import MusicianMessageForm
+from django.views.generic import ListView, DetailView
+
+from custom_wrappers import musician_wrapper_func
 from profiles.models import Musician
 from .models import MusicianMusicianConversation, MusMusMessage
+
 # Create your views here.
 
-login_required
+
 class MusicianMusicianConversationListView(ListView):
     model = MusicianMusicianConversation
 
@@ -26,6 +27,14 @@ class MusicianMusicianConversationListView(ListView):
         profile = Musician.objects.get(user=self.request.user)
         return MusicianMusicianConversation.objects.filter(Q(musician_one=profile) | Q(musician_two=profile))
 
+    @method_decorator(user_passes_test(musician_wrapper_func,
+                                       redirect_field_name='main:denied',
+                                       login_url='main:denied',
+                                       ))
+    def dispatch(self, *args, **kwargs):
+        print("user passed test", musician_wrapper_func)
+        return super().dispatch(*args, **kwargs)
+
 
 class MusicianMusicianConversationDetailView(DetailView):
     model = MusicianMusicianConversation
@@ -34,6 +43,15 @@ class MusicianMusicianConversationDetailView(DetailView):
     def list_of_messages(self):
         return MusicianMusicianConversation.messages
 
+    @method_decorator(user_passes_test(musician_wrapper_func,
+                                       redirect_field_name='main:denied',
+                                       login_url='main:denied',
+                                       ))
+    def dispatch(self, *args, **kwargs):
+        print("user passed test", musician_wrapper_func)
+        return super().dispatch(*args, **kwargs)
+
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def mm_start_conv(request, receiver_pk):
     me = Musician.objects.get(pk=request.user.pk)
     print(me)
@@ -60,6 +78,8 @@ def mm_start_conv(request, receiver_pk):
         return HttpResponseRedirect(redirection)
 
 
+
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def mm_message_create_view(request, conversation_pk, receiver_pk):
     message_t = request.POST['memo']
     conv = MusicianMusicianConversation.objects.get(pk=conversation_pk)

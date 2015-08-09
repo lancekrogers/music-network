@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block body %}
+<div align="Center">
+<h1>Hey You Can't Go There</h1>
+<h2>You might want to try registering as a musician</h2>
+<a href="{% url 'profiles:register_musician' %}"><button>Register as Musician</button></a><br>
+<h2>Or go check out another area of our site!</h2>
+<a href="{% url 'main:home' %}"><button>Home</button></a><br>
+</div>
+
+
+{% endblock %}

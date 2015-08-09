@@ -16,6 +16,10 @@ def feed(request):
     return render(request, 'main/main-feed.html')
 
 
+def denied(request):
+    return render(request, 'main/denied.html')
+
+
 def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
@@ -156,3 +160,5 @@ def nonmusician_current_location_view(request):
                         print('......hit.....except...in....current_location_view...')
                         pass
             return redirect('main:feed')
+
+

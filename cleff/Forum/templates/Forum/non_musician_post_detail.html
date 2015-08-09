@@ -19,7 +19,7 @@
 {% for obj in response %}
     <div><br>Timestamp: {{obj.timestamp}} <br><br>User:
         {% if obj.user.nonmusician.pk %}
-             <a href="{% url 'profiles:public_profile' obj.user.user.pk %}">
+             <a href="{% url 'profiles:non_m_public_profile' obj.user.user.pk %}">
    {{obj.user.user.username}}</a>
         {% endif %}<br>
   {{obj.text}}</div><br></br>

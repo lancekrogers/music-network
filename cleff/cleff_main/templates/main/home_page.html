@@ -17,11 +17,11 @@
 
     {% if request.user.musician %}
 
-        <a href="{% url 'profiles:musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
+        <a href="{% url 'profiles:musician_profile' %}"><button>Update Profile</button></a><br></br>
 
     {% else %}
 
-        <a href="{% url 'profiles:non_musician_profile' user.pk %}"><button>Update Profile</button></a><br></br>
+        <a href="{% url 'profiles:non_musician_profile' %}"><button>Update Profile</button></a><br></br>
 
 {% endif %}
 

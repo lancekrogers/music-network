@@ -8,7 +8,7 @@
     <title>Base Profiles</title>
 </head>
 <body>
-<div><a href="{% url 'profiles:musician_profile' request.user.pk %}"><button>Back</button></a></div>
+<div><a href="{% url 'profiles:musician_profile' %}"><button>Back</button></a></div>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.media }}

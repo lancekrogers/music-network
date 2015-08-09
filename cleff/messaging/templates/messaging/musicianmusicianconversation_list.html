@@ -4,7 +4,7 @@
 
 {% if request.user.musician %}
 <a href="{% url 'main:home'  %}"><button>Home</button></a><br></br>
-<a href="{% url 'profiles:musician_profile' request.user.musician.pk %}"><button>Profile</button></a><br></br>
+<a href="{% url 'profiles:musician_profile'  %}"><button>Profile</button></a><br></br>
 
 
 {% if object_list %}

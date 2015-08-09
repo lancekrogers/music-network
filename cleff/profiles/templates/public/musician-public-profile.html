@@ -19,7 +19,7 @@
     </ul>
 {% endif %}
 
-{% if object.instrument_group %}
+{% if object.instrument_group.all %}
     <h3>Instrument Families</h3>
     <ul>
     {% for x in object.instrument_group.all %}
@@ -28,7 +28,7 @@
     </ul>
 {% endif %}
 
-{% if object.genres %}
+{% if object.genres.all %}
     <h3>Genres</h3>
     <ul>
     {% for x in object.genres.all %}
@@ -36,7 +36,7 @@
     {% endfor %}
     </ul>
 {% endif %}
-    {% if object.video %}
+    {% if object.video.all %}
  <div class="videoWrapper"><iframe  src="https://www.youtube.com/embed/{{ view.latest_video.embedded_code }}" frameborder="0" ></iframe></div>
     {% endif %}
 

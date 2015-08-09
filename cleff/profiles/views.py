@@ -19,6 +19,7 @@ from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGr
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
+from django.contrib.auth.decorators import user_passes_test
 
 
 
@@ -66,7 +67,6 @@ def musician_registration(request):
                                   context_instance=RequestContext(request))
 
 
-# add login required later
 def non_musician_registration(request):
     print('first non m print')
     if request.POST:
@@ -114,7 +114,8 @@ def choose(request):
     return render(request, 'profiles/choose.html')
 
 
-def musician_profile(request, user_id):
+def musician_profile(request):
+    user_id = request.user.pk
     try:
         profile = Musician.objects.get(pk=user_id)
     except Musician.DoesNotExist:
@@ -129,7 +130,8 @@ def musician_profile(request, user_id):
                               context, context_instance=RequestContext(request))
 
 
-def non_musician_profile(request, user_id):
+def non_musician_profile(request):
+    user_id = request.user.pk
     try:
         profile = NonMusician.objects.get(pk=user_id)
     except NonMusician.DoesNotExist:
@@ -147,7 +149,7 @@ def update_musician_profile(request):
             update_musician_form.save()
             print('I am here')
             messages.add_message(request, INFO, 'Profile updated!')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_musician': update_musician_form}
     return render(request, 'updates/music-update-profile.html', context)
 
@@ -161,7 +163,7 @@ def update_non_musician_profile(request):
             update_nonmusician_form.save()
             print('I am here')
             messages.add_message(request, INFO, 'Profile updated!')
-            return redirect('profiles:non_musician_profile', request.user.pk)
+            return redirect('profiles:non_musician_profile')
     context = {'update_non_musician': update_nonmusician_form}
     return render(request, 'updates/nonmusic-update-profile.html', context)
 
@@ -181,7 +183,7 @@ def musician_add_time_frame(request):
                 musician.save()
                 messages.add_message(request, INFO, 'Availability added!')
                 print('Time frame form should have been added to the musician')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'time_frame_form': time_frame_form}
     return render(request, 'updates/time-frame.html', context)
 
@@ -199,7 +201,7 @@ def musician_update_time_frame(request):
             messages.add_message(request,
                                  INFO,
                                  'Availability updated!')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_availability': update_musician_form}
     return render(request, 'updates/music-update-availability.html', context)
 
@@ -219,7 +221,7 @@ def add_genre(request):
                 musician.save()
                 messages.add_message(request, INFO, 'Genre added!')
                 print('Genre form should have been added to the musician')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'add_genre_form': genre_form}
     return render(request, 'updates/add-genre.html', context)
 
@@ -236,7 +238,7 @@ def update_genres(request):
             update_genres_form.save()
             messages.add_message(request, INFO, 'Genre updated!')
             print('I am here')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_genres_form': update_genres_form}
     return render(request, 'updates/update-genres.html', context)
 
@@ -256,7 +258,7 @@ def add_instrument(request):
                 musician.save()
                 messages.add_message(request, INFO, 'Instrument Family Added!')
                 print('Instrument form should have been added to the musician')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'add_instrument_form': instrument_form}
     return render(request, 'updates/add-instrument.html', context)
 
@@ -273,7 +275,7 @@ def update_instruments(request):
             update_instruments_form.save()
             messages.add_message(request, INFO, 'Instruments updated!')
             print('I am here')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_instruments_form': update_instruments_form}
     return render(request, 'updates/update-instruments.html', context)
 
@@ -292,7 +294,7 @@ def musician_add_location(request):
                 musician.locations.add(obj)
                 musician.save()
                 print('Location form should have been added to the musician')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'musician_location_form': location_form}
     return render(request, 'updates/add-musician-location.html', context)
 
@@ -310,7 +312,7 @@ def update_musician_location(request):
             update_location_form.save()
             print('I am after the second if in update musician location')
             messages.add_message(request, INFO, 'Locations Updated')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_location_form': update_location_form}
     return render(request, 'updates/update-musician-location.html', context)
 
@@ -339,7 +341,7 @@ def youtube_url_decoder_view(request):
                 obj.save()
                 musician.video.add(obj)
                 musician.save()
-                return redirect('profiles:musician_profile', request.user.pk)
+                return redirect('profiles:musician_profile')
             # figure out how to raise error message here
         else:
             messages.add_message(request, INFO, 'Please enter a Youtube video url!')
@@ -358,7 +360,7 @@ def update_video(request):
         if update_video_form.is_valid():
             update_video_form.save()
             print('I am after the second if in update musician location')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_video_form': update_video_form}
     return render(request, 'updates/update-video.html', context)
 
@@ -374,7 +376,7 @@ def update_friends(request):
         if update_friends_form.is_valid():
             update_friends_form.save()
             print('I am after the second if in update musician friends')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_friends_form': update_friends_form}
     return render(request, 'updates/update-friends.html', context)
 
@@ -396,7 +398,7 @@ def add_profile_image(request):
             except MultiValueDictKeyError:
                 print('MultiValueDictKeyError in add_profile_image')
                 messages.add_message(request, INFO, 'Profile Photo Not Updated')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/add-profile-photo.html', context)
 
@@ -415,7 +417,7 @@ def add_profile_image_non_musician(request):
             except MultiValueDictKeyError:
                 print('MultiValueDictKeyError in add_profile_image')
                 messages.add_message(request, INFO, 'Profile Photo Not Updated')
-            return redirect('profiles:non_musician_profile', request.user.pk)
+            return redirect('profiles:non_musician_profile')
     context = {'profile_image_form': profile_image_form}
     return render(request, 'updates/non-musician-p-image.html', context)
 
@@ -432,7 +434,7 @@ def update_watched_musicians(request):
             update_watched_form.save()
             messages.add_message(request, INFO, 'Watched Musicians Updated')
             print('I am after the second if in update musician friends')
-            return redirect('profiles:non_musician_profile', request.user.pk)
+            return redirect('profiles:non_musician_profile')
     context = {'update_watched_form': update_watched_form}
     return render(request, 'updates/update-watched-musicians.html', context)
 
@@ -451,14 +453,14 @@ class LocationCreateView(CreateView):
                     obj = form.save()
                     m.locations.add(obj)
                     messages.add_message(self.request, INFO, 'Location Added')
-                    return redirect('profiles:musician_profile', self.request.user.pk)
+                    return redirect('profiles:musician_profile')
                 except:
                     if v < 1:
                         v -= 1
                         continue
                     else:
                         messages.add_message(self.request, INFO, 'An Error Occured')
-            return redirect('profiles:musician_profile', self.request.user.pk)
+            return redirect('profiles:musician_profile')
         else:
             form.add_error('common_error', 'An Error has occurred')
             pass
@@ -469,14 +471,14 @@ def change_search_area_range(request):
     update_area_form = AdjustMusicianSearchAreaForm(
         request.POST or None,
         instance=musician,
-        initial={'search_range': 50}
+        initial={'search_range': musician.search_range}
     )
     if request.method == 'POST':
         if update_area_form.is_valid():
             update_area_form.save()
             print('I am after the second if in update musician area ramge')
             messages.add_message(request, 20, 'Search Area Updated')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_area_form': update_area_form}
     return render(request, 'updates/update-area-musician.html', context)
 
@@ -486,23 +488,25 @@ def non_musician_change_search_area_range(request):
     update_area_form = AdjustNonMusicianSearchAreaForm(
         request.POST or None,
         instance=musician,
-        initial={'search_range': 50}
+        initial={'search_range': musician.search_range}
     )
     if request.method == 'POST':
         if update_area_form.is_valid():
             update_area_form.save()
             print('I am after the second if in update musician area ramge')
             messages.add_message(request, 20, 'Search Area Updated')
-            return redirect('profiles:musician_profile', request.user.pk)
+            return redirect('profiles:musician_profile')
     context = {'update_area_form': update_area_form}
     return render(request, 'updates/update-area-nonmusician.html', context)
+
 
 class MusicianPublicProfile(DetailView):
     model = Musician
     template_name= 'public/musician-public-profile.html'
 
     def latest_video(self):
-        return Video.objects.filter(user_pk=self.object.pk)[0]
+        if Video.objects.filter(user_pk=self.object.pk)[0]:
+            return Video.objects.filter(user_pk=self.object.pk)[0]
 
     def display_name(self):
         if self.object.first_name:
