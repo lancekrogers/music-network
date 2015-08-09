@@ -35,7 +35,9 @@ class MusicianMusicianConversationDetailView(DetailView):
 
 def mm_start_conv(request, receiver_pk):
     me = Musician.objects.get(pk=request.user.pk)
+    print(me)
     other = Musician.objects.get(pk=receiver_pk)
+    print(other)
     redirection = request.META.get('HTTP_REFERER')
     if request.method == 'POST':
         print('post mm_start_conv')

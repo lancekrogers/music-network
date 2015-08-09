@@ -1,6 +1,8 @@
 {% extends 'public/base.html' %}
 {% block  body %}
 <h1>Checkout {{ view.display_name}}</h1>
+<a href="{% url 'main:home' %}"><button>Home</button></a>
+<a href="{% url 'main:feed' %}"><button>Feed</button></a><br><br>
 
 {% if object.profile_image %}<img src="/static{{ object.profile_image.url }}" width="20%" />{% endif %}
 
@@ -34,8 +36,22 @@
     {% endfor %}
     </ul>
 {% endif %}
-
-
+    {% if object.video %}
  <div class="videoWrapper"><iframe  src="https://www.youtube.com/embed/{{ view.latest_video.embedded_code }}" frameborder="0" ></iframe></div>
+    {% endif %}
+
+
+
+{% if request.user.musician %}
+{% if request.user.musician != object %}
+
+<form action="{% url 'message:start_music_talk' object.pk %}" method="POST">
+        {% csrf_token %}
+    <input type="submit" value="Start Conversation"/>
+</form>
+
+
+{% endif %}
+{% endif %}
 
 {% endblock %}

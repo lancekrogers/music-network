@@ -41,6 +41,7 @@ class Musician(ProfileModel):
     instrument_group = models.ManyToManyField('InstrumentGroup', blank=True)
     availability = models.ManyToManyField('TimeFrame', blank=True)
     friends = models.ManyToManyField('SavedMusician', blank=True)
+   # embedded_links =
 
     def __str__(self):
         return '{}'.format(self.user.username)
