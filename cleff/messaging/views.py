@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
@@ -9,7 +10,7 @@ from profiles.models import Musician
 from .models import MusicianMusicianConversation, MusMusMessage
 # Create your views here.
 
-
+login_required
 class MusicianMusicianConversationListView(ListView):
     model = MusicianMusicianConversation
 
