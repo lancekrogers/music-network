@@ -1,15 +1,19 @@
 import random
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.messages import INFO
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView
+from custom_wrappers import musician_wrapper_func, non_musician_wrapper_func
 from profiles.models import Musician, NonMusician
 from .models import Vote, MusicianPost, MusicianResponse, NonMusicianPost, NonMusicianResponse
 from .forms import MusicianResponseForm, MusicianPostForm, NonMusicianPostForm
 # Create your views here.
 
+@login_required
 def vote_create(request, votee_pk, model_type, vote_type='upvote'):
     print('here')  # separate this out into more than one function so that
     if model_type == 'response':
@@ -68,7 +72,12 @@ def vote_create(request, votee_pk, model_type, vote_type='upvote'):
 class MusicianPostListView(ListView):
     model = MusicianPost
 
+    @method_decorator(login_required(redirect_field_name='profiles:Login'))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
+
+@login_required
 def musician_post_page(request, post_id):
     try:
         ques = MusicianPost.objects.get(pk=post_id)
@@ -85,11 +94,14 @@ def musician_post_page(request, post_id):
                               context_instance=RequestContext(request))
 
 
-
 class NonMusicianPostListView(ListView):
     model = NonMusicianPost
 
+    @method_decorator(login_required(redirect_field_name='profiles:Login'))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
+@login_required
 def non_musician_post_page(request, post_id):
     try:
         ques = NonMusicianPost.objects.get(pk=post_id)
@@ -105,6 +117,7 @@ def non_musician_post_page(request, post_id):
                               context_instance=RequestContext(request))
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_response_create(request, post_id):
     print('here')  # separate this out into more than one function so that
     x_var = post_id
@@ -126,6 +139,7 @@ def musician_response_create(request, post_id):
     return redirect('Forum:musician_post_detail', post_id=x_var)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_post_create_view(request):
     musician = Musician.objects.get(user=request.user)
     create_post_form = MusicianPostForm(
@@ -147,23 +161,36 @@ def musician_post_create_view(request):
     context = {'create_post_form': create_post_form}
     return render(request, 'Forum/musicianpost_form.html', context)
 
-
+@login_required
 def non_musician_post_response_create(request, post_id):
-    print('here')  # separate this out into more than one function so that
+    print('here')
     x_var = post_id
     the_post = NonMusicianPost.objects.get(pk=post_id)
     if request.POST:
         print('sent post m response create')
         user_pk = request.user.pk
-        if request.user.musician:
-            profile = Musician.objects.get(pk=user_pk)
-            m = NonMusicianResponse.objects.create(
-                musician=profile,
-                post=the_post,
-                text=request.POST['this'],
-            )
-            m.save()
-        else:
+        try:
+            if request.user.musician:
+
+                profile = Musician.objects.get(pk=user_pk)
+                m = NonMusicianResponse.objects.create(
+                    musician=profile,
+                    post=the_post,
+                    text=request.POST['this'],
+                )
+                m.save()
+            else:
+                profile = NonMusician.objects.get(pk=user_pk)
+                m = NonMusicianResponse.objects.create(
+                    nonmusician=profile,
+                    post=the_post,
+                    text=request.POST['this'],
+                )
+                m.save()
+            print('mtheory')
+            return redirect('Forum:non_musician_post_detail', post_id=x_var)
+        except:
+            print('Hey bro')
             profile = NonMusician.objects.get(pk=user_pk)
             m = NonMusicianResponse.objects.create(
                 nonmusician=profile,
@@ -171,13 +198,13 @@ def non_musician_post_response_create(request, post_id):
                 text=request.POST['this'],
             )
             m.save()
-        print('mtheory')
-        return redirect('Forum:non_musician_post_detail', post_id=x_var)
+            print('mtheory')
     else:
         pass
     return redirect('Forum:non_musician_post_detail', post_id=x_var)
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def non_musician_post_create_view(request):
     musician = NonMusician.objects.get(user=request.user)
     create_post_form = NonMusicianPostForm(

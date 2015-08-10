@@ -17,10 +17,12 @@
 {% endif %}
 <h2>Comments are below</h2>
 {% for obj in response %}
-    <div><br>Timestamp: {{obj.timestamp}} <br><br>User:
-        {% if obj.user.nonmusician.pk %}
-             <a href="{% url 'profiles:non_m_public_profile' obj.user.user.pk %}">
-   {{obj.user.user.username}}</a>
+    <div><br>Timestamp: {{obj.timestamp}} <br><br>User:{{ obj.user.username }}
+        {% if obj.nonmusician.pk %}
+   {{obj.nonmusician.user.username}}
+            {% elif obj.musician.pk %}
+              <a href="{% url 'profiles:m_public_profile' obj.musician.pk %}">
+            {{ obj.musician.user.username }}</a>
         {% endif %}<br>
   {{obj.text}}</div><br></br>
 {% endfor %}

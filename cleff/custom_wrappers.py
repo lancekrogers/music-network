@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 
 musician_wrapper_func = lambda x: musician_check(x)
-
+non_musician_wrapper_func = lambda x: non_musician_check(x)
 
 def musician_check(x):
     try:
@@ -17,6 +17,16 @@ def musician_check(x):
         return redirect('profiles:register_musician')
     except AttributeError:
         return redirect('profiles:register_musician')
+
+
+def non_musician_check(x):
+    try:
+        return NonMusician.objects.filter(pk=x.pk)
+    except ObjectDoesNotExist:
+        return redirect('main:denied')
+    except AttributeError:
+        return redirect('main:denied')
+
 
 
 #def profile_auth(x):
