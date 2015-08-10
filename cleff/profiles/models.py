@@ -159,6 +159,9 @@ def set_description(sender, instance, created=False, **kwargs):
 
 class SavedMusician(models.Model):
     numbre = models.IntegerField()
+    saver_musician = models.ForeignKey(Musician, blank=True)
+    saver_nonmusician = models.ForeignKey(NonMusician, blank=True)
+    date_stamp = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return "{}".format(Musician.objects.get(pk=self.numbre))
@@ -166,6 +169,7 @@ class SavedMusician(models.Model):
 
 class Comrade(models.Model):
     numbre = models.OneToOneField(SavedMusician, blank=True, primary_key=True)
+    date_stamp = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return 'Comrade {}'.format(Musician.objects.get(pk=self.numbre.numbre))
