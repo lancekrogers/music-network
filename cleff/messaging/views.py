@@ -78,7 +78,6 @@ def mm_start_conv(request, receiver_pk):
         return HttpResponseRedirect(redirection)
 
 
-
 @user_passes_test(musician_wrapper_func, login_url='main:denied')
 def mm_message_create_view(request, conversation_pk, receiver_pk):
     message_t = request.POST['memo']

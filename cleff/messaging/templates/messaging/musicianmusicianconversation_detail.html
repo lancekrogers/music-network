@@ -3,9 +3,9 @@
 {% block body %}
     <button onclick="goBack()">Back</button>
 
-{% if request.user.musician %}
-    <a href="{% url 'message:musician_conversations'  %}"><button>Conversation List</button></a><br></br>
-    <form action="{% url 'message:mm_send_message' object.pk 1  %}" method="POST"  >
+{% if request.user.musician == object.musician_one or object.musician_two %}
+    <a href="{% url 'message:musician_conversations'  %}"><button>Conversation List</button></a><br /><br />
+    <form action="{% url 'message:mm_send_message' object.pk object.musician_two.user.pk  %}" method="POST"  >
     {% csrf_token %}
     <input type="text" name="memo" size="200" height="100"  >
     <input type="submit" value="send" size="100" height="50" >
@@ -13,7 +13,7 @@
 {% if object.messages.all %}
 {% for m in object.messages.all %}
     <section>
-   <div id="one"> {{ m.message }}</div><div id="two">sent by {{ m.sender }}</div><br><br>
+   <div id="one"> {{ m.message }}</div><br /><div id="two">sent by {{ m.sender }}</div><br><br>
     </section>
 {% endfor %}
 {% else %}

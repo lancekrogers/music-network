@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages import INFO
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from profiles.models import Musician, Location, TimeFrame, Video, NonMusician, \
@@ -12,6 +14,7 @@ def home(request):
     return render(request, 'main/home_page.html')
 
 
+@login_required
 def feed(request):
     context = render_comrades(request)
     return render(request, 'main/main-feed.html', context)
@@ -21,9 +24,11 @@ def denied(request):
     return render(request, 'main/denied.html')
 
 
+@login_required
 def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
+        messages.add_message(request, INFO, 'This site uses your location to connect you with musicians')
         print(cor_data)
         if request.user.musician:
             print('worked at if')
@@ -96,9 +101,11 @@ def musician_current_location_view(request):
             return redirect('main:feed')
 
 
+@login_required
 def nonmusician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
+        messages.add_message(request, INFO, 'This site uses your location to find musicians')
         if request.user.nonmusician:
             print('nonmusician ajax works')
             user = request.user.nonmusician
@@ -163,6 +170,7 @@ def nonmusician_current_location_view(request):
             return redirect('main:feed')
 
 
+@login_required
 def render_comrades(request):
     print('hhewhlghasd;lgh;dasjgopdskpkjrpughfjkd')
     context = {}

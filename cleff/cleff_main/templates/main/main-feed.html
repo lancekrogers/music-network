@@ -108,8 +108,12 @@ function successCallback(position) {
 <div align="Center"><h1>CLEFF FEED</h1>
 
 
+
+
+
 {% if request.user %}
     <h3>Whats going on {{ request.user.username }}?</h3>
+        <h6>This site uses your browsers location to give you the best matches possible</h6>
 {% endif %}
 <div><a href="{% url 'main:home' %}"><button>Home</button></a></div>
 </div>

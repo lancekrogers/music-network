@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.utils.datastructures import MultiValueDictKeyError
+from django.utils.decorators import method_decorator
 from cleff import settings
 from .forms import MusicianCreateForm, NonMusicianCreateForm, GenreForm, VideoForm, TimeFrameForm, \
 InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, MusicianUpdateAvailabilityForm, \
@@ -15,12 +16,11 @@ InstrumentGroupForm, LocationForm, ProfileImageForm, MusicianUpdateForm, Musicia
     AdjustNonMusicianSearchAreaForm
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Musician, NonMusician, Video, TimeFrame, Genre, InstrumentGroup, Location
-# Create your views here.
 from django.template import RequestContext
 from profiles.choices_list import TIMES, DAYS
 from random_functions import youtube_code_getter
-from django.contrib.auth.decorators import user_passes_test
-
+from django.contrib.auth.decorators import user_passes_test, login_required
+from custom_wrappers import musician_wrapper_func, non_musician_wrapper_func
 
 
 
@@ -116,6 +116,7 @@ def choose(request):
         'profiles/choose.html')
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_profile(request):
     user_id = request.user.pk
     try:
@@ -133,6 +134,7 @@ def musician_profile(request):
                               context_instance=RequestContext(request))
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def non_musician_profile(request):
     user_id = request.user.pk
     try:
@@ -144,6 +146,7 @@ def non_musician_profile(request):
                               context_instance=RequestContext(request))
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_musician_profile(request):
     musician = Musician.objects.get(user=request.user)
     profile = musician
@@ -161,6 +164,7 @@ def update_musician_profile(request):
         context)
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def update_non_musician_profile(request):
     nonmusician = NonMusician.objects.get(user=request.user)
     profile = nonmusician
@@ -178,6 +182,7 @@ def update_non_musician_profile(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_add_time_frame(request):
     musician = Musician.objects.get(user=request.user)
     time_frame_form = TimeFrameForm(request.POST)
@@ -200,6 +205,8 @@ def musician_add_time_frame(request):
         'updates/time-frame.html',
         context)
 
+
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_update_time_frame(request):
     musician = Musician.objects.get(user=request.user)
     update_musician_form = MusicianUpdateAvailabilityForm(
@@ -222,6 +229,7 @@ def musician_update_time_frame(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def add_genre(request):
     musician = Musician.objects.get(user=request.user)
     genre_form = GenreForm(request.POST)
@@ -245,6 +253,7 @@ def add_genre(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_genres(request):
     musician = Musician.objects.get(user=request.user)
     update_genres_form = UpdateGenresForm(
@@ -265,6 +274,7 @@ def update_genres(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def add_instrument(request):
     musician = Musician.objects.get(user=request.user)
     instrument_form = InstrumentGroupForm(request.POST)
@@ -288,6 +298,7 @@ def add_instrument(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_instruments(request):
     musician = Musician.objects.get(user=request.user)
     update_instruments_form = UpdateInstrumentsForm(
@@ -308,6 +319,7 @@ def update_instruments(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def musician_add_location(request):
     musician = Musician.objects.get(user=request.user)
     location_form = LocationForm(request.POST)
@@ -330,7 +342,7 @@ def musician_add_location(request):
         context)
 
 
-
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_musician_location(request):
     musician = Musician.objects.get(user=request.user)
     update_location_form = UpdateLocationsForm(
@@ -351,6 +363,7 @@ def update_musician_location(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def youtube_url_decoder_view(request):
     musician = Musician.objects.get(user=request.user)
     youtube_url_form = YoutubeUrlForm(request.POST)
@@ -386,6 +399,7 @@ def youtube_url_decoder_view(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_video(request):
     musician = Musician.objects.get(user=request.user)
     update_video_form = UpdateVideoForm(
@@ -405,6 +419,7 @@ def update_video(request):
         context)
 
 
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def update_friends(request):
     musician = Musician.objects.get(user=request.user)
     update_friends_form = UpdateFriendsForm(
@@ -423,7 +438,7 @@ def update_friends(request):
         'updates/update-friends.html',
         context)
 
-
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def add_profile_image(request):
     musician = Musician.objects.get(user=request.user)
     profile_image_form = ProfileImageForm(request.POST, request.FILES)
@@ -449,6 +464,7 @@ def add_profile_image(request):
         context)
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def add_profile_image_non_musician(request):
     nonmusician = NonMusician.objects.get(user=request.user)
     profile_image_form = ProfileImageForm(request.POST, request.FILES)
@@ -471,6 +487,7 @@ def add_profile_image_non_musician(request):
         context)
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def update_watched_musicians(request):
     non_musician = NonMusician.objects.get(user=request.user)
     update_watched_form = NonMusicianUpdateWatchedMusicians(
@@ -489,6 +506,7 @@ def update_watched_musicians(request):
         request,
         'updates/update-watched-musicians.html',
         context)
+
 
 class LocationCreateView(CreateView):
     template_name = 'maps/maps_two.html'
@@ -517,7 +535,16 @@ class LocationCreateView(CreateView):
             form.add_error('common_error', 'An Error has occurred')
             pass
 
+    @method_decorator(user_passes_test(musician_wrapper_func,
+                                       redirect_field_name='main:denied',
+                                       login_url='main:denied',
+                                       ))
+    def dispatch(self, *args, **kwargs):
+        print("user passed test", musician_wrapper_func)
+        return super().dispatch(*args, **kwargs)
 
+
+@user_passes_test(musician_wrapper_func, login_url='main:denied')
 def change_search_area_range(request):
     musician = Musician.objects.get(user=request.user)
     update_area_form = AdjustMusicianSearchAreaForm(
@@ -538,6 +565,7 @@ def change_search_area_range(request):
         context)
 
 
+@user_passes_test(non_musician_wrapper_func, login_url='main:denied')
 def non_musician_change_search_area_range(request):
     musician = NonMusician.objects.get(user=request.user)
     update_area_form = AdjustNonMusicianSearchAreaForm(
@@ -550,7 +578,7 @@ def non_musician_change_search_area_range(request):
             update_area_form.save()
             print('I am after the second if in update musician area ramge')
             messages.add_message(request, 20, 'Search Area Updated')
-            return redirect('profiles:musician_profile')
+            return redirect('profiles:non_musician_profile')
     context = {'update_area_form': update_area_form}
     return render(
         request,
