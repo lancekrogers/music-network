@@ -189,7 +189,7 @@ def render_comrades(request):
                 musician_list.append(muc)
         except:
             messages.add_message(request, 20, 'No Musician Matches')
-        context['comrades'] = musician_list
+        context['comrades'] = reversed(musician_list)
     return context
 
 

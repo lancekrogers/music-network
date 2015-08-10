@@ -173,3 +173,6 @@ class Comrade(models.Model):
 
     def __str__(self):
         return 'Comrade {}'.format(Musician.objects.get(pk=self.numbre.numbre))
+
+    class Meta:
+        ordering = ['-date_stamp']
