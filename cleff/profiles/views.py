@@ -513,7 +513,6 @@ class MusicianPublicProfile(DetailView):
             dn = self.object.first_name
         else:
             dn = self.object.user.username
-
         return dn.title()
 
 
