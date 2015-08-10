@@ -1,17 +1,16 @@
 {% extends 'profiles/base.html' %}
 
 {% block body %}
-{% load staticfiles %}
     <div align="Center">
     <a href="{% url 'main:home' %}"><button>Home</button></a><br><br>
     {% if request.user.musician == profile %}
         {% if messages %}
             {% for message in messages %}
-              {{ message }}
+              {{ message }}<br >
             {% endfor %}
           {% endif %}<br><br>
         {% if request.user.musician.profile_image %}
-        <img src="/static{{ profile.profile_image.url }}" width="20%" />
+        <img class='img-rounded' src="/static{{ profile.profile_image.url }}" width="20%" />
         {% endif %}
         <h1>Play on {{ user.username }}!</h1>
         <br><br><a href="{% url 'message:musician_conversations' %}"><button>Inbox</button></a><br><br/>

@@ -44,12 +44,12 @@
 
 {% if request.user.musician %}
 {% if request.user.musician != object %}
-
+<div align="Center">
 <form action="{% url 'message:start_music_talk' object.pk %}" method="POST">
         {% csrf_token %}
     <input type="submit" value="Start Conversation"/>
-</form>
-
+</form><br />
+</div>
 
 {% endif %}
 {% endif %}

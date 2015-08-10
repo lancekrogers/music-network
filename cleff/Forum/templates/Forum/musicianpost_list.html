@@ -3,9 +3,10 @@
 
 
 {% if request.user.musician %}
-<div align="right" ><a href="{% url 'Forum:create_musician_post' %}"><button>Create a Post</button></a></div>
+<div ><a href="{% url 'Forum:create_musician_post' %}"><button>Create a Post</button></a></div>
 {% endif %}
 
+    <div align="Center">
 {% if object_list %}
 
 {% for obj in object_list %}
@@ -19,6 +20,6 @@
     <h2>No Post Yet</h2>
 
 {% endif %}
-
+</div>
 
 {% endblock %}

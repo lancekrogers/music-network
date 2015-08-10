@@ -127,6 +127,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR,
 MEDIA_URL = '/media/'
 
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+#STATIC_URL = '/static/'
+
+
+#EDIA_ROOT = os.path.join(BASE_DIR,
+  #                        "static/media")  # /Users/lancerogers/Developer/music-network/music-network/cleff/static/media"
+#MEDIA_URL = '/media/'
+
+
 # AUTHENTICATION_BACKENDS = (
 #   'social.backends.facebook.FacebookOAuth2',
 #  'social.backends.google.GoogleOAuth2',

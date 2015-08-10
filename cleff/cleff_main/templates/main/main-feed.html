@@ -2,28 +2,50 @@
 <html>
 
 <head lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 <style>
     .big_button {
-    width: 100%;
+    width: 80%;
     height: 40px;
 
     display:inline-block;
 }
+
+.videoWrapper {
+position: relative;
+padding-bottom: 56.25%; /* 16:9 */
+padding-top: 0px;
+height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 19%;
+	width: 60%;
+	height: 80%;
+}
 </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
 {% if request.user.musician %}
 
 <script>
-window.onload = function() {
-    if(!window.location.hash) {
-        window.location = window.location + '#loaded';
-        window.location.reload();
-    }
-};
+
 
 function initGeolocation() {
     if (navigator && navigator.geolocation) {
@@ -115,7 +137,7 @@ function successCallback(position) {
     <h3>Whats going on {{ request.user.username }}?</h3>
         <h6>This site uses your browsers location to give you the best matches possible</h6>
 {% endif %}
-<div><a href="{% url 'main:home' %}"><button>Home</button></a></div>
+<div><a href="{% url 'main:home' %}"><button class="big_button">Home</button></a></div>
 </div>
 
 {% if request.user.musician %}
@@ -139,26 +161,28 @@ function successCallback(position) {
 <div align="Center">
 
 {% if request.user %}
-    <h1>Here are some musicians near you</h1>
+    <h1>Here are some musicians near you</h1><br /><br />
     {% for com in comrades %}
         {% if com.latest_video %}
-         <div>
-             <iframe src="https://www.youtube.com/embed/{{ com.latest_video.embedded_code }}"
+        <div align="Center">
+         <div class="videoWrapper">
+            <iframe src="https://www.youtube.com/embed/{{ com.latest_video.embedded_code }}"
                  allowfullscreen></iframe>
+         </div>
          </div>
 
             {% if com.profile_image %}
 
             <div><p>{{ com.user.username }}
                 <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
-                <img src="/static{{ com.profile_image.url }}" width="4%" /><p></a>
+                <img class="img-rounded" src="/static{{ com.profile_image.url }}" width="10%" /><p></a>
             <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
                 <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br>
 
             {% else %}
                 <div><p>{{ com.user.username }}</p>
             <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
-                <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a>
+                <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br /><br />
 
             {% endif %}
             </div>

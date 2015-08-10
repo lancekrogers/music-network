@@ -8,6 +8,7 @@ from profiles.models import Musician, Location, TimeFrame, Video, NonMusician, \
 from django.contrib.gis.geos import Point
 from haystack.query import SearchQuerySet
 from haystack.utils.geo import Distance
+import random
 # Create your views here.
 
 def home(request):
@@ -28,7 +29,6 @@ def denied(request):
 def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
-        messages.add_message(request, INFO, 'This site uses your location to connect you with musicians')
         print(cor_data)
         if request.user.musician:
             print('worked at if')
@@ -105,7 +105,6 @@ def musician_current_location_view(request):
 def nonmusician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
-        messages.add_message(request, INFO, 'This site uses your location to find musicians')
         if request.user.nonmusician:
             print('nonmusician ajax works')
             user = request.user.nonmusician
