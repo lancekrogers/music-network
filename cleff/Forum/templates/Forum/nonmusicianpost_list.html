@@ -1,23 +1,28 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-<div align="Center"><h1>Cleff Forum for the non-musicians</h1><br /></div>
+<div class="container-fluid">
 
-<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" btn-lg btn block">Home</button></a></div><br><br>
+<div align="Center" class="well well-lg"><div align="Center"><h1>Cleff Forum for the non-musicians</h1><br /></div></div>
+
+<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class="big_button">Home</button></a></div><br><br>
 
 {% if request.user.nonmusician %}
 
 
-<div align="right" ><a href="{% url 'Forum:create_non_musician_post' %}"><button>Create a Post</button></a></div>
+<div align="Center" ><a href="{% url 'Forum:create_non_musician_post' %}"><button class="big_button">Create a Post</button></a></div>
 
 {% endif %}
 
 {% if object_list %}
 {% for obj in object_list %}
-    <div>{{ obj.title }} <a href="{% url 'Forum:non_musician_post_detail' obj.pk %}"><button>Go To Post</button></a></div>
+     <div class="container-post" class="container-fluid" class="img-rounded">
+    <div><p>{{ obj.title }}</p><br
+        <a href="{% url 'Forum:non_musician_post_detail' obj.pk %}"><button>Go To Post</button></a></div>
 {% endfor %}
 {% else %}
     <h2>No Post Yet</h2>
 {% endif %}
 
-
+</div>
+</div>
 {% endblock %}

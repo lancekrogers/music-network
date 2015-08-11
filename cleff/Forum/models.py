@@ -63,7 +63,7 @@ class MusicianResponse(models.Model):
 
 class NonMusicianPost(models.Model):
     user = models.ForeignKey(NonMusician)
-    title = models.CharField(max_length=140)
+    title = models.CharField(max_length=60)
     text = models.TextField()
     slug = AutoSlugField(populate_from='title')
     score = models.IntegerField(default=0)

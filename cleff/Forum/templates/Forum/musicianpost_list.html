@@ -2,13 +2,13 @@
 {% block body %}
 <div class="container-fluid">
 
-<div align="Center"><h1>Cleff Musician Only Forum</h1><br /></div>
+<div align="Center" class="well well-lg"><h1>Musician Only Forum</h1><br /></div>
 
-<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" btn-lg btn block">Home</button></a></div><br><br>
+<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" big_button">Home</button></a></div><br><br>
 
 
 {% if request.user.musician %}
-<div align="Center"><a href="{% url 'Forum:create_musician_post' %}"><button class="create-button">Create a Post</button></a></div><br />
+<div align="Center"><a href="{% url 'Forum:create_musician_post' %}"><button class="big_button">Create a Post</button></a></div><br />
 {% endif %}
 
     <div align="Center">
@@ -18,12 +18,11 @@
 
 {% for obj in object_list %}
 
-
-
     <div class="container-post" class="container-fluid" class="img-rounded">
 
-      {{ obj.title }}<br />
-        <div align="right" class='container-fluid' style="padding-right: 10%; padding-left: 80%;"><a href="{% url 'Forum:musician_post_detail' obj.pk %}">
+     <p>{{ obj.title }}</p><br />
+        <div align="right" class='container-fluid' style="padding-right: 10%; padding-left: 80%;">
+            <a href="{% url 'Forum:musician_post_detail' obj.pk %}">
             <button class="forumlist-button">Go</button></a></div>
 
     </div><br />

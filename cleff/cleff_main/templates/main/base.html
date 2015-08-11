@@ -45,7 +45,10 @@
    background: #525252;
    color: white;
    }
-
+.back-drop {
+    background-color: #0066FF;
+    position: relative;
+}
 
 </style>
 
@@ -55,12 +58,16 @@
 
 
 </head>
-<body>
-<div align="Center" ><h1>CLEFF</h1></div>
+<body class="masterhead" >
+<div class="back-drop">
+<div class="container-fluid"><br />
+<div align="Center" class="well well-lg" class="container-fluid"><h1>CLEFF</h1></div>
 
 
 
 {% block body %}
 {% endblock %}
+</div>
+</div>
 </body>
 </html>
