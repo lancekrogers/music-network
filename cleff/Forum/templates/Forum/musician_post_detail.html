@@ -14,9 +14,11 @@
 <h2>{{ post.title }}</h2>
 
     <h6>Score: {{post.score}}</h6><br />
+    <h6>Timestamp: {{ post.timestamp }}</h6>
     <p>Post by {{ post.user.user.username }}</p>
+
     <a href="{% url 'profiles:m_public_profile' post.user.user.pk %}">
-     {% if post.user.profile_image.url %}
+     {% if post.user.profile_image %}
         <img alt="Responsive image" class="img-rounded" src="/static{{ post.user.profile_image.url }}" width="10%" />
      {% else %}
          {{ post.user.user.username }}
@@ -55,12 +57,12 @@
 
 {% for obj in response %}
     <div>Score: {{obj.score}} <br>Timestamp: {{obj.timestamp}} <br><br>
-        {% if obj.user.profile_image.url %}
+        {% if obj.user.profile_image %}
             Comment by {{ obj.user }}<br />
         <a href="{% url 'profiles:m_public_profile' obj.user.user.pk %}">
-        <img alt="Responsive image" class="img-rounded" src="/static{{ post.user.profile_image.url }}" width="9%" />
+        <img alt="Responsive image" class="img-rounded" src="/static{{ obj.user.profile_image.url }}" width="9%" />
      {% else %}
-        User: {{ post.user.user.username }}
+        User: {{ obj.user.user.username }}
      {% endif %}</a><p>
    {% if request.user.musician %}
     <form class="form-inline" action="{% url 'Forum:vote_create' obj.pk 'response' 'upvote' %}" method="POST">
