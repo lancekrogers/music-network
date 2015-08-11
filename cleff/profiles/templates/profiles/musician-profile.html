@@ -10,7 +10,8 @@
             {% endfor %}
           {% endif %}<br><br>
         {% if request.user.musician.profile_image %}
-        <img class='img-rounded' src="/static{{ profile.profile_image.url }}" width="20%" />
+       <a href="{% url 'profiles:m_public_profile' request.user.musician.pk %}">
+            <img class='img-rounded' src="/static{{ profile.profile_image.url }}" width="20%" /></a>
         {% endif %}
         <h1>Play on {{ user.username }}!</h1>
         <br><br><a href="{% url 'message:musician_conversations' %}"><button>Inbox</button></a><br><br/>

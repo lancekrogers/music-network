@@ -4,7 +4,7 @@
 <a href="{% url 'main:home' %}"><button>Home</button></a>
 <a href="{% url 'main:feed' %}"><button>Feed</button></a><br><br>
 
-{% if object.profile_image %}<img src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}
+{% if object.profile_image %}<img class="img-rounded" src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}
 
 {% if object.summary %}<h2>{{ view.display_name }}'s Summary</h2> <p>{{ object.summary }}</p>{% endif %}
 

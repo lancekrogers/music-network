@@ -1,15 +1,29 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
+<div class="container-fluid">
+
+<div align="Center"><h1>Cleff Forum for the non-musicians</h1><br /></div>
+
+<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" btn-lg btn block">Home</button></a></div><br><br>
+
 <div><a href="{% url 'Forum:non_musician_post_list' %}"><button>Back</button></a></div>
 
+
 <h2>{{ post.title }}</h2>
-    <p>{{post.text}}</p> <p>Post by {{ post.user.user.username }}</p>
+
+     <p>Post by {{ post.user.user.username }}</p>
+<div class="container-fluid">
+<div class="forum-text">
+
+    <p>{{post.text}}</p><br />
+</div><br />
+
 {% if request.user %}
 
-<form action="{% url 'Forum:non_m_response_create' post.pk %}" method="POST">
+<form class="form-horizontal" action="{% url 'Forum:non_m_response_create' post.pk %}" method="POST">
 {% csrf_token %}
 
-<input name="this" type="text" >
+<input class="form-control" name="this" type="text" >
 <input type="submit" value="Comment" >
 
 </form><br><br>
@@ -41,5 +55,5 @@
 {% endif %}
 
 
-
+</div>
 {% endblock %}

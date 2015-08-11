@@ -1,61 +1,83 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
+<div class="container-fluid">
+
+<div align="Center"><h1>Cleff Musician Only Forum</h1><br /></div>
+
+<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" btn-lg btn block">Home</button></a></div><br><br>
+
+
+
 <div><a href="{% url 'Forum:musician_post_list' %}"><button>Back</button></a></div>
+
+
 <h2>{{ post.title }}</h2>
-    <h6>Score: {{post.score}}</h6>
-    <p>{{post.text}}</p> <p>Post by {{ post.user.user.username }}</p><br></br>
 
+    <h6>Score: {{post.score}}</h6><br />
+    <p>Post by {{ post.user.user.username }}</p>
+    <a href="{% url 'profiles:m_public_profile' post.user.user.pk %}">
+     {% if post.user.profile_image.url %}
+        <img alt="Responsive image" class="img-rounded" src="/static{{ post.user.profile_image.url }}" width="10%" />
+     {% else %}
+         {{ post.user.user.username }}
+     {% endif %}</a><p>
 
+</div>
+<div class="container-fluid">
+<div class="forum-text">
 
+    <p>{{post.text}}</p>
+</div>
 
+<div class="container-fluid">
 {% if request.user.musician %}
-<form action="{% url 'Forum:vote_create' post.pk 'post' 'upvote' %}" method="POST">
+<form class='form-inline' action="{% url 'Forum:vote_create' post.pk 'post' 'upvote' %}" method="POST">
                     {% csrf_token %}
-                    <input id="submit" type="submit" value="upvote" />
+                    <input class="form-control" id="submit" type="submit" value="upvote" />
                 </form>
-<form action="{% url 'Forum:vote_create' post.pk 'post' 'downvote' %}" method="POST">
+<form class="form-inline" action="{% url 'Forum:vote_create' post.pk 'post' 'downvote' %}" method="POST">
                 {% csrf_token %}
-                <input id="submit" type="submit" value="downvote">
+                <input class="form-control" id="submit" type="submit" value="downvote">
 </form>
 <br><br>
-<form action="{% url 'Forum:m_response_create' post.pk %}" method="POST">
+<form class='form-horizontal' action="{% url 'Forum:m_response_create' post.pk %}" method="POST">
 {% csrf_token %}
-<input name="this" type="text" >
+<input class="form-control" name="this" type="text" placeholder="Comment on this post" >
 
-<input type="submit" value="Comment" >
+<div align="right"><input type="submit" value="Comment" ></div>
 
-</form><br></br>
-{% endif %}
+</form><br /><br />
+{% endif %}</div>
 
+<div class="container-fluid">
 <h2>Comments are below</h2>
 
+
 {% for obj in response %}
-    <div>Score: {{obj.score}} <br>Timestamp: {{obj.timestamp}} <br><br>User:
-        {% if obj.user %}
-           <a href="{% url 'profiles:m_public_profile' obj.user.user.pk %}">
-   {{obj.user.user.username}}</a>
-        {% endif %}
+    <div>Score: {{obj.score}} <br>Timestamp: {{obj.timestamp}} <br><br>
+        {% if obj.user.profile_image.url %}
+            Comment by {{ obj.user }}<br />
+        <a href="{% url 'profiles:m_public_profile' obj.user.user.pk %}">
+        <img alt="Responsive image" class="img-rounded" src="/static{{ post.user.profile_image.url }}" width="9%" />
+     {% else %}
+        User: {{ post.user.user.username }}
+     {% endif %}</a><p>
    {% if request.user.musician %}
-    <form action="{% url 'Forum:vote_create' obj.pk 'response' 'upvote' %}" method="POST">
+    <form class="form-inline" action="{% url 'Forum:vote_create' obj.pk 'response' 'upvote' %}" method="POST">
         {% csrf_token %}
-        <input id="submit" type="submit" value="upvote"/>
+        <input class='form-control' id="submit" type="submit" value="upvote"/>
     </form>
-    <form action="{% url 'Forum:vote_create' obj.pk 'response' 'downvote' %}" method="POST">
+    <form class="form-inline" action="{% url 'Forum:vote_create' obj.pk 'response' 'downvote' %}" method="POST">
         {% csrf_token %}
-        <input id="submit" type="submit" value="downvote"/>
+        <input class="form-control" id="submit" type="submit" value="downvote"/>
     </form>
     {% endif %}
-     <br> </br> {{obj.text}}</div><br></br>
+     <br /> <br /> <div class="forum-text"><p>{{obj.text}}</p></div></div><br/><br/>
 {% endfor %}
-
-
-
-
-
     </div>
 
 
-
+</div>
 
 
 
