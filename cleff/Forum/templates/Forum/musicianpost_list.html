@@ -1,6 +1,6 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-
+<div class="container-fluid">
 
 <div align="Center"><h1>Cleff Musician Only Forum</h1><br /></div>
 
@@ -8,23 +8,34 @@
 
 
 {% if request.user.musician %}
-<div ><a href="{% url 'Forum:create_musician_post' %}"><button>Create a Post</button></a></div>
+<div align="Center"><a href="{% url 'Forum:create_musician_post' %}"><button class="create-button">Create a Post</button></a></div><br />
 {% endif %}
 
     <div align="Center">
+
+      <div class="container-fluid">
 {% if object_list %}
 
 {% for obj in object_list %}
 
-    <div>{{ obj.title }} <a href="{% url 'Forum:musician_post_detail' obj.pk %}"><button>Go To Post</button></a></div>
 
-{% endfor %}
+
+    <div class="container-post" class="container-fluid" class="img-rounded">
+
+      {{ obj.title }}<br />
+        <div align="right" class='container-fluid' style="padding-right: 10%; padding-left: 80%;"><a href="{% url 'Forum:musician_post_detail' obj.pk %}">
+            <button class="forumlist-button">Go</button></a></div>
+
+    </div><br />
+
+{% endfor %}<br />
 
 {% else %}
 
     <h2>No Post Yet</h2>
 
 {% endif %}
+    </div>
 </div>
-
+</div>
 {% endblock %}

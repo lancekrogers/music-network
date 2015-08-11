@@ -23,7 +23,7 @@
         font-size: 300%;
     }
     .back-drop {
-        background-color: #3366FF;
+        background-color: #666699;
     }
     .forum-text {
         padding-left: 10%;
@@ -35,7 +35,80 @@
         font-size: 125% ;
 
                   }
+    .container-post {
+        font-family: sans-serif;
+        font-size: 150%;
+        background-color: white;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        border-radius:5px;
 
+
+
+    }
+    .forumlist-button {
+       width: 100%;
+        min-width: 50px;
+        max-width: 300px;
+       border-top:  #020303;
+       background: #3c444a;
+       background: -webkit-gradient(linear, left top, left bottom, from(#9aa6a2), to(#3c444a));
+       background: -webkit-linear-gradient(top, #9aa6a2, #3c444a);
+       background: -moz-linear-gradient(top, #9aa6a2, #3c444a);
+       background: -ms-linear-gradient(top, #9aa6a2, #3c444a);
+       background: -o-linear-gradient(top, #9aa6a2, #3c444a);
+       display: block;
+
+       border-radius: 14px;
+       -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+       -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+       box-shadow: rgba(0,0,0,1) 0 1px 0;
+       color: #332f33;
+       font-size: .6em;
+       font-family: 'Lucida Grande', Helvetica, Arial, Sans-Serif;
+       text-decoration: none;
+   }
+.forumlist-button:hover {
+   border-top-color: #444e54;
+   background: #444e54;
+   color: #ededed;
+   }
+.forumlist-button:active {
+   border-top-color: #545f66;
+   background: #545f66;
+   }
+
+.create-button {
+   border-top: 1px solid #6a7373;
+   background: #2e3336;
+   background: -webkit-gradient(linear, left top, left bottom, from(#adadad), to(#2e3336));
+   background: -webkit-linear-gradient(top, #adadad, #2e3336);
+   background: -moz-linear-gradient(top, #adadad, #2e3336);
+   background: -ms-linear-gradient(top, #adadad, #2e3336);
+   background: -o-linear-gradient(top, #adadad, #2e3336);
+   padding: 20px 40px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #000000;
+   font-size: 24px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.create-button:hover {
+   border-top-color: #878791;
+   background: #878791;
+   color: #f2c7c2;
+   }
+.create-button:active {
+   border-top-color: #ffffff;
+   background: #ffffff;
+   }
 </style>
 
 
@@ -44,14 +117,17 @@
 
 
 </head>
-<body class="masterhead">
 <div class="back-drop">
+
+<body class="masterhead">
 <br />
 
 
 {% block body %}
+
 {% endblock %}
-</div>
 
 </body>
+</div>
+
 </html>
