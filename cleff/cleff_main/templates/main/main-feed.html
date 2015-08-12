@@ -154,18 +154,39 @@ function successCallback(position) {
 
             <div class="well well">
 
-                <div align="left">
-                    <h2>{{ com.user.username }}</h2><br />
+                <div class="well well" align="left">
 
-                {% if com.user.musician.genres.all %}<h3>Genres:</h3>
+
+
+                    <h2>{{ com.user.username }}</h2><br />
+                <div class="well well" align="left">
+
+
+                <div style="float: left; width: 12.5em;">{% if com.user.musician.genres.all %}<h3>Genres</h3>
 
                     {% for x in com.user.musician.genres.all %}
-                        {{ x }}
+                        {{ x }}</br>
                     {% endfor %}
 
-                {% endif %}
+                {% endif %}</div>
+
+                <div>
+                    {% if com.user.musician.instrument_group.all %}<h3>Instrument Types</h3>
+                        {% for x in com.user.musician.instrument_group.all %}
+                            {{ x }}<br />
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
 
                 </div>
+                </div>
+                <br />
+
+
+
+
+
                 <a href="{% url 'profiles:m_public_profile' com.pk %}">
                 <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br>
 
@@ -194,7 +215,6 @@ function successCallback(position) {
         {% endif %}
     {% endfor %}
 {% endif %}
-</div>
 </div>
 </div>
 </div>

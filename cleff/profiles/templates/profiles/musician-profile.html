@@ -6,29 +6,38 @@
     {% if request.user.musician == profile %}
         {% if messages %}
             {% for message in messages %}
-              {{ message }}<br >
+            <div class="thumbnail">  {{ message }}</div><br >
             {% endfor %}
           {% endif %}<br><br>
+        <div class="row">
+        <div class="thumbnail col-lg-6 col-lg-offset-3">
         {% if request.user.musician.profile_image %}
        <a href="{% url 'profiles:m_public_profile' request.user.musician.pk %}">
-            <img class='img-rounded' src="/static{{ profile.profile_image.url }}" width="20%" /></a>
+            <img class='img-rounded' src="/static{{ profile.profile_image.url }}" width="100%" /></a>
         {% endif %}
-        <h1>Play on {{ user.username }}!</h1>
-        <br><br><a href="{% url 'message:musician_conversations' %}"><button>Inbox</button></a><br><br/>
-    <a href="{% url 'profiles:add_availability' %}"><button>Add Availability</button></a>
-    <a href="{% url 'profiles:update_availability' %}"><button>Remove Availability</button></a><br><br>
-    <a href="{% url 'profiles:add_youtube_url' %}"><button>Add Youtube Video</button></a>
-    <a href="{% url 'profiles:update_video' %}"><button>Delete Videos</button></a><br><br>
-    <a href="{% url 'profiles:add_genre' %}"><button>Add Genre</button></a>
-    <a href="{% url 'profiles:update_genres' %}"><button>Delete Genres</button></a><br><br>
-    <a href="{% url 'profiles:add_instrument' %}"><button>Add Instrument Family</button></a>
-    <a href="{% url 'profiles:update_instruments' %}"><button>Remove Instrument Groups</button></a><br><br>
-    <a href="{% url 'profiles:add_musician_location' %}"><button>Add Location</button></a>
-    <a href="{% url 'profiles:update_musician_location' %}"><button>Remove Locations</button></a><br><br>
-    <a href="{% url 'profiles:update_friends' %}"><button>Remove Friends</button></a>
-    <a href="{% url 'profiles:musician_profile_image' %}"><button>Update Profile Image</button></a><br><br>
-    <a href="{% url 'profiles:update_area_range' %}"><button>Change Search Area</button></a>
-    <a href="{% url 'profiles:musician_update' %}"><button>Update Your Information Here</button></a><br><br>
+        <div class="caption"><h1>Play on {{ user.username }}!</h1></div>
+        </div> <!-- .thumbnail -->
+        </div> <!-- .row -->
+
+    <div class="container-fluid">
+        <br><br><a href="{% url 'message:musician_conversations' %}"><button class="inbox_big_button">Inbox</button></a><br><br/>
+    <a href="{% url 'profiles:add_availability' %}"><button class="half_button">Add Availability</button></a>
+    <a href="{% url 'profiles:update_availability' %}"><button class="red_half_button">Remove Availability</button></a><br><br>
+    <a href="{% url 'profiles:add_youtube_url' %}"><button class="half_button">Add Youtube Video</button></a>
+    <a href="{% url 'profiles:update_video' %}"><button class="red_half_button">Delete Videos</button></a><br><br>
+    <a href="{% url 'profiles:add_genre' %}"><button class="half_button">Add Genre</button></a>
+    <a href="{% url 'profiles:update_genres' %}"><button class="red_half_button">Delete Genres</button></a><br><br>
+    <a href="{% url 'profiles:add_instrument' %}"><button class="half_button">Add Instrument Group</button></a>
+    <a href="{% url 'profiles:update_instruments' %}"><button class="red_half_button">Remove Instrument Groups</button></a><br><br>
+    <a href="{% url 'profiles:add_musician_location' %}"><button class="half_button">Add Location</button></a>
+    <a href="{% url 'profiles:update_musician_location' %}"><button class="red_half_button">Remove Locations</button></a><br><br>
+    <a href="{% url 'profiles:musician_profile_image' %}"><button class="bottom_half_button">Update Profile Image</button></a>
+    <a href="{% url 'profiles:update_friends' %}"><button class="red_half_button">Remove Friends</button></a><br><br>
+    <a href="{% url 'profiles:update_area_range' %}"><button class="bottom_half_button">Change Search Area</button></a>
+    <a href="{% url 'profiles:musician_update' %}"><button class="bottom_half_button">Update Your Information Here</button></a><br><br>
+
+
+    </div>
 
     {% endif %}
 </div>

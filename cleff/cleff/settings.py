@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'messaging',
     'geoposition',
     'haystack',
+    'widget_tweaks',
     #    'social.apps.django_app.default',
 
 )
