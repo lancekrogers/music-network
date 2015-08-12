@@ -44,7 +44,11 @@ function goBack() {
 </head>
 
 <body>
-
+{% if request.user.musician %}
+    {% include 'navbar-musician.html' %}
+{% elif request.user.nonmusician%}
+    {% include 'navbar-non-musician.html' %}
+{% endif %}
 {% block body %}
 {% endblock %}
 </body>

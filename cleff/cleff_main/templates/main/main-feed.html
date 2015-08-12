@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head lang="en">
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
@@ -103,9 +102,15 @@ function successCallback(position) {
 
 </head>
 <div class="back-drop"><br />
-<div class="container-fluid">
-<body onload="javascript:initGeolocation()" class="masterhead">
 
+{% if request.user.musician %}
+    {% include 'navbar-musician.html' %}
+{% elif request.user.nonmusician%}
+    {% include 'navbar-non-musician.html' %}
+{% endif %}
+
+<div class="container-fluid">
+<body onload="javascript:initGeolocation()" class="masterhead"><br />
 
 <div align="Center" class="well well-lg"><h1>CLEFF FEED</h1></div>
 
@@ -118,7 +123,6 @@ function successCallback(position) {
         <div><h5>This site uses your browsers location to help you find new neighbors to jam with</h5></div>
 {% endif %}</div>
 
-<div align="Center"><a href="{% url 'main:home' %}"><button class="big_button">Home</button></a></div>
 
 {% if request.user.musician %}
 <form action="{% url 'main:current' %}" method="POST" id="position_form" >
@@ -219,5 +223,6 @@ function successCallback(position) {
 </div>
 </div>
 </div>
+
 </body>
 </html>

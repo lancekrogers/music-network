@@ -1,8 +1,7 @@
 {% extends 'public/base.html' %}
 {% block  body %}
+
 <h1>Checkout {{ view.display_name}}</h1>
-<a href="{% url 'main:home' %}"><button>Home</button></a>
-<a href="{% url 'main:feed' %}"><button>Feed</button></a><br><br>
 
 {% if object.profile_image %}<img class="img-rounded" src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}
 

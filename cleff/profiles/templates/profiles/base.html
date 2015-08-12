@@ -27,17 +27,15 @@
 <div class="back-drop">
 
 <div class="container-fluid"><br />
-
+{% if request.user.musician %}
+    {% include 'navbar-musician.html' %}
+{% elif request.user.nonmusician%}
+    {% include 'navbar-non-musician.html' %}
+{% endif %}
 <div class="container-fluid">
-<div class="well well"><h1 align="Center">Profiles App</h1></div></div>
 
-<button onclick="goBack()">Back</button>
+<div class="well well"><h1 align="Center">Profile</h1></div></div>
 
-<script>
-function goBack() {
-    window.history.back();
-}
-</script><br><br>
 
 
 

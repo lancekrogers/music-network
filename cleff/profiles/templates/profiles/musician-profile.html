@@ -2,7 +2,6 @@
 
 {% block body %}
     <div align="Center">
-    <a href="{% url 'main:home' %}"><button>Home</button></a><br><br>
     {% if request.user.musician == profile %}
         {% if messages %}
             {% for message in messages %}
