@@ -115,7 +115,7 @@ function successCallback(position) {
 <div class='well' align='center'>
 {% if request.user %}
     <h3>Whats up {{ request.user.username }}?</h3>
-        <div><h5>This site uses your browsers location to give you the best matches possible</h5></div>
+        <div><h5>This site uses your browsers location to help you find new neighbors to jam with</h5></div>
 {% endif %}</div>
 
 <div align="Center"><a href="{% url 'main:home' %}"><button class="big_button">Home</button></a></div>
@@ -166,17 +166,16 @@ function successCallback(position) {
                 {% endif %}
 
                 </div>
-
+                <a href="{% url 'profiles:m_public_profile' com.pk %}">
                 <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br>
 
             {% else %}
                 <div><p>{{ com.user.username }}</p>
-            <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
-                <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br /><br />
+            <a href="{% url 'profiles:m_public_profile' com.pk %}">
+                <button class="big_button">Check out {{ com.user.username }}'s profile</button></a><br /><br />
 
             {% endif %}
 
-            </div>
 
 
 
@@ -188,7 +187,7 @@ function successCallback(position) {
                  allowfullscreen></iframe>
          </div>
          </div>
-
+    </div>
 
 
 

@@ -3,19 +3,19 @@ link {
 }
 .big_button {
     width: 80%;
-    height: 100px;
-    padding-top: 40px;
-    padding-bottom: 10px;
+    height: 6.25em;
+    padding-top: .635em;
+    padding-bottom: .625em;
     background-color: #B3B3B4;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
+    -webkit-border-radius: 1.25em;
+    -moz-border-radius: 1.25em;
+    border-radius: 1.25em;
     -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
     -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
     box-shadow: rgba(0,0,0,1) 0 1px 0;
     text-shadow: rgba(0,0,0,.4) 0 1px 0;
     color: #3E3E3E;
-    font-size: 24px;
+    font-size: 1.5em;
     font-family: Helvetica, Arial, Sans-Serif;
     text-decoration: none;
     vertical-align: middle;
