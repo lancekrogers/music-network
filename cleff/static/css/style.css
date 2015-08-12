@@ -1,3 +1,4 @@
+
 .big_button {
     width: 80%;
     height: 100px;
@@ -18,8 +19,14 @@
     vertical-align: middle;
     display:inline-block;
 }
+
 .big_button:hover {
    border-top-color: transparent;
    background: #525252;
    color: white;
+}
+
+ .back-drop {
+    background-color: #0066FF;
+    position: relative;
 }

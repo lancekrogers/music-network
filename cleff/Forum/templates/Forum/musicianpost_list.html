@@ -2,7 +2,7 @@
 {% block body %}
 <div class="container-fluid">
 
-<div align="Center" class="well well-lg"><h1>Musician Only Forum</h1><br /></div>
+<div align="Center" class="well well-lg" ><h1>Musician Only Forum</h1><br /></div>
 
 <div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" big_button">Home</button></a></div><br><br>
 
@@ -20,7 +20,8 @@
 
     <div class="container-post" class="container-fluid" class="img-rounded">
 
-     <p>{{ obj.title }}</p><br />
+     <p style="font-size: 125%">{{ obj.title }}</p>
+    <p style="font-size: 80%">Post by: {{ obj.user.user.username }}</p><br />
         <div align="right" class='container-fluid' style="padding-right: 10%; padding-left: 80%;">
             <a href="{% url 'Forum:musician_post_detail' obj.pk %}">
             <button class="forumlist-button">Go</button></a></div>

@@ -2,27 +2,41 @@
 {% block body %}
 <div class="container-fluid">
 
-<div align="Center" class="well well-lg"><div align="Center"><h1>Cleff Forum for the non-musicians</h1><br /></div></div>
+<div align="Center" class="well well-lg"><div align="Center"><h1>Non-Musician Forum</h1><br /></div></div>
 
 <div align="Center"><br /><a href="{% url 'main:home' %}"><button  class="big_button">Home</button></a></div><br><br>
 
 {% if request.user.nonmusician %}
 
 
-<div align="Center" ><a href="{% url 'Forum:create_non_musician_post' %}"><button class="big_button">Create a Post</button></a></div>
+<div align="Center" ><a href="{% url 'Forum:create_non_musician_post' %}"><button class="big_button">Create a Post</button></a></div><br />
 
 {% endif %}
 
+    <div align="Center">
+
+      <div class="container-fluid">
 {% if object_list %}
-{% for obj in object_list %}
-     <div class="container-post" class="container-fluid" class="img-rounded">
-    <div><p>{{ obj.title }}</p><br
-        <a href="{% url 'Forum:non_musician_post_detail' obj.pk %}"><button>Go To Post</button></a></div>
-{% endfor %}
-{% else %}
-    <h2>No Post Yet</h2>
-{% endif %}
 
+{% for obj in object_list %}
+
+    <div class="container-post" class="container-fluid" class="img-rounded">
+
+     <p>{{ obj.title }}</p><br />
+        <div align="right" class='container-fluid' style="padding-right: 10%; padding-left: 80%;">
+            <a href="{% url 'Forum:non_musician_post_detail' obj.pk %}">
+            <button class="forumlist-button">Go</button></a></div>
+
+    </div><br />
+
+{% endfor %}<br />
+
+{% else %}
+
+    <h2>No Post Yet</h2>
+
+{% endif %}
+    </div>
 </div>
 </div>
 {% endblock %}
