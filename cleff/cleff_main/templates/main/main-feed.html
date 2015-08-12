@@ -103,21 +103,22 @@ function successCallback(position) {
 
 </head>
 <div class="back-drop"><br />
+<div class="container-fluid">
 <body onload="javascript:initGeolocation()" class="masterhead">
 
 
-<div align="Center"><h1>CLEFF FEED</h1>
+<div align="Center" class="well well-lg"><h1>CLEFF FEED</h1></div>
 
 
 
 
-
+<div class='well' align='center'>
 {% if request.user %}
-    <h3>Whats going on {{ request.user.username }}?</h3>
-        <h6>This site uses your browsers location to give you the best matches possible</h6>
-{% endif %}
-<div><a href="{% url 'main:home' %}"><button class="big_button">Home</button></a></div>
-</div>
+    <h3>Whats up {{ request.user.username }}?</h3>
+        <div><h5>This site uses your browsers location to give you the best matches possible</h5></div>
+{% endif %}</div>
+
+<div align="Center"><a href="{% url 'main:home' %}"><button class="big_button">Home</button></a></div>
 
 {% if request.user.musician %}
 <form action="{% url 'main:current' %}" method="POST" id="position_form" >
@@ -137,25 +138,28 @@ function successCallback(position) {
 
 <br>
 
-<div align="Center">
+{% if comrades%}
+    <div align="Center" class="well well-sm"><h1>Here are some musicians near you</h1></div>
+{% else %}
+    <div align="Center" class="well well-sm"><h1>There does not seem to be any activity in your area please check back later</h1></div>
+{% endif %}
+
 
 {% if request.user %}
-    <h1>Here are some musicians near you</h1><br /><br />
+    <div align="Center">
     {% for com in comrades %}
         {% if com.latest_video %}
-        <div align="Center">
-         <div class="videoWrapper">
-            <iframe src="https://www.youtube.com/embed/{{ com.latest_video.embedded_code }}"
-                 allowfullscreen></iframe>
-         </div>
-         </div>
 
-            {% if com.profile_image %}
+            {% if com %}
 
-            <div><p>{{ com.user.username }}
-                <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
-                <img class="img-rounded" src="/static{{ com.profile_image.url }}" width="10%" /><p></a>
-            <a href="{% url 'profiles:m_public_profile' com.user.pk %}">
+            <div class="well well">
+
+                <div align="left">
+                    <h2>{{ com.user.username }}</h2><br />
+
+
+                </div>
+
                 <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br>
 
             {% else %}
@@ -164,16 +168,30 @@ function successCallback(position) {
                 <div><button class="big_button" >Check out {{ com.user.username }}'s profile</button></div></a><br /><br />
 
             {% endif %}
+
             </div>
+
+
+
+
+
+        <div align="Center">
+         <div class="videoWrapper">
+            <iframe src="https://www.youtube.com/embed/{{ com.latest_video.embedded_code }}"
+                 allowfullscreen></iframe>
+         </div>
+         </div>
+
+
 
 
         {% endif %}
     {% endfor %}
 {% endif %}
 </div>
-
-
-
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>
