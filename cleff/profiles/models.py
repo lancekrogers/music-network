@@ -159,8 +159,8 @@ def set_description(sender, instance, created=False, **kwargs):
 
 class SavedMusician(models.Model):
     numbre = models.IntegerField()
-    saver_musician = models.ForeignKey(Musician, blank=True)
-    saver_nonmusician = models.ForeignKey(NonMusician, blank=True)
+    saver_musician = models.ForeignKey(Musician, blank=True, null=True)
+    saver_nonmusician = models.ForeignKey(NonMusician, blank=True, null=True)
     date_stamp = models.DateField(auto_now_add=True)
 
     def __str__(self):

@@ -29,20 +29,20 @@ def denied(request):
 def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
-        print(cor_data)
         if request.user.musician:
-            print('worked at if')
+            print('musician ajax worked')
             user = request.user.musician
-            print('still working at if')
-            print(user.current_location)
+        #    print('still working at if')
+        #    print(user.current_location)
             user.current_location = cor_data
             user.save()
-            print('Working Music Loc is {}'.format(user.current_location))
+      #      print('Working Music Loc is {}'.format(user.current_location))
             loca = Location.objects.create(
                 user_pk=user.pk,
                 location=cor_data,
             )
             loca.save()
+        #    print('loca {}'.format(loca.user_pk))
             coor = user.current_location
             lat = float(coor.latitude)
             lon = float(coor.longitude)
@@ -53,37 +53,41 @@ def musician_current_location_view(request):
                 'location',
                 current_location,
                 max_dist)
+      #      print(loc_match)
             if len(loc_match) > 0:
                 for obj in loc_match:
                     try:
                         loc_o = Location.objects.get(pk=obj.pk)
                         loc_o_user = Musician.objects.get(pk=loc_o.user_pk)
                         if loc_o_user != user:
-                            print('loc_o != user')
-                            print(loc_o_user.pk)
+                    #        print('loc_o != user')
+                        #    print(loc_o_user.pk)
                             try:
-                                print('trying....and...crying')
-                                sav = SavedMusician.objects.filter(numbre=loc_o_user.pk)[0]
-                                print('im here')
+                             #   print('trying....and...crying')
+                                sav = SavedMusician.objects.filter(numbre=loc_o_user.pk,
+                                                                   saver_musician=request.user.musician)[0]
+                           #     print('im here')
                                 try:
-                                    print('not....crying..as..bad')
+                            #        print('not....crying..as..bad')
                                     com = Comrade.objects.filter(numbre=sav)[0]
-                                    print('Yay you know it worked!')
+                             #       print('Yay you know it worked!')
                                 except:
                                     com = Comrade.objects.create(numbre=sav)
-                                print('Sav...{}....and....Com...{}...Created in try.....'.format(
-                                    sav,
-                                    com))
+                              #  print('Sav...{}....and....Com...{}...Created in try.....'.format(
+                               #     sav,
+                                #    com))
                             except:
-                                sav = SavedMusician.objects.create(numbre=loc_o_user.pk)
+                                sav = SavedMusician.objects.create(numbre=loc_o_user.pk,
+                                                                   saver_musician=request.user.musician)
                                 sav.save()
+                                print(sav)
                                 com = Comrade.objects.create(numbre=sav)
-                                print('Sav...{}....and....Com...{}...Created in except.....'.format(
-                                    sav,
-                                    com))
+                              #  print('Sav...{}....and....Com...{}...Created in except.....'.format(
+                               #     sav,
+                                #    com))
                                 com.save()
-                                print('........{}....SavedMusician....Has Been Saved....You are welcome.... '.format(
-                                    loc_o_user))
+                              #  print('........{}....SavedMusician....Has Been Saved....You are welcome.... '.format(
+                              #      loc_o_user))
                             if com in user.comrades.all():
                                 print('Com {} already in {}s comrade list'.format(
                                     com,
@@ -92,11 +96,11 @@ def musician_current_location_view(request):
                             else:
                                 user.comrades.add(com)
                                 user.save()
-                                print('....{}...added..to....{}'.format(
-                                    com,
-                                    user))
+                             #   print('....{}...added..to....{}'.format(
+                              #      com,
+                               #     user))
                     except:
-                        print('......hit.....except...in....current_location_view...')
+                #        print('......hit.....except...in....current_location_view...')
                         pass
             return redirect('main:feed')
 
@@ -131,7 +135,8 @@ def nonmusician_current_location_view(request):
                             print(loc_o_user.pk)
                             try:
                                 print('trying....and...crying')
-                                sav = SavedMusician.objects.filter(numbre=loc_o_user.pk)[0]
+                                sav = SavedMusician.objects.filter(numbre=loc_o_user.pk,
+                                                                   saver_nonmusician=request.user.nonmusician)[0]
                                 print('im here')
                                 try:
                                     print('not....crying..as..bad')
@@ -143,7 +148,8 @@ def nonmusician_current_location_view(request):
                                     sav,
                                     com))
                             except:
-                                sav = SavedMusician.objects.create(numbre=loc_o_user.pk)
+                                sav = SavedMusician.objects.create(numbre=loc_o_user.pk,
+                                                                   saver_nonmusician=request.user.nonmusician)
                                 sav.save()
                                 com = Comrade.objects.create(numbre=sav)
                                 print('Sav...{}....and....Com...{}...Created in except.....'.format(
@@ -171,7 +177,7 @@ def nonmusician_current_location_view(request):
 
 @login_required
 def render_comrades(request):
-    print('hhewhlghasd;lgh;dasjgopdskpkjrpughfjkd')
+    print('...........render..comrades.........')
     context = {}
     try:
         print('.......render_comrades ...is..musician....')

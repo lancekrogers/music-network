@@ -376,11 +376,13 @@ def youtube_url_decoder_view(request):
                 tube_url = youtube_url_form['youtube_url'].value()
                 youtube_code = youtube_code_getter(tube_url)
                 print(genres)
+                print(tube_url)
                 obj = Video.objects.create(
                     user_pk=request.user.pk,
                     title=title,
                     embedded_code=youtube_code
                 )
+                print(obj)
                 for gen in genres:
                     obj_g = Genre.objects.create(user_pk=request.user.pk,
                                                  genre=gen)
@@ -388,6 +390,8 @@ def youtube_url_decoder_view(request):
                 obj.save()
                 musician.video.add(obj)
                 musician.save()
+                print(musician.video)
+                messages.add_message(request, 20, 'video added')
                 return redirect('profiles:musician_profile')
             # figure out how to raise error message here
         else:
@@ -410,7 +414,9 @@ def update_video(request):
     if request.method == 'POST':
         if update_video_form.is_valid():
             update_video_form.save()
+            print('heyyyyyyy')
             print('I am after the second if in update musician location')
+            messages.add_message(request, INFO, 'video updated')
             return redirect('profiles:musician_profile')
     context = {'update_video_form': update_video_form}
     return render(
