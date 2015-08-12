@@ -2,6 +2,8 @@
 <html>
 
 <head lang="en">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
@@ -16,29 +18,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="stylesheet" type="text/css" href="static/css/style.css">
 
-<style>
-    .big_button {
-    width: 80%;
-    height: 40px;
 
-    display:inline-block;
-}
-
-.videoWrapper {
-position: relative;
-padding-bottom: 56.25%; /* 16:9 */
-padding-top: 0px;
-height: 0;
-}
-.videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 19%;
-	width: 60%;
-	height: 80%;
-}
-</style>
 
 
 
@@ -112,6 +94,7 @@ function successCallback(position) {
 }
 
 </script>
+
 {% endif %}
 
 
@@ -121,12 +104,11 @@ function successCallback(position) {
 
 
 
-
 </head>
 
-<body onload="javascript:initGeolocation()">
+<body onload="javascript:initGeolocation()" class="masterhead">
 
-
+<div class="back-drop">
 <div align="Center"><h1>CLEFF FEED</h1>
 
 
@@ -195,6 +177,6 @@ function successCallback(position) {
 
 
 
-
+</div>
 </body>
 </html>
