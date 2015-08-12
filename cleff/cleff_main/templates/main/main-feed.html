@@ -157,6 +157,13 @@ function successCallback(position) {
                 <div align="left">
                     <h2>{{ com.user.username }}</h2><br />
 
+                {% if com.user.musician.genres.all %}<h3>Genres:</h3>
+
+                    {% for x in com.user.musician.genres.all %}
+                        {{ x }}
+                    {% endfor %}
+
+                {% endif %}
 
                 </div>
 
