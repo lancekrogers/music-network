@@ -53,55 +53,50 @@ def musician_current_location_view(request):
                 'location',
                 current_location,
                 max_dist)
-      #      print(loc_match)
+            com_list = []
             if len(loc_match) > 0:
                 for obj in loc_match:
                     try:
                         loc_o = Location.objects.get(pk=obj.pk)
                         loc_o_user = Musician.objects.get(pk=loc_o.user_pk)
                         if loc_o_user != user:
-                    #        print('loc_o != user')
-                        #    print(loc_o_user.pk)
                             try:
-                             #   print('trying....and...crying')
                                 sav = SavedMusician.objects.filter(numbre=loc_o_user.pk,
                                                                    saver_musician=request.user.musician)[0]
-                           #     print('im here')
                                 try:
-                            #        print('not....crying..as..bad')
                                     com = Comrade.objects.filter(numbre=sav)[0]
-                             #       print('Yay you know it worked!')
+                                    com_list.append(com)
                                 except:
                                     com = Comrade.objects.create(numbre=sav)
-                              #  print('Sav...{}....and....Com...{}...Created in try.....'.format(
-                               #     sav,
-                                #    com))
+                                    com_list.append(com)
                             except:
                                 sav = SavedMusician.objects.create(numbre=loc_o_user.pk,
                                                                    saver_musician=request.user.musician)
                                 sav.save()
                                 print(sav)
                                 com = Comrade.objects.create(numbre=sav)
-                              #  print('Sav...{}....and....Com...{}...Created in except.....'.format(
-                               #     sav,
-                                #    com))
                                 com.save()
-                              #  print('........{}....SavedMusician....Has Been Saved....You are welcome.... '.format(
-                              #      loc_o_user))
+                                com_list.append(com)
                             if com in user.comrades.all():
                                 print('Com {} already in {}s comrade list'.format(
                                     com,
                                     user))
                                 pass
                             else:
+
                                 user.comrades.add(com)
                                 user.save()
-                             #   print('....{}...added..to....{}'.format(
-                              #      com,
-                               #     user))
                     except:
-                #        print('......hit.....except...in....current_location_view...')
                         pass
+                if com_list:
+                    for co in user.comrades.all():
+                        print('new feature might work')
+                        if co not in com_list:
+                            print('should remove {} from {}.comrades'.format(co, user))
+                            user.comrades.remove(co)
+                else:
+                    print('something went wrong man')
+                    pass
             return redirect('main:feed')
 
 
