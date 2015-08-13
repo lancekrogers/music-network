@@ -1,8 +1,7 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 <div align="Center">
-<h2>Hows it going {{ user.username }}?</h2><br><br>
-    <a href="{% url 'main:home' %}"><button>Home</button></a><br><br>
+<h2 class="thumbnail">Hows it going {{ user.username }}?</h2><br><br>
 
 {% if request.user.nonmusician == profile %}
     {% if messages %}
@@ -10,17 +9,20 @@
               {{ message }}
         {% endfor %}
     {% endif %}<br><br>
+
+    <div class="thumbnail col-lg-6 col-lg-offset-3">
     {% if profile.profile_image %}
-        <img src="/static{{ profile.profile_image.url }}" width="20%" />
+        <img class="img img-rounded" src="/static{{ profile.profile_image.url }}" width="100%" />
     {% endif %}<br><br>
+<h2>Hows it going {{ user.username }}?</h2><br><br></div>
 
-<a href="{% url 'profiles:update_watched_musicians' %}"><button>Update Watched Musicians</button></a><br><br>
-<a href="{% url 'profiles:non_musician_profile_image' %}"><button>Update Profile Image</button></a><br><br>
-<a href="{% url 'profiles:non_musician_update' %}"><button>Update Your Information Here</button></a><br><br>
-<a href="{% url 'profiles:update_non_area_range' %}"><button>Change Area Range</button></a>
+<a href="{% url 'profiles:update_watched_musicians' %}"><button class="big_button">Update Watched Musicians</button></a><br><br>
+<a href="{% url 'profiles:non_musician_profile_image' %}"><button class="big_button">Update Profile Image</button></a><br><br>
+<a href="{% url 'profiles:non_musician_update' %}"><button class="big_button">Update Your Information Here</button></a><br><br>
+<a href="{% url 'profiles:update_non_area_range' %}"><button class="big_button">Change Area Range</button></a>
 
 
-{% endif %}
+{% endif %}<br /><br />
 
 </div>
 

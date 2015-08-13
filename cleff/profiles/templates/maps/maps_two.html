@@ -2,19 +2,28 @@
 <html>
 <head lang="en">
 {% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     <meta charset="UTF-8">
     <title>Base Profiles</title>
 </head>
-<body>
-<div><a href="{% url 'profiles:musician_profile' %}"><button>Back</button></a></div>
+<body class="back-drop">
+<br /><br /><br /><br />
+{% if request.user.musician %}
+    {% include 'navbar-musician.html' %}
+{% elif request.user.nonmusician%}
+    {% include 'navbar-non-musician.html' %}
+{% endif %}
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
-    <input type="submit" value="Add Location">
-    </form>
+    <input class='long_skinny_button' type="submit" value="Add Location">
+    </form><br />
 
 
 </body>
