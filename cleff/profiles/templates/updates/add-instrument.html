@@ -1,5 +1,7 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
+<div class="container-fluid">
+<div class="well">
 
 {% if request.user.musician %}
     <form method="POST">
@@ -13,5 +15,6 @@
 
 
 
-
+</div>  <!-- div well -->
+</div>  <!-- div container-fluid -->
 {% endblock %}

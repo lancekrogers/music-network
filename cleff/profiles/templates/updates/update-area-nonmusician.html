@@ -1,6 +1,9 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 
+<div class="container-fluid">
+<div class="well">
+
 {% if request.user.nonmusician %}
 
     <div align="Center">
@@ -13,6 +16,7 @@
 
 {% endif %}
 
-
+</div>  <!-- div well -->
+</div>  <!-- div container-fluid -->
 
 {% endblock %}

@@ -1,17 +1,25 @@
 {% extends 'updates/upload-base.html' %}
 {% block body %}
+
+<div class="container-fluid">
+<div class="well">
+
+
 {% if request.user.nonmusician %}
-<a href="{% url 'profiles:non_musician_profile' %}"><button>Back</button></a>
+<a href="{% url 'profiles:non_musician_profile' %}"><button class="skinny_button">Back</button></a>
     {% load static from staticfiles %}
 <script type="text/javascript" src="{% static 'stickyuploads/js/django-uploader.js' %}"></script>
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 
 {{ profile_image_form.as_p }}
-<button type="submit">Set Profile Photo</button>
+<button class="skinny_button" type="submit">Set Profile Photo</button>
 </form>
 
 
 {% endif %}
+
+</div>  <!-- div well -->
+</div>  <!-- div container-fluid -->
 
 {% endblock %}

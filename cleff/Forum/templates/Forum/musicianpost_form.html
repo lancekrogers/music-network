@@ -1,6 +1,15 @@
 {% extends 'Forum/base.html' %}
 {% block body %}
-<div><a href="{% url 'Forum:musician_post_list' %}"><button>Back</button></a></div><br><br><br>
+
+<br /><br /><br />
+<div class="container-fluid">
+<div class="well"><h1>Create a Post</h1></div>
+
+<br /><br /><br />
+
+
+<div class="well">
+
 
 <form method="POST">
 {% csrf_token %}
@@ -8,5 +17,7 @@
 <input type="submit" value="Create Post">
 </form>
 
+</div> <!-- div well  -->
+</div> <!-- div container fluid  -->
 
 {% endblock %}

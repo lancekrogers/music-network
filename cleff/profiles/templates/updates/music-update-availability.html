@@ -1,6 +1,10 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 {% if request.user.musician %}
+
+<div class="container-fluid">
+<div class="well">
+
     <form method="POST" checked=False>
     {% csrf_token %}
     {{ update_availability.as_p}}
@@ -11,5 +15,6 @@
 {% endif %}
 
 
-
+</div>  <!-- div well -->
+</div>  <!-- div container-fluid -->
 {% endblock %}
