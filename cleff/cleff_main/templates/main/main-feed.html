@@ -101,7 +101,7 @@ function successCallback(position) {
 
 
 </head>
-<div class="back-drop"><br />
+
 
 {% if request.user.musician %}
     {% include 'navbar-musician.html' %}
@@ -110,8 +110,8 @@ function successCallback(position) {
 {% endif %}
 
 <div class="container-fluid">
-<body onload="javascript:initGeolocation()" class="masterhead"><br />
-
+<body onload="javascript:initGeolocation()" class="back-drop"><br />
+<br />
 <h1 class="white-h1" align="Center">CLEFF FEED</h1>
 
 
@@ -156,20 +156,20 @@ function successCallback(position) {
 
             {% if com %}
 
-            <div class="well well">
+            <div class="well" style="height: 70em;">
 
-                <div class="well well" align="left">
+                <div class="well" align="left">
 
 
 
                     <h2>{{ com.user.username }}</h2><br />
-                <div class="well well" align="left">
+                <div class="well" align="left">
 
 
                 <div style="float: left; width: 12.5em;">{% if com.user.musician.genres.all %}<h3>Genres</h3>
 
                     {% for x in com.user.musician.genres.all %}
-                        {{ x }}</br>
+                        {{ x }}<br />
                     {% endfor %}
 
                 {% endif %}</div>
@@ -221,8 +221,7 @@ function successCallback(position) {
 {% endif %}
 </div>
 </div>
-</div>
-</div>
+
 
 </body>
 </html>
