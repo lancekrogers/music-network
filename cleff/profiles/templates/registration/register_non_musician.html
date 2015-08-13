@@ -1,7 +1,10 @@
 {% extends 'profiles/base.html' %}
 {% block body %}
 
-<h1>Registration for the non-musically gifted</h1>
+<h1 class="white-h1">Registration for the non-musically gifted</h1>
+
+<div class="well">
+
 <form method="post">
         {% csrf_token %}
         {{ u_form.as_p }}
@@ -10,5 +13,5 @@
         <button type="submit" name="register">Create</button>
     </form>
 
-
+</div> <!-- well div -->
 {% endblock %}

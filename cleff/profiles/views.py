@@ -52,7 +52,7 @@ def musician_registration(request):
                     password = request.POST['password1']
                     user = authenticate(username=username, password=password)
                     login(request, user)
-                    return redirect('main:home')
+                    return redirect('main:feed')
                 except:
                     return redirect('profiles:Login')
             except:
@@ -95,7 +95,7 @@ def non_musician_registration(request):
                     password = request.POST['password1']
                     user = authenticate(username=username, password=password)
                     login(request, user)
-                    return redirect('main:home')
+                    return redirect('main:feed')
                 except:
                     return redirect('profiles:Login')
             except:

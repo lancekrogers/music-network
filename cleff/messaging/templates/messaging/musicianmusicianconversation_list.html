@@ -2,7 +2,7 @@
 {% block body %}
     <div class="container-fluid">
 
-<div class="well"><h2>Musician Inbox</h2></div> <!-- well -->
+<div align="Center"><h2 class="white-h1">Musician Inbox</h2></div> <!-- align center div -->
 
 {% if request.user.musician %}
 
@@ -17,6 +17,8 @@
     {% endif %} <!-- if conversation -->
 
     {% endfor %}
+{% else %}
+    <h2>No Conversations Yet</h2>
     {% endif %} <!-- if object list -->
     {% endif %} <!-- if user  -->
 </div> <!-- container-fluid -->
