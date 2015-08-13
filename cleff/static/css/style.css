@@ -169,3 +169,17 @@ height: 0;
    background: #525252;
    color: white;
 }
+
+.videoWrapper {
+position: relative;
+padding-bottom: 56.25%; /* 16:9 */
+padding-top: 1.5625em;
+height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 10%;
+	width: 80%;
+	height: 55%;
+}

@@ -1,10 +1,12 @@
 {% extends 'public/base.html' %}
 {% block  body %}
+<div class="container-fluid">
 
-<h1>Checkout {{ view.display_name}}</h1>
+<h1 class="thumbnail">Checkout {{ view.display_name}}</h1>
 
-{% if object.profile_image %}<img class="img-rounded" src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}
+{% if object.profile_image %}<img class="img-rounded" src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}<br /><br />
 
+    <div class="well">
 {% if object.summary %}<h2>{{ view.display_name }}'s Summary</h2> <p>{{ object.summary }}</p>{% endif %}
 
 {% if object.company %}<p><b>Company:</b> {{ object.company }}</p>{% endif %}
@@ -35,8 +37,20 @@
     {% endfor %}
     </ul>
 {% endif %}
+
+{% if object.locations.all %}
+    <h3>Locations</h3>
+    <ul>
+    {% for x in object.locations.all %}
+        <li>{{ x.description }}</li>
+    {% endfor %}
+    </ul><br />
+{% endif %}
     {% if object.video.all %}
- <div class="videoWrapper"><iframe  src="https://www.youtube.com/embed/{{ view.latest_video.embedded_code }}" frameborder="0" ></iframe></div>
+ <div align='Center' class="videoWrapper">
+     <iframe  src="https://www.youtube.com/embed/{{ view.latest_video.embedded_code }}" frameborder="0" allowfullscreen >
+
+     </iframe></div> <!-- center videowrapper -->
     {% endif %}
 
 
@@ -49,7 +63,8 @@
     <input type="submit" value="Start Conversation"/>
 </form><br />
 </div>
-
+</div> <!-- container fluid -->
+</div> <!-- well -->
 {% endif %}
 {% endif %}
 
