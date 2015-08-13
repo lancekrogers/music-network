@@ -13,8 +13,10 @@ import random
 
 def home(request):
     try:
-        if request.user.username.all:
+        if request.user.username:
             return redirect('main:feed')
+        else:
+            return render(request, 'main/home_page.html')
     except:
         return render(request, 'main/home_page.html')
 
