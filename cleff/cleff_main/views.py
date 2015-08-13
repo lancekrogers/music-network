@@ -191,7 +191,7 @@ def render_comrades(request):
         comrades = visitor.comrades.all()
         musician_list = []
         try:
-            for com in comrades:
+            for com in reversed(comrades):
                 muc = Musician.objects.get(pk=com.numbre.numbre)
                 musician_list.append(muc)
         except:
