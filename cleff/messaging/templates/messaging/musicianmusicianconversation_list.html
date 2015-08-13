@@ -1,21 +1,23 @@
 {% extends 'messaging/base.html' %}
 {% block body %}
-<h2>Musician to Musician Inbox</h2>
+    <div class="container-fluid">
+
+<div class="well"><h2>Musician Inbox</h2></div> <!-- well -->
 
 {% if request.user.musician %}
-<a href="{% url 'main:home'  %}"><button>Home</button></a><br></br>
-<a href="{% url 'profiles:musician_profile'  %}"><button>Profile</button></a><br></br>
 
-
+<div class="well">
 {% if object_list %}
+
 {% for conversation in object_list %}
     {% if conversation in view.owner_is_musician_one %}
        <a href="{% url 'message:musician_conv_detail_view' conversation.pk %}">{{ conversation.musician_two }}</a><br></br>
     {% elif conversation in view.owner_is_musician_two %}
         <a href="{% url 'message:musician_conv_detail_view' conversation.pk %}">{{ conversation.musician_one }}</a><br></br>
-    {% endif %}
+    {% endif %} <!-- if conversation -->
 
-{% endfor %}
-{% endif %}
-{% endif %}
+    {% endfor %}
+    {% endif %} <!-- if object list -->
+    {% endif %} <!-- if user  -->
+</div> <!-- container-fluid -->
 {% endblock %}

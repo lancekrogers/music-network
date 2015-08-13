@@ -13,7 +13,8 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <style>
     h1 {
         margin-top: 0px;
@@ -93,8 +94,13 @@
 
 </head>
 <div class="back-drop">
+{% if request.user.musician %}
+    {% include 'navbar-musician.html' %}
+{% elif request.user.nonmusician%}
+    {% include 'navbar-non-musician.html' %}
+{% endif %}
 
-<body class="masterhead">
+<body class="back-drop">
 <br />
 
 

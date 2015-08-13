@@ -2,15 +2,14 @@
 {% block body %}
 <div class="container-fluid">
 
-<div align="Center"><h1>Cleff Musician Only Forum</h1><br /></div>
-
-<div align="Center"><br /><a href="{% url 'main:home' %}"><button  class=" btn-lg btn block">Home</button></a></div><br><br>
-
-
-
-<div><a href="{% url 'Forum:musician_post_list' %}"><button>Back</button></a></div>
+<div class="well">
+<div align="Center"><h1>Cleff Musician Forum</h1><br /></div>
+</div>
 
 
+
+
+<div class="well">
 <h2>{{ post.title }}</h2>
 
     <h6>Score: {{post.score}}</h6><br />
@@ -24,7 +23,7 @@
          {{ post.user.user.username }}
      {% endif %}</a><p>
 
-</div>
+
 <div class="container-fluid">
 <div class="forum-text">
 
@@ -81,8 +80,7 @@
 
 </div>
 
-
-
+</div> <!-- well -->
 
 
 

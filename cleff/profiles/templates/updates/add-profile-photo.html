@@ -1,9 +1,9 @@
 {% extends 'updates/upload-base.html' %}
 {% block body %}
-
+<div class="well">
 {% if request.user.musician %}
 
-    <a href="{% url 'profiles:musician_profile' %}"><button>Back</button></a>
+    <a href="{% url 'profiles:musician_profile' %}"><button class="skinny_button">Back</button></a>
 
     {% load static from staticfiles %}
 <script type="text/javascript" src="{% static 'stickyuploads/js/django-uploader.js' %}"></script>
@@ -16,5 +16,5 @@
 
 {% endif %}
 
-
+</div>
 {% endblock %}

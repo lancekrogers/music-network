@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
-from .views import MusicianMusicianConversationListView, MusicianMusicianConversationDetailView, mm_start_conv, \
+from .views import MusicianMusicianConversationListView, \
+    MusicianMusicianConversationDetailView, mm_start_conv, \
     mm_message_create_view
 
 urlpatterns = [
