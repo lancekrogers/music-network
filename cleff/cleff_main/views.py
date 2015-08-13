@@ -173,7 +173,7 @@ def render_comrades(request):
         comrades = visitor.comrades.all()
         musician_list = []
         try:
-            for com in comrades:
+            for com in reversed(comrades):
                 muc = Musician.objects.get(pk=com.numbre.numbre)
                 musician_list.append(muc)
         except:
@@ -190,7 +190,7 @@ def render_comrades(request):
                 musician_list.append(muc)
         except:
             messages.add_message(request, 20, 'No Musician Matches')
-        context['comrades'] = reversed(musician_list)
+        context['comrades'] = musician_list
     return context
 
 
