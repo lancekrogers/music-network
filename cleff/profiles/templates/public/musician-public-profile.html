@@ -2,12 +2,27 @@
 {% block  body %}
 <div class="container-fluid">
 
-<h1 class="white-h1">Checkout {{ view.display_name}}</h1>
+<h1 class="white-h1"> {{ view.display_name}}</h1>
+
+
+
 
 {% if object.profile_image %}<img class="img-rounded" src="/static{{ object.profile_image.url }}" width="35%" />{% endif %}<br /><br />
 
+{% if request.user.musician %}
+{% if request.user.musician != object %}
+<div align="left">
+<form action="{% url 'message:start_music_talk' object.pk %}" method="POST">
+        {% csrf_token %}
+    <input class='skinny_button' type="submit" value="Start Conversation"/>
+</form><br />
+</div> <!-- div align center -->
+{% endif %}
+{% endif %}
+
     <div class="well">
-{% if object.summary %}<h2>{{ view.display_name }}'s Summary</h2> <p>{{ object.summary }}</p>{% endif %}
+
+{% if object.summary %}<h2>Summary</h2> <p>{{ object.summary }}</p>{% endif %}
 
 {% if object.company %}<p><b>Company:</b> {{ object.company }}</p>{% endif %}
 
@@ -55,17 +70,8 @@
 
 
 
-{% if request.user.musician %}
-{% if request.user.musician != object %}
-<div align="Center">
-<form action="{% url 'message:start_music_talk' object.pk %}" method="POST">
-        {% csrf_token %}
-    <input type="submit" value="Start Conversation"/>
-</form><br />
-</div>
+
 </div> <!-- container fluid -->
 </div> <!-- well -->
-{% endif %}
-{% endif %}
 
 {% endblock %}
