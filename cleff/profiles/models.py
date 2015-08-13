@@ -57,7 +57,7 @@ class NonMusician(ProfileModel):
     musicians = models.ManyToManyField('SavedMusician', blank=True)
 
     def __str__(self):
-        return 'Username: {}'.format(self.user.username)
+        return '{}'.format(self.user.username)
 
 
 class Genre(models.Model):
@@ -88,7 +88,7 @@ class Video(models.Model):
 class InstrumentGroup(models.Model):
     user_pk = models.IntegerField(default=-1)
     family = models.CharField(choices=INSTRUMENT_CLASSES, max_length=60)
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=50, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

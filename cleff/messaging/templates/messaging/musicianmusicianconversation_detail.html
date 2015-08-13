@@ -22,7 +22,8 @@
 
     <section>
 
-   <div class='well' id="one"> {{ m.message }}</div><br /><div id="two">sent by {{ m.sender }}</div><br><br>
+   <div class='well' id="one"> {{ m.message }}</div><br />
+        <div id="two"><a href="{% url 'profiles:m_public_profile' m.sender.pk %}">sent by {{ m.sender }}</a></div><br><br>
 
     </section>
 

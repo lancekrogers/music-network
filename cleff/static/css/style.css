@@ -211,14 +211,14 @@ height: 0;
 
 .forum_text {
     min-height: 6.6em;
-    min-width: 80%;
+    min-width: 100%;
     background-color: #CACAD4;
     border-radius: .4em;
 
 }
 
 .forum_send_placement {
-    padding-right: 25%;
+    padding-right: 15%;
 }
 
 .white-h1 {
