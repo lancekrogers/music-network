@@ -117,10 +117,10 @@ function successCallback(position) {
 
 
 
-<div class='well' align='center'>
+<div align='center'>
 {% if request.user %}
-    <h3>Whats up {{ request.user.username }}?</h3>
-        <div><h5>This site uses your browsers location to help you find new neighbors to jam with</h5></div>
+   <!-- <h3 class="white-h1">Welcome to Cleff {{ request.user.username }}</h3> -->
+        <div><h5 class="white-h1">This site uses your browsers location to help you find new neighbors to jam with</h5></div>
 {% endif %}</div>
 
 
@@ -143,9 +143,9 @@ function successCallback(position) {
 <br>
 
 {% if comrades%}
-    <div align="Center" class="well well-sm"><h1>Here are some musicians near you</h1></div>
+    <div align="Center"><h1 class="white-h1">Here are some musicians near you</h1></div>
 {% else %}
-    <div align="Center" class="well well-sm"><h1>There does not seem to be any activity in your area please check back later</h1></div>
+    <div align="Center" ><h1 class="white-h1">There does not seem to be any activity in your area please check back later</h1></div>
 {% endif %}
 
 
