@@ -9,12 +9,13 @@
 
     {% csrf_token %}
 
-    <input type="text" name="memo"   >
+    <input type="text" name="memo" class="forum_text"><br/><br />
 
-    <input type="submit" value="send" size="100" height="50" >
+   <div align="right" class="forum_send_placement"> <input  type="submit" value="send"></div>
 
     </form><br />
 <div class="well">
+
 {% if object.messages.all %}
 
 {% for m in object.messages.all %}

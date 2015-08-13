@@ -208,3 +208,15 @@ height: 0;
    background: #525252;
    color: white;
 }
+
+.forum_text {
+    min-height: 6.6em;
+    min-width: 80%;
+    background-color: #CACAD4;
+    border-radius: .4em;
+
+}
+
+.forum_send_placement {
+    padding-right: 25%;
+}
