@@ -12,7 +12,11 @@ import random
 # Create your views here.
 
 def home(request):
-    return render(request, 'main/home_page.html')
+    try:
+        if request.user.username.all:
+            return redirect('main:feed')
+    except:
+        return render(request, 'main/home_page.html')
 
 
 @login_required
