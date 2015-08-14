@@ -4,6 +4,15 @@
 
 {% if request.user.musician == object.musician_one or object.musician_two %}
 
+    <div align="right">
+    <form action="{% url 'message:message_delete' object.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Delete This Conversation">
+
+
+    </form><br />
+
+    </div>
 
     <form action="{% url 'message:mm_send_message' object.pk object.musician_two.user.pk  %}" method="POST"  >
 

@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from .views import MusicianMusicianConversationListView, \
     MusicianMusicianConversationDetailView, mm_start_conv, \
-    mm_message_create_view
+    mm_message_create_view, conversation_delete
 
 urlpatterns = [
     url(r'^$',
@@ -15,5 +15,8 @@ urlpatterns = [
         name='start_music_talk'),
     url(r'^musician-musician-message/(?P<conversation_pk>\d+)/(?P<receiver_pk>\d+)/',
         mm_message_create_view,
-        name='mm_send_message')
+        name='mm_send_message'),
+    url(r'^conversation-delete/(?P<conversation_pk>\d+)/',
+        conversation_delete,
+        name='message_delete'),
 ]

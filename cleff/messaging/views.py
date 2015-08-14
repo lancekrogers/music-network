@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, DeleteView
 
 from custom_wrappers import musician_wrapper_func
 from profiles.models import Musician
@@ -100,10 +101,11 @@ def mm_message_create_view(request, conversation_pk, receiver_pk):
                   {'message_form': message_t})
 
 
-
-
-
-
+def conversation_delete(request, conversation_pk):
+    if request.POST:
+        instance = MusicianMusicianConversation.objects.get(pk=conversation_pk)
+        instance.delete()
+        return redirect('message:musician_conversations')
 
 
 
