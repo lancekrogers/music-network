@@ -36,10 +36,15 @@
 {% endif %}
 <h2>Comments are below</h2>
 {% for obj in response %}
-    <div><br>Timestamp: {{obj.timestamp}} <br><br>{{ obj.user.username }}
+    <div><br>Timestamp: {{obj.timestamp}} <br><br>
         {% if obj.nonmusician.pk %}
-   {{obj.nonmusician.user.username}}
-            {% elif obj.musician.pk %}
+            Comment by: {{obj.nonmusician.user.username}}
+            {% if obj.nonmusician.profile_image %}<br />
+                <img alt="Responsive image"  class="img-rounded" src="/static{{ obj.nonmusician.profile_image.url }}" width="9%" />
+            {% endif %}
+
+
+        {% elif obj.musician.pk %}
 
             {% if obj.musician.profile_image %}
             Comment by {{ obj.musician }}<br />
