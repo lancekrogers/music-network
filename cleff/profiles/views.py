@@ -535,7 +535,8 @@ class LocationCreateView(CreateView):
                         v -= 1
                         continue
                     else:
-                        messages.add_message(self.request, INFO, 'An Error Occured')
+                        print('somethings wrong')
+                        pass
             return redirect('profiles:musician_profile')
         else:
             form.add_error('common_error', 'An Error has occurred')
