@@ -17,8 +17,24 @@ there will be a button to the forum on one side, and button to update your profi
 on the other.  I might try to figure out how to do a slide in button menu containing links to all the pages in 
 my site.
 
+# Running requirements
 
-I edited django-geoposition.  My project requires a pip install from my github page.  My version of 
-django-geoposition can be installed using pip.
+I made some customizatinos to django-geoposition.  My project requires a pip install from my github page. 
 
-##Pip install git+https://github.com/lancekrogers/django-geoposition
+* Pip install git+https://github.com/lancekrogers/django-geoposition
+
+* Pip install requirements.txt
+
+* Install Postgres onto you're system and create a user and database to use.
+  Start the Postgres server.  Open music-network/cleff/cleff/settings.py/ ;
+  find DATABASES and replace 'NAME':, 'cleff',  'USER': 'cleff', with 
+  'NAME': 'your database name', 'USER': 'your database username'.
+
+* Install geo-django to the system you are using, follow the 
+  instructions in the documentation 
+  https://docs.djangoproject.com/en/1.8/ref/contrib/gis/
+
+* Install ElasticSearch on your system 
+
+* ./manage.py runserver
+
