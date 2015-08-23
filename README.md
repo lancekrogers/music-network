@@ -32,5 +32,7 @@ I made some customizations to django-geoposition so my project requires a pip in
 
 * Install ElasticSearch on your system 
 
-* ./manage.py runserver
+* cd music-network/cleff/ 
+  then type ./manage.py runserver
+  hit enter and go to localhost:8000
 
