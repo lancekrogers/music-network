@@ -1,3 +1,4 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -26,11 +27,11 @@ function goBack() {
     window.history.back();
 }
 </script><br><br>
-<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
 </head>
 
-<body class="back-drop">
+<body class="back-drop" >
 {% if request.user.musician %}
     {% include 'navbar-musician.html' %}
 {% elif request.user.nonmusician%}
