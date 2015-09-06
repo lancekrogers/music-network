@@ -26,9 +26,9 @@ I made some customizations to django-geoposition so my project requires a pip in
   find DATABASES and replace 'NAME':, 'cleff',  'USER': 'cleff', with 
   'NAME': 'your database name', 'USER': 'your database username'.
 
-* Install geo-django to the system you are using, follow the 
+* Install geo-django spatial libraries to the system you are using, follow the 
   instructions in the documentation 
-  https://docs.djangoproject.com/en/1.8/ref/contrib/gis/
+  https://docs.djangoproject.com/en/1.8/ref/contrib/gis/install/geolibs/
 
 * Install ElasticSearch on your system 
 
