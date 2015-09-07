@@ -36,19 +36,14 @@ def musician_current_location_view(request):
     if request.POST:
         cor_data = request.POST['coordinates']
         if request.user.musician:
-            print('musician ajax worked')
             user = request.user.musician
-        #    print('still working at if')
-        #    print(user.current_location)
             user.current_location = cor_data
             user.save()
-      #      print('Working Music Loc is {}'.format(user.current_location))
             loca = Location.objects.create(
                 user_pk=user.pk,
                 location=cor_data,
             )
             loca.save()
-        #    print('loca {}'.format(loca.user_pk))
             coor = user.current_location
             lat = float(coor.latitude)
             lon = float(coor.longitude)
@@ -60,7 +55,6 @@ def musician_current_location_view(request):
                 current_location,
                 max_dist)
             com_list = []
-            print('after com_list')
             if len(loc_match) > 0:
                 for obj in loc_match:
                     try:
