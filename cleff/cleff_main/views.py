@@ -60,6 +60,7 @@ def musician_current_location_view(request):
                 current_location,
                 max_dist)
             com_list = []
+            print('after com_list')
             if len(loc_match) > 0:
                 for obj in loc_match:
                     try:
@@ -79,7 +80,6 @@ def musician_current_location_view(request):
                                 sav = SavedMusician.objects.create(numbre=loc_o_user.pk,
                                                                    saver_musician=request.user.musician)
                                 sav.save()
-                                print(sav)
                                 com = Comrade.objects.create(numbre=sav)
                                 com.save()
                                 com_list.append(com)
@@ -97,10 +97,10 @@ def musician_current_location_view(request):
                 if com_list:
                     for co in user.comrades.all():
                         if co not in com_list:
-                            print('should remove {} from {}.comrades'.format(co, user))
                             user.comrades.remove(co)
                 else:
-                    pass
+                    for co in user.comrades.all():
+                        user.comrades.remove(co)
             return redirect('main:feed')
 
 
@@ -179,11 +179,12 @@ def render_comrades(request):
         comrades = visitor.comrades.all()
         musician_list = []
         try:
-            for com in reversed(comrades):
+            for com in comrades:
                 muc = Musician.objects.get(pk=com.numbre.numbre)
                 musician_list.append(muc)
+            musician_list.sort()
         except:
-            messages.add_message(request, 20, 'No Musician Matches')
+            pass
         context['comrades'] = musician_list
     except:
         print('......non..musician.....render.....comrades...')
@@ -191,11 +192,12 @@ def render_comrades(request):
         comrades = visitor.comrades.all()
         musician_list = []
         try:
-            for com in reversed(comrades):
+            for com in comrades:
                 muc = Musician.objects.get(pk=com.numbre.numbre)
                 musician_list.append(muc)
+            musician_list.sort()
         except:
-            messages.add_message(request, 20, 'No Musician Matches')
+            pass
         context['comrades'] = musician_list
     return context
 
