@@ -561,7 +561,7 @@ def change_search_area_range(request):
     if request.method == 'POST':
         if update_area_form.is_valid():
             update_area_form.save()
-            print('I am after the second if in update musician area ramge')
+            print('I am after the second if in update musician area range')
             messages.add_message(request, 20, 'Search Area Updated')
             return redirect('profiles:musician_profile')
     context = {'update_area_form': update_area_form}
