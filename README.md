@@ -4,6 +4,8 @@ Iron Yard final project
 
 # Cleff
 
+<img src="http://g.recordit.co/QyzVm8OetF.gif" alt="" />
+
 Cleff is a social network where musicians can meet musicians near them.  Musicians create accounts and 
 build their public profile as a resume so people can make a conscious decision if they want to talk to the 
 person or not.  A users home page is a page with a sample from all the uses in their area that have posted a
@@ -12,6 +14,11 @@ and communicate with musicians through the non-musician forum.
 
 I designed the site to update as the user navigates through the site, not requiring a task runner. 
 
+
+
+
+
+<img src="http://g.recordit.co/421Cg27BZn.gif" alt="" />
 
 # Running requirements
 
@@ -35,4 +42,5 @@ I made some customizations to django-geoposition so my project requires a pip in
 * cd music-network/cleff/ 
   then type ./manage.py runserver
   hit enter and go to localhost:8000
+
 
