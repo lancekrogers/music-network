@@ -43,4 +43,8 @@ I made some customizations to django-geoposition so my project requires a pip in
   then type ./manage.py runserver
   hit enter and go to localhost:8000
 
+<p>
+A more maintenable server side api version was built after leaving the Iron Yard, but the project was set aside to allocate more time to learning algorothmic trading 
+https://goo.gl/dE3w58
 
+</p>
